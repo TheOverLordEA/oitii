@@ -86,6 +86,7 @@ const JobSectionHome: React.FC<JobSectionsProp> = ({ jobTitle }) => {
             salary={job.salary}
             equity={job.equity}
             postedDate={job.postedDate}
+            key={index}
           />
         ))}
       </div>
