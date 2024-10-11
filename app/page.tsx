@@ -5,7 +5,9 @@ import { Search, BarChart, Users, Briefcase } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
 import HomePageHeader from "@/components/headers/HomePageHeader";
-import FloatingBackground from "@/components/floatingBackground/FloatingBackground";
+import TrendingJobs from "@/components/trendingJobs/TrendingJobs";
+// import FloatingBackground from "@/components/floatingBackground/FloatingBackground";
+import JobSectionHome from "@/components/job-sections/JobSectionHome";
 
 export const metadata: Metadata = {
   title: "Oitii | Real Jobs, Real Opportunities",
@@ -14,6 +16,14 @@ export const metadata: Metadata = {
 
 const BUTTON = {
   search: "Search",
+};
+
+const JOBSECTIONTITLES = {
+  latestJobs: "Latest Jobs",
+  engineeringJobs: "Engineering Jobs",
+  marketingJobs: "Marketing Jobs",
+  healthcareJobs: "Healthcare Jobs",
+  financeJobs: "Finance Jobs",
 };
 
 export default function LandingPage() {
@@ -100,10 +110,9 @@ export default function LandingPage() {
                 </div>
               </div>
             </div>
-            <div>
-              <h2>Trending Hires</h2>
-            </div>
-            <div>trending jobs</div>
+            <TrendingJobs />
+            {/* Latest Jobs */}
+            <JobSectionHome jobTitle={JOBSECTIONTITLES.latestJobs} />
             <div>Latest jobs</div>
           </section>
 
