@@ -1,101 +1,210 @@
-import Image from "next/image";
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Search, BarChart, Users, Briefcase } from "lucide-react";
+import Link from "next/link";
+import type { Metadata } from "next";
+import HomePageHeader from "@/components/headers/HomePageHeader";
+import FloatingBackground from "@/components/floatingBackground/FloatingBackground";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Oitii | Real Jobs, Real Opportunities",
+  description: "...",
+};
+
+const BUTTON = {
+  search: "Search",
+};
+
+export default function LandingPage() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <>
+      <HomePageHeader />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+      <main className="flex flex-col min-h-screen bg-white text-black">
+        <main className="flex-1">
+          <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gray-50">
+            <div className="container mx-auto px-4 md:px-6">
+              <div className="flex flex-col items-center space-y-4 text-center">
+                <div className="space-y-2">
+                  <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-black">
+                    Find Your Dream Tech Job
+                  </h1>
+                  <p className="mx-auto max-w-[700px] text-gray-700 md:text-xl">
+                    Connect with top startups and tech companies. Your next
+                    career move starts here.
+                  </p>
+                </div>
+                <div className="w-full max-w-sm space-y-2">
+                  <form className="flex space-x-2">
+                    <Input
+                      className="flex-1"
+                      placeholder="Search jobs..."
+                      type="text"
+                    />
+                    <Button
+                      className="bg-green-600 text-white hover:bg-green-700"
+                      type="submit"
+                    >
+                      {BUTTON.search}
+                    </Button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <div className="flex flex-col md:flex-row justify-between items-center bg-white p-8 md:p-16">
+              {/* Left Section with Profile and Shapes */}
+              <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
+                <div className="relative">
+                  {/* Profile Image */}
+                  <img
+                    src="https://via.placeholder.com/150"
+                    alt="Profile 1"
+                    className="rounded-full w-20 h-20"
+                  />
+                  {/* Geometric Shapes */}
+                  <div className="absolute -top-6 -left-6 w-20 h-20 bg-pink-400"></div>
+                  <div className="absolute -top-6 left-10 w-20 h-20 bg-green-500"></div>
+                  <div className="absolute top-6 left-6 w-10 h-10 bg-yellow-400"></div>
+                  <div className="absolute top-10 left-16 w-10 h-10 bg-blue-600"></div>
+                </div>
+              </div>
+
+              {/* Center Text Section */}
+              <div className="text-center mt-8 md:mt-0">
+                <h2 className="text-4xl font-bold text-black">
+                  Find what's next<span className="text-red-500">:</span>
+                </h2>
+                <p className="text-gray-600 mt-2">
+                  OVER 130K REMOTE & LOCAL STARTUP JOBS
+                </p>
+              </div>
+
+              {/* Right Section with Profile and Shapes */}
+              <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 mt-8 md:mt-0">
+                <div className="relative">
+                  {/* Profile Image */}
+                  <img
+                    src="https://via.placeholder.com/150"
+                    alt="Profile 2"
+                    className="rounded-full w-20 h-20"
+                  />
+                  {/* Geometric Shapes */}
+                  <div className="absolute -top-6 -right-6 w-20 h-20 bg-yellow-500"></div>
+                  <div className="absolute -top-6 right-10 w-20 h-20 bg-green-600"></div>
+                  <div className="absolute top-6 right-6 w-10 h-10 bg-blue-600"></div>
+                  <div className="absolute top-10 right-16 w-10 h-10 bg-orange-400"></div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h2>Trending Hires</h2>
+            </div>
+            <div>trending jobs</div>
+            <div>Latest jobs</div>
+          </section>
+
+          <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
+            <div className="container mx-auto px-4 md:px-6">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12 text-black">
+                Why Choose Oitii
+              </h2>
+              <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 items-start">
+                {[
+                  {
+                    icon: Search,
+                    title: "Smart Job Matching",
+                    description:
+                      "Our AI-powered algorithm finds the perfect job matches for you.",
+                  },
+                  {
+                    icon: BarChart,
+                    title: "Salary Insights",
+                    description:
+                      "Get detailed salary information for informed decisions.",
+                  },
+                  {
+                    icon: Users,
+                    title: "Direct Connections",
+                    description:
+                      "Connect directly with hiring managers and founders.",
+                  },
+                  {
+                    icon: Briefcase,
+                    title: "Curated Opportunities",
+                    description:
+                      "Access exclusive job listings from top tech companies.",
+                  },
+                ].map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col items-center space-y-2 border border-gray-200 p-4 rounded-lg"
+                  >
+                    <item.icon className="h-8 w-8 text-green-600" />
+                    <h3 className="text-xl font-bold text-black">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 text-center">
+                      {item.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+          <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50">
+            <div className="container mx-auto px-4 md:px-6">
+              <div className="grid gap-10 md:gap-16 md:grid-cols-2">
+                <div className="space-y-4">
+                  <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-black">
+                    Join Thousands of Tech Professionals
+                  </h2>
+                  <p className="max-w-[600px] text-gray-700 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                    WellShop has helped countless developers, designers, and
+                    tech professionals find their dream jobs. Start your journey
+                    today and see where your career can take you.
+                  </p>
+                </div>
+                <div className="flex flex-col items-start space-y-4">
+                  <div className="inline-block rounded-lg bg-green-100 px-3 py-1 text-sm text-green-800">
+                    Testimonial
+                  </div>
+                  <blockquote className="text-lg font-semibold leading-snug lg:text-xl lg:leading-normal xl:text-2xl text-black">
+                    "Thanks to WellShop, I found an amazing opportunity at a
+                    cutting-edge startup. The process was smooth, and I felt
+                    supported every step of the way."
+                  </blockquote>
+                  <p className="text-sm text-gray-600">
+                    - Sarah L., Full Stack Developer
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+        <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center justify-between px-4 md:px-6 border-t border-gray-200 bg-white text-black">
+          <p className="text-xs text-gray-600">
+            © 2023 WellShop Inc. All rights reserved.
+          </p>
+          <nav className="flex gap-4 sm:gap-6">
+            <Link
+              className="text-xs hover:underline underline-offset-4 text-gray-600"
+              href="#"
+            >
+              Terms of Service
+            </Link>
+            <Link
+              className="text-xs hover:underline underline-offset-4 text-gray-600"
+              href="#"
+            >
+              Privacy
+            </Link>
+          </nav>
+        </footer>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    </>
   );
 }
