@@ -8,6 +8,7 @@ import HomePageHeader from "@/components/headers/HomePageHeader";
 import TrendingJobs from "@/components/trendingJobs/TrendingJobs";
 // import FloatingBackground from "@/components/floatingBackground/FloatingBackground";
 import JobSectionHome from "@/components/job-sections/JobSectionHome";
+// import Bear from "@/components/zustand/Bear";
 
 export const metadata: Metadata = {
   title: "Oitii | Real Jobs, Real Opportunities",
@@ -184,7 +185,17 @@ export default function LandingPage() {
               jobs={jobs}
             />
 
-            <div>Latest jobs</div>
+            <JobSectionHome
+              jobTitle={JOBSECTIONTITLES.marketingJobs}
+              jobs={jobs}
+            />
+            <div className="flex justify-center">
+              <Button className="bg-black text-white rounded-none ">
+                <Link href="/jobs" className="text-xl">
+                  View All jobs
+                </Link>
+              </Button>
+            </div>
           </section>
 
           <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
@@ -265,25 +276,6 @@ export default function LandingPage() {
             </div>
           </section>
         </main>
-        <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center justify-between px-4 md:px-6 border-t border-gray-200 bg-white text-black">
-          <p className="text-xs text-gray-600">
-            © 2023 WellShop Inc. All rights reserved.
-          </p>
-          <nav className="flex gap-4 sm:gap-6">
-            <Link
-              className="text-xs hover:underline underline-offset-4 text-gray-600"
-              href="#"
-            >
-              Terms of Service
-            </Link>
-            <Link
-              className="text-xs hover:underline underline-offset-4 text-gray-600"
-              href="#"
-            >
-              Privacy
-            </Link>
-          </nav>
-        </footer>
       </main>
     </>
   );
