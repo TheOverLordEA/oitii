@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { createClient } from "@/utils/supabase/server";
 import { Button } from "../ui/button";
 
 const BUTTON = {
@@ -6,7 +7,16 @@ const BUTTON = {
   signUp: "Sign Up",
 };
 
-const HomePageHeader = () => {
+const HomePageHeader = async () => {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.auth.getUser();
+  if (error || !data?.user) {
+    console.log("user not logged in");
+  } else {
+    console.log(data.user);
+  }
+
   return (
     <header className="px-4 lg:px-6 py-12 h-16 flex items-center justify-evenly border-b border-gray-200 bg-white">
       <div className="flex justify-around items-center gap-20 w-4/5 ">
@@ -50,13 +60,27 @@ const HomePageHeader = () => {
           </ul>
         </nav>
         <div className="flex gap-5 flex-1 justify-center">
-          <Button className="bg-white text-black ">
-            <Link href="/login">{BUTTON.signIn}</Link>
-          </Button>
-
-          <Button>
-            <Link href="/signup">{BUTTON.signUp}</Link>
-          </Button>
+          {data.user ? (
+            <div> {data.user.email} </div>
+          ) : (
+            <>
+              {" "}
+              <Link href="/login">
+                <Button className="bg-white text-black ">
+                  {BUTTON.signIn}
+                </Button>
+              </Link>
+              <Link href="/signup">
+                <Button>{BUTTON.signUp}</Button>
+              </Link>{" "}
+            </>
+          )}
+          {/* <Link href="/login">
+            <Button className="bg-white text-black ">{BUTTON.signIn}</Button>
+          </Link>
+          <Link href="/signup">
+            <Button>{BUTTON.signUp}</Button>
+          </Link> */}
         </div>
       </div>
     </header>

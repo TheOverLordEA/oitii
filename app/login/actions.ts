@@ -21,6 +21,28 @@ export async function login(formData: FormData) {
     return { error: error.message };
   }
 
+  // Check if the user exists in the users table
+  // const { data: existingUser, error: fetchError } = await supabase
+  //   .from("users")
+  //   .select("*")
+  //   .eq("email", email)
+  //   .single(); // Fetch single user by email
+
+  // const { error: updateError } = await supabase
+  //   .from("users")
+  //   .update({ last_signed_in: new Date() })
+  //   .eq("id", data.user.id);
+
+  // if (fetchError && fetchError.code !== "PGRST116") {
+  //   // PGRST116 means no rows found
+  //   console.error("Error fetching user:", fetchError.message);
+  //   return;
+  // }
+
+  // if (updateError) {
+  //   console.error("Error updating last signed in:", updateError.message);
+  // }
+
   revalidatePath("/", "layout");
   return { success: true, user: data.user };
 }

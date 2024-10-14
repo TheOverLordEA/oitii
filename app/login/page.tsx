@@ -1,5 +1,10 @@
 import LoginBlock from "@/components/login/LoginBlock";
-// import { login, signup } from "./actions";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Oitii | Login",
+  description: "...",
+};
 
 const Page = () => {
   return (

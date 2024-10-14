@@ -10,11 +10,17 @@ export async function middleware(request: NextRequest) {
   const { data, error } = await supabase.auth.getUser();
 
   if (request.nextUrl.pathname.startsWith("/login") && data.user) {
-    return NextResponse.rewrite(new URL("/", request.url));
+    // return NextResponse.rewrite(new URL("/", request.url));
+    const response = NextResponse.redirect(new URL("/", request.url));
+    response.headers.set("x-middleware-cache", "no-cache");
+    return response;
   }
 
   if (request.nextUrl.pathname.startsWith("/signup") && data.user) {
-    return NextResponse.rewrite(new URL("/", request.url));
+    // return NextResponse.rewrite(new URL("/", request.url));
+    const response = NextResponse.redirect(new URL("/", request.url));
+    response.headers.set("x-middleware-cache", "no-cache");
+    return response;
   }
 
   return await updateSession(request);
