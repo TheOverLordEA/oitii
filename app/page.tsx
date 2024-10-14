@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, BarChart, Users, Briefcase } from "lucide-react";
@@ -172,23 +172,31 @@ export default function LandingPage() {
                 </div>
               </div>
             </div>
-            <TrendingJobs />
+            {/* Trending jobs */}
+            {/* TODO: Add skeleton ui for Suspense components */}
+            <Suspense fallback={<span>Loading.....</span>}>
+              <TrendingJobs />
+            </Suspense>
             {/* Latest Jobs */}
-            <JobSectionHome
-              jobTitle={JOBSECTIONTITLES.latestJobs}
-              jobs={jobs}
-            />
-
+            <Suspense fallback={<span>Loading.....</span>}>
+              <JobSectionHome
+                jobTitle={JOBSECTIONTITLES.latestJobs}
+                jobs={jobs}
+              />
+            </Suspense>
             {/* Tech Jobs */}
-            <JobSectionHome
-              jobTitle={JOBSECTIONTITLES.engineeringJobs}
-              jobs={jobs}
-            />
-
-            <JobSectionHome
-              jobTitle={JOBSECTIONTITLES.marketingJobs}
-              jobs={jobs}
-            />
+            <Suspense fallback={<span>Loading.....</span>}>
+              <JobSectionHome
+                jobTitle={JOBSECTIONTITLES.engineeringJobs}
+                jobs={jobs}
+              />
+            </Suspense>
+            <Suspense fallback={<span>Loading.....</span>}>
+              <JobSectionHome
+                jobTitle={JOBSECTIONTITLES.marketingJobs}
+                jobs={jobs}
+              />
+            </Suspense>
             <div className="flex justify-center">
               <Button className="bg-black text-white rounded-none ">
                 <Link href="/jobs" className="text-xl">
