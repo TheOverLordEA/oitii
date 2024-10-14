@@ -50,8 +50,13 @@ const HomePageHeader = () => {
           </ul>
         </nav>
         <div className="flex gap-5 flex-1 justify-center">
-          <Button className="bg-white text-black ">{BUTTON.signIn}</Button>
-          <Button>{BUTTON.signUp}</Button>
+          <Button className="bg-white text-black ">
+            <Link href="/login">{BUTTON.signIn}</Link>
+          </Button>
+
+          <Button>
+            <Link href="/signup">{BUTTON.signUp}</Link>
+          </Button>
         </div>
       </div>
     </header>
