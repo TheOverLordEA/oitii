@@ -15,10 +15,6 @@ export const metadata: Metadata = {
   description: "...",
 };
 
-const BUTTON = {
-  search: "Search",
-};
-
 interface Job {
   id: string;
   title: string;
@@ -92,22 +88,29 @@ export default function LandingPage() {
   return (
     <>
       <HomePageHeader />
+      {/* space-y-2 */}
 
       <main className="flex flex-col min-h-screen bg-white text-black">
         <main className="flex-1">
-          <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gray-50">
+          <section className="w-full py-12 md:py-24 bg-white">
             <div className="container mx-auto px-4 md:px-6">
               <div className="flex flex-col items-center space-y-4 text-center">
-                <div className="space-y-2">
-                  <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-black">
-                    Find Your Dream Tech Job
+                <div className="flex flex-col gap-8">
+                  <div className="uppercase">
+                    <p>Apply to real jobs no ghost jobs</p>
+                  </div>
+                  <h1 className="text-3xl font-bold tracking-tighter pt-0 md:text-5xl lg:text-6xl/none text-black">
+                    The all-in-one platform to <br /> find and apply to real
+                    jobs
                   </h1>
-                  <p className="mx-auto max-w-[700px] text-gray-700 md:text-xl">
-                    Connect with top startups and tech companies. Your next
-                    career move starts here.
-                  </p>
+                  <div>
+                    <p className="uppercase">
+                      Verified opportunities. Zero time wasted. Your dream
+                      career awaits.{" "}
+                    </p>
+                  </div>
                 </div>
-                <div className="w-full max-w-sm space-y-2">
+                {/* <div className="w-full max-w-sm space-y-2">
                   <form className="flex space-x-2">
                     <Input
                       className="flex-1"
@@ -121,7 +124,7 @@ export default function LandingPage() {
                       {BUTTON.search}
                     </Button>
                   </form>
-                </div>
+                </div> */}
               </div>
             </div>
           </section>

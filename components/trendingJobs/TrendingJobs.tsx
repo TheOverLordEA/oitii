@@ -53,10 +53,10 @@ const companies = [
   },
 ];
 
-export default function TrendingJobs() {
+export default function FeaturedJobs() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Trending startups hiring now</h1>
+      <h1 className="text-3xl font-bold mb-6">Trending jobs</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {companies.map((company, index) => (
           <div

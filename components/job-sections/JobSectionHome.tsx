@@ -21,7 +21,7 @@ const JobSectionHome: React.FC<JobSectionsProp> = ({ jobTitle, jobs }) => {
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">{jobTitle}</h1>
-        <a href="#" className="text-blue-600 hover:underline">
+        <a href="/jobs" className="text-gray-800 hover:underline">
           View all jobs
         </a>
       </div>
