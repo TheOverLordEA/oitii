@@ -1,5 +1,5 @@
 // import AppShowcaseJobs from "@/components/appShowcase/AppShowCaseJobs";
-import EmailNewsLetterSignUp from "@/components/emailNewsletter/emailNewsLetterSignUp";
+import EmailNewsLetterSignUp from "@/components/emailNewsletter/EmailNewsLetterSignUp";
 import HeroJobs from "@/components/hero/HeroJobs";
 import FeaturedJobs from "@/components/trendingJobs/TrendingJobs";
 // import { span } from "framer-motion/client";

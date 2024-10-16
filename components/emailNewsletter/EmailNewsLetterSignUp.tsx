@@ -20,12 +20,15 @@ export default function EmailNewsLetterSignUp() {
     <div className="w-full mx-auto p-6">
       <div className="max-w-80">
         <h2 className="text-4xl font-bold mb-4">Stay ahead in marketing</h2>
+        <div>
         <p className="text-lg mb-6">
           Get the <span className="font-semibold">weekly newsletter</span>{" "}
           sending thousands of marketers the latest marketing news, resources,
           and guides.
         </p>
-        <form onSubmit={handleSubmit} className="mb-4">
+        </div>
+    <div>
+    <form onSubmit={handleSubmit} className="mb-4">
           <div className="flex">
             <Input
               type="email"
@@ -47,6 +50,8 @@ export default function EmailNewsLetterSignUp() {
         <p className="text-sm text-gray-500">
           Unsubscribe anytime, no hard feelings.
         </p>
+    </div>
+       
       </div>
     </div>
   );
