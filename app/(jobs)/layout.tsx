@@ -8,7 +8,9 @@ export default function JobsLayout({
   return (
     <>
       <HomePageHeader />
-      <main className="bg-white">{children}</main>
+      <>
+        <main className="bg-white">{children}</main>
+      </>
     </>
   );
 }

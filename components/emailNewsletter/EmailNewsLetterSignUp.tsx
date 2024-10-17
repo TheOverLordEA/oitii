@@ -17,41 +17,40 @@ export default function EmailNewsLetterSignUp() {
   };
 
   return (
-    <div className="w-full mx-auto p-6">
-      <div className="max-w-80">
-        <h2 className="text-4xl font-bold mb-4">Stay ahead in marketing</h2>
-        <div>
-        <p className="text-lg mb-6">
-          Get the <span className="font-semibold">weekly newsletter</span>{" "}
-          sending thousands of marketers the latest marketing news, resources,
-          and guides.
-        </p>
+    <div className="w-[80%] p-12 bg-[#99ff99] my-0 rounded-xl mx-auto">
+      <div className="max-w-6xl mx-auto flex items-center justify-between text-black">
+        <h2 className="text-5xl font-bold leading-tight w-2/5">
+          Stay ahead in marketing
+        </h2>
+        <div className="w-1/2">
+          <p className="text-xl mb-6">
+            Get the <span className="font-semibold">weekly newsletter</span>{" "}
+            sending thousands of marketers the latest marketing news, resources,
+            and guides.
+          </p>
+          <form onSubmit={handleSubmit} className="mb-4">
+            <div className="flex gap-5 h-12">
+              <Input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="flex-grow rounded-2xl p-2 px-5 h-full bg-white text-black placeholder-blue-200 hover:border hover:border-green-500 focus:border-teal focus:outline-none focus:ring-0"
+                aria-label="Email address"
+              />
+              <Button
+                type="submit"
+                className="rounded-2xl bg-black hover:bg-yellow-500 h-full text-white font-semibold px-6 py-2"
+              >
+                Subscribe
+              </Button>
+            </div>
+          </form>
+          <p className="text-sm text-blue-200">
+            Unsubscribe anytime, no hard feelings.
+          </p>
         </div>
-    <div>
-    <form onSubmit={handleSubmit} className="mb-4">
-          <div className="flex">
-            <Input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="flex-grow rounded-r-none"
-              aria-label="Email address"
-            />
-            <Button
-              type="submit"
-              className="rounded-l-none bg-black hover:bg-gray-800 text-white"
-            >
-              Join for $0
-            </Button>
-          </div>
-        </form>
-        <p className="text-sm text-gray-500">
-          Unsubscribe anytime, no hard feelings.
-        </p>
-    </div>
-       
       </div>
     </div>
   );

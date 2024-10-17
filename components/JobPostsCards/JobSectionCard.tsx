@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 interface JobProps {
@@ -13,7 +13,6 @@ interface JobProps {
   postedDate: string;
   index: number;
 }
-
 
 interface Job {
   id: string;
@@ -100,13 +99,13 @@ const JobSectionCard: React.FC<JobProps> = ({
           alt={`${companyName} logo`}
           className="w-10 h-10 rounded-full"
         />
-        <div>
+        <Link href={`jobs/${id}`}>
           <h2 className="font-semibold">{title}</h2>
           <p className="text-sm text-gray-600">
             {companyName} • {location} • {salary}
             {equity && ` • ${equity}`} • {postedDate}
           </p>
-        </div>
+        </Link>
       </div>
       <div className="flex space-x-2">
         <Button variant="outline">Save</Button>
@@ -114,7 +113,7 @@ const JobSectionCard: React.FC<JobProps> = ({
         {/* TODO: Add a link href for job app  */}
 
         <Link href="/">
-          <Button variant={index === 3 ? "default" : "secondary"}>Apply</Button>
+          <Button className="bg-black">Apply</Button>
         </Link>
       </div>
     </div>

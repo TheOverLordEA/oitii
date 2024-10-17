@@ -38,7 +38,7 @@ const HomePageHeader = async () => {
             Oitii
           </Link>
           <Link
-            className={`ml-2 tracking-wider text-2xl md:text-5xl font-bold text-black ${josefin_sans.className} `}
+            className={`ml-2 tracking-wider text-2xl md:text-4xl font-bold text-black ${josefin_sans.className} `}
             href="/"
           >
             Oitii
@@ -65,7 +65,7 @@ const HomePageHeader = async () => {
                 >
                   {item.name}
                 </Link>
-                <div className="absolute inset-0 hover:border border-indigo-800 hover:bg-blue-500 rounded-full transition-all duration-300 ease-in-out -z-10"></div>
+                {/* <div className="absolute inset-0 hover:border border-indigo-800 hover:bg-blue-500 rounded-full transition-all duration-300 ease-in-out -z-10"></div> */}
               </li>
             ))}
           </ul>

@@ -8,7 +8,7 @@ const HeroJobs = () => {
   return (
     <div className="relative text-black w-full bg-white py-16 overflow-hidden ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center">
+        <div className="text-center p-8">
           <h2 className="text-sm font-semibold text-gray-500 tracking-wide uppercase mb-2">
             {TextHero.h2}
           </h2>
@@ -41,20 +41,8 @@ const HeroJobs = () => {
       </svg>
 
       {/* Placeholder images */}
-      <div className="absolute left-4 top-1/2 -translate-y-1/2 w-24 h-24 bg-orange-200 rounded-full overflow-hidden hidden md:block">
-        <img
-          src="/placeholder.svg?height=96&width=96"
-          alt="Person on orange background"
-          className="w-full h-full object-cover"
-        />
-      </div>
-      <div className="absolute right-4 top-1/2 -translate-y-1/2 w-24 h-24 bg-teal-200 rounded-full overflow-hidden hidden md:block">
-        <img
-          src="/placeholder.svg?height=96&width=96"
-          alt="Person on teal background"
-          className="w-full h-full object-cover"
-        />
-      </div>
+      <div className="absolute left-4 top-1/2 -translate-y-1/2 w-24 h-24 bg-orange-200 rounded-full overflow-hidden hidden md:block"></div>
+      <div className="absolute right-4 top-1/2 -translate-y-1/2 w-24 h-24 bg-teal-200 rounded-full overflow-hidden hidden md:block"></div>
 
       {/* Accessibility enhancement */}
       <span className="sr-only">
