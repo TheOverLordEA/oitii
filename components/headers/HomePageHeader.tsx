@@ -78,7 +78,7 @@ const HomePageHeader = async () => {
             <>
               {" "}
               <Link href="/login">
-                <Button className="bg-white text-black ">
+                <Button className="bg-white text-black transition-all ease-in-out hover:border hover:border-gray-500 hover:bg-white">
                   {BUTTON.signIn}
                 </Button>
               </Link>
