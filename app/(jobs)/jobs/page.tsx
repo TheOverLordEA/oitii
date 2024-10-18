@@ -86,7 +86,7 @@ const Page = () => {
   return (
     <>
       <HeroJobs />
-      <section className="text-black">
+      <section className="text-black mx-auto my-0 max-w-[80%] flex flex-col gap-5">
         <Suspense fallback={<span>Loading ...</span>}>
           <FeaturedJobs />
           <EmailNewsLetterSignUp />
