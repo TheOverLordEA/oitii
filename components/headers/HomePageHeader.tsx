@@ -31,7 +31,7 @@ const HomePageHeader = async () => {
   }
 
   return (
-    <header className="px-4 lg:px-6 py-12 h-16 flex items-center justify-evenly bg-white sticky top-0 z-50">
+    <header className="px-4 lg:px-6 py-12 h-16 flex items-center justify-evenly bg-white sticky top-0 z-50 border-b border-gray-200">
       <div className="flex justify-around items-center gap-5 w-4/5 ">
         <div className="flex items-center justify-center flex-1">
           <Link className="sr-only" href="/">
@@ -78,13 +78,13 @@ const HomePageHeader = async () => {
             <>
               {" "}
               <Link href="/login">
-                <Button className="bg-white text-black transition-all ease-in-out hover:border hover:border-gray-500 hover:bg-white">
+                <Button className="bg-white text-black transition-all ease-in-out hover:border hover:border-gray-500 hover:bg-white max-w-[75px]">
                   {BUTTON.signIn}
                 </Button>
               </Link>
               <Link href="/signup">
-                <Button>{BUTTON.signUp}</Button>
-              </Link>{" "}
+                <Button className="max-w-[75px]">{BUTTON.signUp}</Button>
+              </Link>
             </>
           )}
         </div>

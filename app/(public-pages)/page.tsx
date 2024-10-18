@@ -1,14 +1,10 @@
 import React, { Suspense } from "react";
 import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
 import { Search, BarChart, Users, Briefcase } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
-import HomePageHeader from "@/components/headers/HomePageHeader";
 import TrendingJobs from "@/components/trendingJobs/TrendingJobs";
-// import FloatingBackground from "@/components/floatingBackground/FloatingBackground";
 import JobSectionHome from "@/components/job-sections/JobSectionHome";
-// import Bear from "@/components/zustand/Bear";
 
 export const metadata: Metadata = {
   title: "Oitii | Real Jobs, Real Opportunities",
@@ -87,9 +83,6 @@ const JOBSECTIONTITLES = {
 export default function LandingPage() {
   return (
     <>
-      <HomePageHeader />
-      {/* space-y-2 */}
-
       <main className="flex flex-col min-h-screen bg-white text-black">
         <div className="flex-1">
           <section className="w-full py-12 md:py-24 bg-white">
