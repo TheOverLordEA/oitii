@@ -1,6 +1,10 @@
+"use client";
 import Link from "next/link";
 // import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import JobApplication from "../jobApplication/JobApplication";
+import { useState } from "react";
+import { useJobStore } from "@/components/store/useJobStore"; // Import Zustand store
 
 interface JobProps {
   id: string;
@@ -86,6 +90,30 @@ const JobSectionCard: React.FC<JobProps> = ({
   equity,
   postedDate,
 }) => {
+  const setSelectedJob = useJobStore((state) => state.setSelectedJob);
+  const [showJobApply, setShowJobApply] = useState(false);
+
+  const handleJobClick = () => {
+    setSelectedJob({
+      id,
+      title,
+      company: companyName,
+      logo,
+      location,
+      salary,
+      equity,
+      postedDate,
+    });
+  };
+
+  const handleJobApply = () => {
+    if (!showJobApply) {
+      setShowJobApply(true);
+    } else {
+      setShowJobApply(false);
+    }
+  };
+
   return (
     <div
       key={id}
@@ -99,7 +127,7 @@ const JobSectionCard: React.FC<JobProps> = ({
           alt={`${companyName} logo`}
           className="w-10 h-10 rounded-full"
         />
-        <Link href={`jobs/${id}`}>
+        <Link href={`jobs/${id}`} onClick={handleJobClick}>
           <h2 className="font-semibold">{title}</h2>
           <p className="text-sm text-gray-600">
             {companyName} • {location} • {salary}
@@ -112,10 +140,11 @@ const JobSectionCard: React.FC<JobProps> = ({
 
         {/* TODO: Add a link href for job app  */}
 
-        <Link href="/">
-          <Button className="bg-black">Apply</Button>
-        </Link>
+        <Button className="bg-black" onClick={handleJobApply}>
+          Apply
+        </Button>
       </div>
+      {showJobApply ? <JobApplication handleJobApply={handleJobApply} /> : ""}
     </div>
   );
 };
