@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { Button } from "../ui/button";
 import { Josefin_Sans } from "next/font/google";
+import { Lato } from "next/font/google";
 import AvatarHeader from "../avatar/AvatarHeader";
 
 const BUTTON = {
@@ -14,6 +15,12 @@ const navItems = [
   { name: "For employers", href: "/recruit/overview" },
   { name: "About", href: "/about" },
 ];
+
+const lato = Lato({
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "700", "900"],
+  display: "swap",
+});
 
 const josefin_sans = Josefin_Sans({
   subsets: ["latin"],
@@ -49,18 +56,7 @@ const HomePageHeader = async () => {
             {navItems.map((item, index) => (
               <li key={index} className="relative">
                 <Link
-                  className="
-                    text-md
-              text-black
-              transition-all duration-300 ease-in-out
-              rounded-md
-              border border-transparent
-              hover:border-[#6bb36b] hover:bg-[#99ff99] hover:text-black
-              font-medium
-              hover:shadow-[0_0_0_4px_#99ff99;]
-              py-2 px-4
-              inline-block
-                  "
+                  className={` ${lato.className} text-md text-black transition-all duration-300 ease-in-out rounded-md border border-transparent hover:border-[#6bb36b] hover:bg-[#99ff99] hover:text-black font-medium hover:shadow-[0_0_0_4px_#99ff99;] py-2 px-4 inline-block`}
                   href={item.href}
                 >
                   {item.name}
