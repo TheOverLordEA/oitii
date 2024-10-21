@@ -4,7 +4,7 @@ import HeroJobs from "@/components/hero/HeroJobs";
 import FeaturedJobs from "@/components/trendingJobs/TrendingJobs";
 // import { span } from "framer-motion/client";
 import { Suspense } from "react";
-import JobSectionHome from "@/components/job-sections/JobSectionHome";
+import JobSectionHome from "@/components/job-sections/JobSectionBlock";
 
 import { Metadata } from "next";
 

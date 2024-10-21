@@ -2,6 +2,7 @@
 import Link from "next/link";
 // import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 import JobApplication from "../jobApplication/JobApplication";
 import { useState } from "react";
 import { useJobStore } from "@/components/store/useJobStore"; // Import Zustand store
@@ -16,6 +17,7 @@ interface JobProps {
   equity?: string;
   postedDate: string;
   index: number;
+  userLoggedIn: boolean;
 }
 
 interface Job {
@@ -89,9 +91,12 @@ const JobSectionCard: React.FC<JobProps> = ({
   salary,
   equity,
   postedDate,
+  userLoggedIn,
 }) => {
   const setSelectedJob = useJobStore((state) => state.setSelectedJob);
   const [showJobApply, setShowJobApply] = useState(false);
+
+  const router = useRouter();
 
   const handleJobClick = () => {
     setSelectedJob({
@@ -104,6 +109,15 @@ const JobSectionCard: React.FC<JobProps> = ({
       equity,
       postedDate,
     });
+  };
+
+  const handleSaveJob = () => {
+    if (!userLoggedIn) {
+      console.log("user ! logged ");
+      router.push("/login");
+    } else {
+      console.log("User Logged in");
+    }
   };
 
   const handleJobApply = () => {
@@ -136,7 +150,9 @@ const JobSectionCard: React.FC<JobProps> = ({
         </Link>
       </div>
       <div className="flex space-x-2">
-        <Button variant="outline">Save</Button>
+        <Button variant="outline" onClick={handleSaveJob}>
+          Save
+        </Button>
 
         {/* TODO: Add a link href for job app  */}
 

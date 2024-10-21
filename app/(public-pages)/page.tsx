@@ -4,7 +4,7 @@ import { Search, BarChart, Users, Briefcase } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
 import TrendingJobs from "@/components/trendingJobs/TrendingJobs";
-import JobSectionHome from "@/components/job-sections/JobSectionHome";
+import JobSectionHome from "@/components/job-sections/JobSectionBlock";
 
 export const metadata: Metadata = {
   title: "Oitii | Real Jobs, Real Opportunities",

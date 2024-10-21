@@ -1,4 +1,5 @@
 import JobSectionCard from "../JobPostsCards/JobSectionCard";
+import { createClient } from "@/utils/supabase/server";
 
 interface Job {
   id: string;
@@ -9,6 +10,7 @@ interface Job {
   salary: string;
   equity?: string;
   postedDate: string;
+  // userLoggedIn: boolean
 }
 
 interface JobSectionsProp {
@@ -16,7 +18,16 @@ interface JobSectionsProp {
   jobs: Job[];
 }
 
-const JobSectionHome: React.FC<JobSectionsProp> = ({ jobTitle, jobs }) => {
+const JobSectionHome: React.FC<JobSectionsProp> = async ({
+  jobTitle,
+  jobs,
+}) => {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.auth.getUser();
+
+  const userLoggedIn = data.user?.email;
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
@@ -38,6 +49,7 @@ const JobSectionHome: React.FC<JobSectionsProp> = ({ jobTitle, jobs }) => {
             equity={job.equity}
             postedDate={job.postedDate}
             key={index}
+            userLoggedIn={!!userLoggedIn}
           />
         ))}
       </div>
