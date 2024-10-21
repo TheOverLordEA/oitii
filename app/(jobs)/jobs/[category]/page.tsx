@@ -3,17 +3,111 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChevronDown, MapPin, DollarSign, Clock } from "lucide-react";
+import Loading from "./loading";
 
-const Page = ({ params }: { params: { category: string } }) => {
+import { createClient } from "@supabase/supabase-js";
+
+import { unstable_cache } from "next/cache";
+// import { createClient } from "@/utils/supabase/server";
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
+
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+const revalidateSec = 60;
+
+const fetchPosts = async (category: string) => {
+  const { data, error } = await supabase
+    .from("fake_jobs")
+    .select("*")
+    .eq("category", category);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data;
+};
+
+const getPosts = unstable_cache(
+  async (category: string) => {
+    return await fetchPosts(category);
+  },
+  ["posts"], // Unique cache key
+  { revalidate: revalidateSec, tags: ["posts"] } // Revalidate every hour
+);
+
+const Page = async ({
+  params,
+  searchParams,
+}: {
+  params: { category: string };
+  searchParams: { page?: string };
+}) => {
   const { category } = params; // Extract category from params
+
+  console.log(category);
+
+  const allPosts = await getPosts(category);
+  // const supabase = createClient(); // This is now in the correct context
+
+  // Now you can use supabase to fetch data
+  // const { data, error } = await supabase
+  //   .from("fake_jobs")
+  //   .select("*")
+  //   .eq("category", "engineering");
+
+  // const page = searchParams.page ? parseInt(searchParams.page, 10) : 1;
+
+  // const { data: posts, totalPosts } = await getPosts(page);
+
+  // const totalPages = Math.ceil(totalPosts ?? 0 / POSTS_PER_PAGE);
+
+  const handlePageChange = (newPage: number) => {
+    const url = new URL(window.location.href);
+    url.searchParams.set("page", newPage.toString());
+    window.location.href = url.toString();
+  };
 
   return (
     <div className="h-screen">
       <div>Category page for: {category}</div>
-      <Suspense>
+      <Suspense fallback={<Loading />}>
         <h1>Show Jobs in {category}</h1>
+        <div>
+          <h1>Posts in Category: {category}</h1>
+
+          <ul>
+            {/* {posts.map((post) => (
+              <li key={post.id}>{post.title}</li>
+            ))} */}
+            {/* {data &&
+              data.map((item) => <div key={item.id}>{item.category}</div>)} */}
+            {allPosts.map((post) => (
+              <li key={post.id}>{post.title}</li>
+            ))}
+          </ul>
+
+          {/* Pagination controls */}
+          {/* <div>
+            <button
+              disabled={page === 1}
+              onClick={() => handlePageChange(page - 1)}
+            >
+              Previous
+            </button>
+            <span>
+              Page {page} of {totalPages}
+            </span>
+            <button
+              disabled={page === totalPages}
+              onClick={() => handlePageChange(page + 1)}
+            >
+              Next
+            </button>
+          </div> */}
+        </div>
       </Suspense>
-      <div className="container mx-auto p-4">
+      {/* <div className="container mx-auto p-4">
         <div className="flex items-center space-x-4 mb-8">
           <div className="flex-grow">
             <Input placeholder="Software Engineer" className="w-full" />
@@ -100,10 +194,10 @@ const Page = ({ params }: { params: { category: string } }) => {
                   </div>
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
 
-            {/* Additional job listings would go here */}
-          </div>
+      {/* Additional job listings would go here */}
+      {/* </div>
 
           <div>
             <Card>
@@ -118,7 +212,7 @@ const Page = ({ params }: { params: { category: string } }) => {
                   <li>Engineering Manager in United States</li>
                   <li>Finance in United States</li>
                   {/* More job categories... */}
-                </ul>
+      {/* </ul>
               </CardContent>
             </Card>
 
@@ -132,12 +226,12 @@ const Page = ({ params }: { params: { category: string } }) => {
                   <li>Chief Information Security Officer (CISO) Remote</li>
                   <li>Cloud Architect Remote</li>
                   {/* More remote job categories... */}
-                </ul>
+      {/* </ul>
               </CardContent>
             </Card>
           </div>
         </div>
-      </div>
+      </div>  */}
     </div>
   );
 };
