@@ -20,6 +20,7 @@ interface Job {
   salary: string;
   equity?: string;
   postedDate: string;
+  category: string;
 }
 
 const jobs: Job[] = [
@@ -32,6 +33,7 @@ const jobs: Job[] = [
     salary: "$185k - $250k",
     equity: "0.1% - 1.0%",
     postedDate: "yesterday",
+    category: "engineering",
   },
   {
     id: "2",
@@ -41,6 +43,7 @@ const jobs: Job[] = [
     location: "Long Beach",
     salary: "$132k - $169k",
     postedDate: "yesterday",
+    category: "engineering",
   },
   {
     id: "3",
@@ -50,6 +53,7 @@ const jobs: Job[] = [
     location: "Arlington",
     salary: "$80k - $89k",
     postedDate: "1 day ago",
+    category: "finance",
   },
   {
     id: "4",
@@ -60,6 +64,7 @@ const jobs: Job[] = [
     salary: "$140k - $200k",
     equity: "0.5% - 1.5%",
     postedDate: "yesterday",
+    category: "healthcare",
   },
   {
     id: "5",
@@ -69,6 +74,7 @@ const jobs: Job[] = [
     location: "United States",
     salary: "$104k - $120k",
     postedDate: "yesterday",
+    category: "healthcare",
   },
 ];
 

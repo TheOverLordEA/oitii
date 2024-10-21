@@ -1,4 +1,5 @@
 import JobSectionCard from "../JobPostsCards/JobSectionCard";
+import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 
 interface Job {
@@ -10,6 +11,8 @@ interface Job {
   salary: string;
   equity?: string;
   postedDate: string;
+  category: string;
+
   // userLoggedIn: boolean
 }
 
@@ -28,13 +31,20 @@ const JobSectionHome: React.FC<JobSectionsProp> = async ({
 
   const userLoggedIn = data.user?.email;
 
+  const VIEW_ALL_JOBS_TITLE = jobTitle.split(" ")[0].toLowerCase();
+
+  // console.log(VIEW_ALL_JOBS_TITLE);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">{jobTitle}</h1>
-        <a href="/jobs" className="text-gray-800 hover:underline">
+        <Link
+          href={`/jobs/${VIEW_ALL_JOBS_TITLE}`}
+          className="text-gray-800 hover:underline"
+        >
           View all jobs
-        </a>
+        </Link>
       </div>
       <div className="space-y-4">
         {jobs.map((job, index) => (
@@ -50,6 +60,8 @@ const JobSectionHome: React.FC<JobSectionsProp> = async ({
             postedDate={job.postedDate}
             key={index}
             userLoggedIn={!!userLoggedIn}
+            category={job.category}
+            loginError={!!error}
           />
         ))}
       </div>
