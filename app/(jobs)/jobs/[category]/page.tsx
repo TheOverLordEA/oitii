@@ -1,20 +1,60 @@
 import { Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChevronDown, MapPin, DollarSign, Clock } from "lucide-react";
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+// import { ChevronDown, MapPin, DollarSign, Clock } from "lucide-react";
 import Loading from "./loading";
 
-import { createClient } from "@supabase/supabase-js";
+import { Metadata, ResolvingMetadata } from "next";
+import { createClient as createServerClient } from "@supabase/supabase-js";
+import { createClient } from "@/utils/supabase/server";
+
+import JobSectionCard from "@/components/JobPostsCards/JobSectionCard";
 
 import { unstable_cache } from "next/cache";
+
+type Props = {
+  params: Promise<{ category: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
 // import { createClient } from "@/utils/supabase/server";
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const supabase = createServerClient(supabaseUrl, supabaseAnonKey);
 
-const revalidateSec = 60;
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const category = (await params).category;
+
+  const METADATACATEGORY = category.charAt(0).toUpperCase() + category.slice(1);
+
+  console.log(category);
+
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || [];
+
+  // console.log(id);
+  return {
+    title: `Explore Exciting Opportunities in ${
+      METADATACATEGORY || "the United States"
+    } || Find Your Next Career Move`,
+    openGraph: {
+      images: ["/some-specific-page-image.jpg", ...previousImages],
+    },
+  };
+}
+
+// export const metadata: Metadata = {
+//   title: "Oitii | Real Jobs, Real Opportunities",
+//   description: "...",
+// };
+
+const revalidateSec = 3600;
 
 const fetchPosts = async (category: string) => {
   const { data, error } = await supabase
@@ -33,7 +73,7 @@ const getPosts = unstable_cache(
     return await fetchPosts(category);
   },
   ["posts"], // Unique cache key
-  { revalidate: revalidateSec, tags: ["posts"] } // Revalidate every hour
+  { revalidate: revalidateSec, tags: ["posts"] }
 );
 
 const Page = async ({
@@ -45,22 +85,16 @@ const Page = async ({
 }) => {
   const { category } = params; // Extract category from params
 
+  const supabase = createClient();
+
+  const { data, error } = await supabase.auth.getUser();
+
+  const userLoggedIn = data.user?.email;
+
   console.log(category);
 
   const allPosts = await getPosts(category);
-  // const supabase = createClient(); // This is now in the correct context
-
-  // Now you can use supabase to fetch data
-  // const { data, error } = await supabase
-  //   .from("fake_jobs")
-  //   .select("*")
-  //   .eq("category", "engineering");
-
-  // const page = searchParams.page ? parseInt(searchParams.page, 10) : 1;
-
-  // const { data: posts, totalPosts } = await getPosts(page);
-
-  // const totalPages = Math.ceil(totalPosts ?? 0 / POSTS_PER_PAGE);
+  // console.log(allPosts);
 
   const handlePageChange = (newPage: number) => {
     const url = new URL(window.location.href);
@@ -73,19 +107,42 @@ const Page = async ({
       <div>Category page for: {category}</div>
       <Suspense fallback={<Loading />}>
         <h1>Show Jobs in {category}</h1>
-        <div>
+        <div className="container mx-auto p-4">
+          <div className="flex items-center space-x-4 mb-8">
+            <div className="flex-grow">
+              <Input placeholder="Software Engineer" className="w-full" />
+            </div>
+            <div className="flex items-center space-x-2 flex-grow">
+              <span className="text-sm font-medium">roles, hiring in</span>
+              <Input placeholder="United States" className="w-full" />
+            </div>
+            <Button variant="default">Search</Button>
+          </div>
           <h1>Posts in Category: {category}</h1>
 
-          <ul>
-            {/* {posts.map((post) => (
-              <li key={post.id}>{post.title}</li>
-            ))} */}
-            {/* {data &&
-              data.map((item) => <div key={item.id}>{item.category}</div>)} */}
-            {allPosts.map((post) => (
-              <li key={post.id}>{post.title}</li>
-            ))}
-          </ul>
+          {allPosts === undefined || allPosts.length === 0 ? (
+            <div>Job Post empty</div>
+          ) : (
+            <ul>
+              {allPosts.map((post, index) => (
+                <JobSectionCard
+                  key={post.id}
+                  id={post.id}
+                  title={post.title}
+                  companyName={post.company}
+                  logo={post.logo}
+                  index={index}
+                  location={post.location}
+                  salary={post.salary}
+                  equity={post.equity}
+                  postedDate={post.postedDate}
+                  loginError={!!error}
+                  userLoggedIn={!!userLoggedIn}
+                  category={post.category}
+                />
+              ))}
+            </ul>
+          )}
 
           {/* Pagination controls */}
           {/* <div>

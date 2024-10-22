@@ -46,7 +46,7 @@ const JobSectionHome: React.FC<JobSectionsProp> = async ({
           View all jobs
         </Link>
       </div>
-      <div className="space-y-4">
+      <ul className="space-y-4">
         {jobs.map((job, index) => (
           <JobSectionCard
             id={job.id}
@@ -64,7 +64,7 @@ const JobSectionHome: React.FC<JobSectionsProp> = async ({
             loginError={!!error}
           />
         ))}
-      </div>
+      </ul>
     </div>
   );
 };

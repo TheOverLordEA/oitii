@@ -72,7 +72,7 @@ const JobSectionCard: React.FC<JobProps> = ({
   };
 
   return (
-    <div
+    <li
       key={id}
       className={`flex items-center justify-between p-4 rounded-lg ${
         index % 2 === 0 ? "bg-gray-50" : "bg-white"
@@ -92,7 +92,7 @@ const JobSectionCard: React.FC<JobProps> = ({
           </p>
         </Link>
       </div>
-      <div className="flex space-x-2">
+      <div className="flex space-x-2 text-black">
         <Button variant="outline" onClick={handleSaveJob}>
           Save
         </Button>
@@ -104,7 +104,7 @@ const JobSectionCard: React.FC<JobProps> = ({
         </Button>
       </div>
       {showJobApply ? <JobApplication handleJobApply={handleJobApply} /> : ""}
-    </div>
+    </li>
   );
 };
 
