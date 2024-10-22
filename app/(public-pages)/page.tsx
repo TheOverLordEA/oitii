@@ -96,14 +96,16 @@ export default function LandingPage() {
               <div className="flex flex-col items-center space-y-4 text-center">
                 <div className="flex flex-col gap-8">
                   <div className="uppercase">
-                    <p>Apply to real jobs no ghost jobs</p>
+                    <p className="text-[#b31f1f] text-xl">
+                      Apply to real jobs no ghost jobs
+                    </p>
                   </div>
                   <h1 className="text-3xl font-bold tracking-tighter pt-0 md:text-5xl lg:text-6xl/none text-black">
-                    The all-in-one platform to <br /> find and apply to real
-                    jobs
+                    Find and apply to real jobs <br />
+                    Authentic Careers
                   </h1>
                   <div>
-                    <p className="uppercase">
+                    <p className="uppercase text-[#b31f1f] text-xl">
                       Verified opportunities. Zero time wasted. Your dream
                       career awaits.{" "}
                     </p>
@@ -149,11 +151,13 @@ export default function LandingPage() {
 
               {/* Center Text Section */}
               <div className="text-center mt-8 md:mt-0">
-                <h2 className="text-4xl font-bold text-black">
-                  Find what's next<span className="text-red-500">:</span>
+                <h2 className="text-2xl font-bold text-black">
+                  {/* Find what's next<span className="text-red-500">:</span> */}
+                  Don’t Waste Your Time on Fake Listings
+                  <span className="text-green-500">:</span>
                 </h2>
-                <p className="text-gray-600 mt-2">
-                  OVER 130K REMOTE & LOCAL STARTUP JOBS
+                <p className="text-gray-600 mt-2 uppercase">
+                  Discover Authentic Jobs with Accurate Descriptions
                 </p>
               </div>
 
@@ -211,7 +215,10 @@ export default function LandingPage() {
           <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
             <div className="container mx-auto px-4 md:px-6">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12 text-black">
-                Why Choose Oitii
+                Why Choose{" "}
+                <span className="tracking-wider font-bold text-black ${josefin_sans.className} ">
+                  Oitii
+                </span>
               </h2>
               <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 items-start">
                 {[

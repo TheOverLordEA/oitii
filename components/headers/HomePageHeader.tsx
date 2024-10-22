@@ -13,7 +13,8 @@ const BUTTON = {
 const navItems = [
   { name: "Jobs", href: "/jobs" },
   { name: "For employers", href: "/recruit/overview" },
-  { name: "About", href: "/about" },
+  { name: "Post a Job", href: "/post/new" },
+  // { name: "About", href: "/about" },
 ];
 
 const lato = Lato({
