@@ -10,7 +10,7 @@ export default function JobsLayout({
     <>
       <HomePageHeader />
       <>
-        <main className="bg-white">{children}</main>
+        <main className="bg-white h-screen">{children}</main>
       </>
       <Footer />
     </>
