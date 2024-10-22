@@ -74,7 +74,7 @@ const JobSectionCard: React.FC<JobProps> = ({
   return (
     <li
       key={id}
-      className={`flex text-black overflow-hidden items-center justify-between p-4 rounded-lg ${
+      className={`flex items-center justify-between p-4 rounded-lg ${
         index % 2 === 0 ? "bg-gray-50" : "bg-white"
       }`}
     >
