@@ -5,6 +5,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import TrendingJobs from "@/components/trendingJobs/TrendingJobs";
 import JobSectionHome from "@/components/job-sections/JobSectionBlock";
+import { Josefin_Sans } from "next/font/google";
+
+const josefin_sans = Josefin_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Oitii | Real Jobs, Real Opportunities",
@@ -153,7 +156,7 @@ export default function LandingPage() {
               <div className="text-center mt-8 md:mt-0">
                 <h2 className="text-2xl font-bold text-black">
                   {/* Find what's next<span className="text-red-500">:</span> */}
-                  Don’t Waste Your Time on Fake Listings
+                  Don't Waste Your Time on Fake Listings
                   <span className="text-green-500">:</span>
                 </h2>
                 <p className="text-gray-600 mt-2 uppercase">
@@ -216,7 +219,9 @@ export default function LandingPage() {
             <div className="container mx-auto px-4 md:px-6">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12 text-black">
                 Why Choose{" "}
-                <span className="tracking-wider font-bold text-black ${josefin_sans.className} ">
+                <span
+                  className={`tracking-wider font-bold text-black ${josefin_sans.className}`}
+                >
                   Oitii
                 </span>
               </h2>
