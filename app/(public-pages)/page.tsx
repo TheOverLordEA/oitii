@@ -100,8 +100,13 @@ export default function LandingPage() {
     <>
       <main className="flex flex-col min-h-screen bg-white text-black">
         <div className="flex-1">
-          <section className="w-full py-12 md:py-24 bg-white">
-            <div className="container mx-auto px-4 md:px-6">
+          <section className="w-full py-12 md:py-24 bg-white relative">
+            {/* <div className="absolute inset-0 rounded max-h-24 bg-gradient-to-br from-white via-orange-50/80 to-purple-200/90" /> */}
+            {/* <div className="absolute inset-0 bg-gradient-to-br from-orange-50/90 via-pink-100/80 to-purple-300/70" />
+            <div className="relative container mx-auto px-4 md:px-6"> */}
+            {/* Rest of the content */}
+            {/* </div> */}
+            <div className="relative container mx-auto px-4 md:px-6">
               <div className="flex flex-col items-center space-y-4 text-center">
                 <div className="flex flex-col gap-8">
                   <div className="uppercase">
@@ -127,21 +132,6 @@ export default function LandingPage() {
                     </p>
                   </div>
                 </div>
-                {/* <div className="w-full max-w-sm space-y-2">
-                  <form className="flex space-x-2">
-                    <Input
-                      className="flex-1"
-                      placeholder="Search jobs..."
-                      type="text"
-                    />
-                    <Button
-                      className="bg-green-600 text-white hover:bg-green-700"
-                      type="submit"
-                    >
-                      {BUTTON.search}
-                    </Button>
-                  </form>
-                </div> */}
               </div>
             </div>
           </section>

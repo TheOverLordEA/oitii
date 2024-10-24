@@ -60,7 +60,7 @@ export default function JobBoard() {
           </Button>
         </div>
 
-        <div className="flex flex-col flex-1 bg-gray-100 p-5 rounded-lg gap-6">
+        <div className="flex flex-col flex-1 bg-gray-100 p-5 rounded-lg gap-8">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center">
