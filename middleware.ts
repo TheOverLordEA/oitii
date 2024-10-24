@@ -4,59 +4,73 @@ import { updateSession } from "@/utils/supabase/middleware";
 
 import { createClient } from "@/utils/supabase/server";
 
-export const JOB_CATEGORIES = [
-  "latest",
-  "engineering",
-  "finance",
-  "marketing",
-  "healthcare",
-  "construction",
-  "government",
-  "retail",
-  "utilities",
-];
-
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const supabase = createClient();
-
-  const { data, error } = await supabase.auth.getUser();
-
-  if (
-    request.nextUrl.pathname.startsWith("/login") &&
-    data.user
-    // (request.nextUrl.pathname.startsWith("/login") && error)
-  ) {
-    // return NextResponse.rewrite(new URL("/", request.url));
-    const response = NextResponse.redirect(new URL("/", request.url));
-    response.headers.set("x-middleware-cache", "no-cache");
-    return response;
+  // Allow the home page to load normally
+  if (pathname === "/") {
+    return await updateSession(request);
   }
 
-  if (request.nextUrl.pathname.startsWith("/signup") && data.user) {
-    // return NextResponse.rewrite(new URL("/", request.url));
-    const response = NextResponse.redirect(new URL("/", request.url));
-    response.headers.set("x-middleware-cache", "no-cache");
-    return response;
-  }
-
-  if (pathname.startsWith("/jobs")) {
-    const categoryMatch = pathname.match(/^\/jobs\/([^/]+)$/);
-
-    if (categoryMatch) {
-      const category = categoryMatch[1];
-
-      // Check if the category is valid
-      if (!JOB_CATEGORIES.includes(category)) {
-        // Redirect to 404 page if the category is invalid
-        return NextResponse.redirect(new URL("/404", request.url));
-      }
-    }
-  }
-
-  return await updateSession(request);
+  // Redirect all other paths to home page
+  const response = NextResponse.redirect(new URL("/", request.url));
+  response.headers.set("x-middleware-cache", "no-cache");
+  return response;
 }
+
+// export const JOB_CATEGORIES = [
+//   "latest",
+//   "engineering",
+//   "finance",
+//   "marketing",
+//   "healthcare",
+//   "construction",
+//   "government",
+//   "retail",
+//   "utilities",
+// ];
+
+// export async function middleware(request: NextRequest) {
+//   const { pathname } = request.nextUrl;
+
+//   const supabase = createClient();
+
+//   const { data, error } = await supabase.auth.getUser();
+
+//   if (
+//     request.nextUrl.pathname.startsWith("/login") &&
+//     data.user
+//     // (request.nextUrl.pathname.startsWith("/login") && error)
+//   ) {
+//     // return NextResponse.rewrite(new URL("/", request.url));
+//     const response = NextResponse.redirect(new URL("/", request.url));
+//     response.headers.set("x-middleware-cache", "no-cache");
+//     return response;
+//   }
+
+//   if (request.nextUrl.pathname.startsWith("/signup") && data.user) {
+//     // return NextResponse.rewrite(new URL("/", request.url));
+//     const response = NextResponse.redirect(new URL("/", request.url));
+//     response.headers.set("x-middleware-cache", "no-cache");
+//     return response;
+//   }
+
+//   if (pathname.startsWith("/jobs")) {
+//     const categoryMatch = pathname.match(/^\/jobs\/([^/]+)$/);
+
+//     if (categoryMatch) {
+//       const category = categoryMatch[1];
+
+//       // Check if the category is valid
+//       if (!JOB_CATEGORIES.includes(category)) {
+//         // Redirect to 404 page if the category is invalid
+//         return NextResponse.redirect(new URL("/404", request.url));
+//       }
+//     }
+//   }
+
+//   return await updateSession(request);
+// }
 
 export const config = {
   matcher: [
