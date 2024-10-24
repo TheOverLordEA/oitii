@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 export default function JobBoard() {
   return (
     <section className="container mx-auto px-4 py-12">
-      <div className="flex flex-row gap-5 space-y-8">
+      <div className="flex flex-col md:flex-row gap-5 space-y-8">
         <div className="flex-1 flex justify-center flex-col items-baseline">
           <h2 className="text-[#FF6347] font-semibold mb-4 uppercase">
             Real Jobs, Verified Listings — No Ghost Jobs Here!

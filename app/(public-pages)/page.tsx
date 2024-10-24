@@ -109,14 +109,24 @@ export default function LandingPage() {
             <div className="relative container mx-auto px-4 md:px-6">
               <div className="flex flex-col items-center space-y-4 text-center">
                 <div className="flex flex-col gap-8">
-                  <div className="uppercase">
+                  <div
+                    className="uppercase"
+                    aria-label="Job search tagline"
+                    role="text"
+                  >
                     <p className="text-black text-xl">
                       Apply to{" "}
-                      <span className="bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent font-bold">
+                      <span
+                        className="bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent font-bold"
+                        aria-label="real jobs"
+                      >
                         real jobs
                       </span>{" "}
                       not{" "}
-                      <span className="bg-gradient-to-r from-orange-500 to-rose-800 bg-clip-text text-transparent font-bold">
+                      <span
+                        className="bg-gradient-to-r from-orange-500 to-rose-800 bg-clip-text text-transparent font-bold"
+                        aria-label="ghost jobs"
+                      >
                         ghost jobs
                       </span>
                     </p>
