@@ -1,5 +1,6 @@
 import LoginBlock from "@/components/login/LoginBlock";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Oitii | Login",
@@ -9,7 +10,9 @@ export const metadata: Metadata = {
 const Page = () => {
   return (
     <>
-      <LoginBlock />
+      <Suspense>
+        <LoginBlock />
+      </Suspense>
       {/* <form>
         <label htmlFor="email">Email:</label>
         <input id="email" name="email" type="email" required />
