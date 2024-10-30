@@ -1,15 +1,81 @@
+"use client";
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import type { SubscriberType } from "@/types/newsletter";
 
-export default function Component() {
-  const [email, setEmail] = useState("");
+export default function ComingSoon() {
+  // const [email, setEmail] = useState("");
+  const [type, setType] = useState<SubscriberType>("user");
+  const [formData, setFormData] = useState({
+    email: "",
+    name: "",
+    company_name: "",
+    industry: "",
+    size: "",
+  });
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const [message, setMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  // Here you would typically send the email to your backend
+  //   console.log("Submitted email:", email);
+  //   setEmail("");
+  // };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the email to your backend
-    console.log("Submitted email:", email);
-    setEmail("");
+    setStatus("loading");
+
+    const payload = {
+      type,
+      email: formData.email,
+      ...(type === "user"
+        ? { name: formData.name }
+        : {
+            company_name: formData.company_name,
+            industry: formData.industry,
+            size: formData.size,
+          }),
+    };
+
+    try {
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) throw new Error(data.error);
+
+      setStatus("success");
+      setMessage(data.message);
+      setFormData({
+        email: "",
+        name: "",
+        company_name: "",
+        industry: "",
+        size: "",
+      });
+    } catch (error) {
+      setStatus("error");
+      setMessage(
+        error instanceof Error ? error.message : "Something went wrong"
+      );
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   return (
@@ -61,8 +127,8 @@ export default function Component() {
             <Input
               type="email"
               placeholder="Please enter your email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={handleInputChange}
               className="flex-grow mr-2 bg-gray-800 text-white border-gray-700"
               required
             />

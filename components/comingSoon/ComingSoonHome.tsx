@@ -4,34 +4,179 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import {
-  User,
-  Rocket,
-  Building2,
-  Bell,
-  Linkedin,
-  Sparkles,
-  ArrowRight,
-} from "lucide-react";
+import { User, Rocket, Building2, Bell, Linkedin } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-// import { Josefin_Sans } from "next/font/google";
+// import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/supabase/client";
 
-// const josefin_sans = Josefin_Sans({
-//   subsets: ["latin"],
-//   display: "swap",
-// });
+// import type { SubscriberType } from "@/types/newsletter";
+type EmailState = {
+  personalEmail: string;
+  businessEmail: string;
+};
+
+type ErrorState = {
+  personalError: boolean;
+  businessError: boolean;
+};
+
+type ErrorMessage = {
+  personalError: string;
+  businessError: string;
+};
+
+async function subscribeEmailPersonal(email: string) {
+  const supabase = await createClient();
+
+  try {
+    // First, check if email already exists
+    const { data: existingEmail, error: searchError } = await supabase
+      .from("user_subscribers")
+      .select("email")
+      .eq("email", email)
+      .single();
+
+    if (searchError && searchError.code !== "PGRST116") {
+      throw new Error("Error checking email existence");
+    }
+
+    if (existingEmail) {
+      return {
+        success: false,
+        message: "This email is already subscribed",
+      };
+    }
+
+    // If email doesn't exist, insert it
+    const { data, error: insertError } = await supabase
+      .from("user_subscribers")
+      .insert([{ email }]);
+
+    if (insertError) {
+      throw new Error("Error subscribing email");
+    }
+
+    return {
+      success: true,
+      message: "Successfully subscribed to newsletter",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error)?.message,
+    };
+  }
+}
+
+async function subscribeEmailBusiness(email: string) {
+  const supabase = await createClient();
+
+  try {
+    // First, check if email already exists
+    const { data: existingEmail, error: searchError } = await supabase
+      .from("business_subscribers")
+      .select("email")
+      .eq("email", email)
+      .single();
+
+    if (searchError && searchError.code !== "PGRST116") {
+      throw new Error("Error checking email existence");
+    }
+
+    if (existingEmail) {
+      return {
+        success: false,
+        message: "This email is already subscribed",
+      };
+    }
+
+    // If email doesn't exist, insert it
+    const { data, error: insertError } = await supabase
+      .from("business_subscribers")
+      .insert([{ email }]);
+
+    if (insertError) {
+      throw new Error("Error subscribing email");
+    }
+
+    return {
+      success: true,
+      message: "Successfully subscribed to newsletter",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: (error as Error)?.message,
+    };
+  }
+}
 
 export default function ComingSoonHome() {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState<EmailState>({
+    personalEmail: "",
+    businessEmail: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSubmitted(true);
-    // Handle form submission logic here
+  const [showError, setShowError] = useState<ErrorState>({
+    personalError: false,
+    businessError: false,
+  });
+
+  const [showErrorMessage, setShowErrorMessage] = useState<ErrorMessage>({
+    personalError: "",
+    businessError: "",
+  });
+  const [showSuccessfulUser, setShowSuccessfulUser] = useState(false);
+
+  const [showSuccessfulBusiness, setShowSuccessfulBusiness] = useState(false);
+
+  const [isLoadingPersonal, setIsLoadingPersonal] = useState(false);
+
+  const [isLoadingBusiness, setIsLoadingBusiness] = useState(false);
+
+  const handleInputChangePersonalEmail = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setFormData({
+      ...formData,
+      personalEmail: e.target.value,
+    });
   };
+
+  const handleInputChangeBusinessEmail = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setFormData({
+      ...formData,
+      businessEmail: e.target.value,
+    });
+  };
+
+  const handleSubmitEmailPersonal = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoadingPersonal(true);
+    const result = await subscribeEmailPersonal(formData.personalEmail);
+
+    if (!result.success) {
+      setIsLoadingPersonal(false);
+    }
+    setIsLoadingPersonal(false);
+    console.log(result);
+  };
+
+  const handleSubmitEmailBusiness = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoadingBusiness(true);
+    const result = await subscribeEmailBusiness(formData.businessEmail);
+    console.log(result);
+    if (!result.success) {
+      setIsLoadingBusiness(false);
+    }
+    setIsLoadingBusiness(false);
+  };
+
   return (
-    <div className="min-h-[600px] bg-gradient-to-br from-slate-50 via-white to-blue-50 shadow-xl rounded-xl p-6 md:p-12 relative overflow-hidden">
+    <div className="min-h-[600px] bg-gradient-to-br from-slate-50 via-white to-blue-50 rounded-xl p-6 md:p-12 relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-blue-100 rounded-full filter blur-3xl opacity-20 -mr-32 -mt-32" />
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-100 rounded-full filter blur-3xl opacity-20 -ml-32 -mb-32" />
@@ -65,6 +210,7 @@ export default function ComingSoonHome() {
                 <TabsTrigger
                   value="jobseeker"
                   className="flex items-center justify-center space-x-2 py-1 data-[state=active]:bg-white data-[state=active]:text-blue-700"
+                  // onClick={() => setType("user")}
                 >
                   <User className="w-4 h-4" />
                   <span>Professionals</span>
@@ -72,6 +218,7 @@ export default function ComingSoonHome() {
                 <TabsTrigger
                   value="employer"
                   className="flex items-center justify-center space-x-2 py-1 data-[state=active]:bg-white data-[state=active]:text-blue-700"
+                  // onClick={() => setType("business")}
                 >
                   <Building2 className="w-4 h-4" />
                   <span>Enterprise</span>
@@ -84,30 +231,55 @@ export default function ComingSoonHome() {
                     <h3 className="text-lg font-semibold text-slate-900">
                       Apply to real jobs not Ghost jobs
                     </h3>
-                    {/* <p className="text-slate-600">
-                      Access exclusive opportunities and industry insights
-                    </p> */}
                     <div className="flex items-center justify-center space-x-2">
                       <Bell className="w-4 h-4 text-blue-500" />
                       <span>Get notified when new features launch</span>
                     </div>
                   </div>
 
-                  <form onSubmit={handleSubmit} className="space-y-4">
+                  <form
+                    onSubmit={handleSubmitEmailPersonal}
+                    className="space-y-4"
+                  >
                     <div className="flex flex-col md:flex-row gap-3">
                       <Input
                         type="email"
-                        placeholder="Enter your business email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        name="email"
+                        placeholder="Enter your email"
+                        value={formData.personalEmail}
+                        onChange={handleInputChangePersonalEmail}
                         className="flex-grow bg-slate-50 border-slate-200"
+                        required
                       />
                       <Button
                         type="submit"
                         className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2"
                       >
-                        {/* <Sparkles className="mr-2 h-4 w-4" /> */}
-                        Subscribe Now
+                        {isLoadingPersonal ? (
+                          <>
+                            {" "}
+                            <svg
+                              aria-hidden="true"
+                              className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                              viewBox="0 0 100 101"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                fill="currentColor"
+                              />
+                              <path
+                                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                fill="currentFill"
+                              />
+                            </svg>
+                            <span className="sr-only">Loading...</span>{" "}
+                            Loading...{" "}
+                          </>
+                        ) : (
+                          "Subscribe Now"
+                        )}
                       </Button>
                     </div>
                   </form>
@@ -126,18 +298,51 @@ export default function ComingSoonHome() {
                     </div>
                   </div>
 
-                  <form onSubmit={handleSubmit} className="space-y-4">
+                  <form
+                    onSubmit={handleSubmitEmailBusiness}
+                    className="space-y-6 w-full max-w-2xl mx-auto"
+                  >
                     <div className="flex flex-col md:flex-row gap-3">
-                      <Input
-                        type="email"
-                        placeholder="Enter your corporate email"
-                        className="flex-grow bg-slate-50 border-slate-200"
-                      />
+                      <div className="flex-grow">
+                        <Input
+                          type="email"
+                          name="email"
+                          placeholder="Enter your corporate email"
+                          value={formData.businessEmail}
+                          onChange={handleInputChangeBusinessEmail}
+                          className="w-full bg-slate-50 border-slate-200 focus:border-blue-500 focus:ring-blue-500"
+                          required
+                        />
+                      </div>
                       <Button
                         type="submit"
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2"
+                        // disabled={status === "loading"}
+                        className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 transition-colors duration-200"
                       >
-                        Subscribe Now
+                        {isLoadingBusiness ? (
+                          <>
+                            <svg
+                              aria-hidden="true"
+                              className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                              viewBox="0 0 100 101"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                fill="currentColor"
+                              />
+                              <path
+                                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                fill="currentFill"
+                              />
+                            </svg>
+                            <span className="sr-only">Loading...</span>{" "}
+                            Loading...{" "}
+                          </>
+                        ) : (
+                          "Subscribe Now"
+                        )}
                       </Button>
                     </div>
                   </form>
@@ -146,19 +351,8 @@ export default function ComingSoonHome() {
             </Tabs>
           </div>
 
-          {submitted && (
-            <Alert className="mt-6 bg-green-50 border-green-100 text-green-800">
-              <AlertDescription className="flex items-center justify-center">
-                <Sparkles className="mr-2 h-4 w-4" />
-                Thank you! We'll be in touch with exclusive access details
-                shortly.
-              </AlertDescription>
-            </Alert>
-          )}
-
-          {/* New Features Availability Section */}
+          {/* Social Media Section */}
           <div className="mt-12 space-y-6">
-            {/* Social Media Section */}
             <div className="flex flex-col items-center space-y-3">
               <p className="text-slate-600">
                 Stay updated with our latest announcements

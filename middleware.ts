@@ -7,16 +7,54 @@ import { createClient } from "@/utils/supabase/server";
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Allow the home page to load normally
-  if (pathname === "/") {
+  // List of allowed paths that should load normally
+  const allowedPaths = [
+    "/", // Home page
+    "/coming-soon", // Coming soon page
+    "/api", // Optional: Allow API routes
+  ];
+
+  // Check if the current path starts with any allowed path
+  const isAllowedPath = allowedPaths.some(
+    (path) => pathname === path || pathname.startsWith(`${path}/`)
+  );
+
+  // Allow access to assets and public files
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/static") ||
+    pathname.includes(".")
+  ) {
+    return;
+  }
+
+  // Allow the path if it's in the allowed list
+  if (isAllowedPath) {
     return await updateSession(request);
   }
 
   // Redirect all other paths to home page
   const response = NextResponse.redirect(new URL("/", request.url));
+
+  // Prevent caching of redirect response
   response.headers.set("x-middleware-cache", "no-cache");
+
   return response;
 }
+
+// export async function middleware(request: NextRequest) {
+//   const { pathname } = request.nextUrl;
+
+//   // Allow the home page to load normally
+//   if (pathname === "/") {
+//     return await updateSession(request);
+//   }
+
+//   // Redirect all other paths to home page
+//   const response = NextResponse.redirect(new URL("/", request.url));
+//   response.headers.set("x-middleware-cache", "no-cache");
+//   return response;
+// }
 
 // export const JOB_CATEGORIES = [
 //   "latest",

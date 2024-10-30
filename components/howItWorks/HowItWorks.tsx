@@ -46,9 +46,9 @@ export default function HowItWorks() {
                 <div className="ml-4">
                   <h3 className="text-lg font-medium">Find & Apply</h3>
                   <p className="mt-2 text-gray-600">
-                    Apply using the employer's preferred method: Oitii Apply,
-                    company website link, email, or phone number. Choose the
-                    option that suits you best!
+                    Apply using the employer's preferred method:{" "}
+                    <span>Oitii Apply</span>, company website, email, or phone
+                    number. Choose the option that suits you best!
                   </p>
                 </div>
               </div>

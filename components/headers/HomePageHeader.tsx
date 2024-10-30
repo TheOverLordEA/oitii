@@ -29,7 +29,7 @@ const josefin_sans = Josefin_Sans({
 });
 
 const HomePageHeader = async () => {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase.auth.getUser();
   if (error || !data?.user) {
