@@ -25,7 +25,7 @@ const JobSectionHome: React.FC<JobSectionsProp> = async ({
   jobTitle,
   jobs,
 }) => {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase.auth.getUser();
 

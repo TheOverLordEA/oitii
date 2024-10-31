@@ -159,8 +159,16 @@ export default function ComingSoonHome() {
 
     if (!result.success) {
       setIsLoadingPersonal(false);
+      setFormData({
+        ...formData,
+        personalEmail: "",
+      });
     }
     setIsLoadingPersonal(false);
+    setFormData({
+      ...formData,
+      personalEmail: "",
+    });
     console.log(result);
   };
 
@@ -170,8 +178,17 @@ export default function ComingSoonHome() {
     const result = await subscribeEmailBusiness(formData.businessEmail);
     console.log(result);
     if (!result.success) {
+      setFormData({
+        ...formData,
+        businessEmail: "",
+      });
       setIsLoadingBusiness(false);
     }
+
+    setFormData({
+      ...formData,
+      personalEmail: "",
+    });
     setIsLoadingBusiness(false);
   };
 

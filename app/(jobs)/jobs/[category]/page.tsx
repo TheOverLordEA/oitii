@@ -85,7 +85,7 @@ const Page = async ({
 }) => {
   const { category } = params; // Extract category from params
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase.auth.getUser();
 
