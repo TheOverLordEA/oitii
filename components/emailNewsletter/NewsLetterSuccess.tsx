@@ -1,12 +1,15 @@
 interface Props {
-  onClose: () => void;
+  onClose: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const NewsLetterSuccess: React.FC<Props> = () => {
+const NewsLetterSuccess: React.FC<Props> = ({ onClose }) => {
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-3xl w-full max-w-4xl overflow-hidden flex flex-col md:flex-row relative animate-in fade-in duration-500">
-        <button className="absolute right-4 top-4 text-gray-500 hover:text-gray-700 z-10">
+    <div className="md:fixed md:inset-0 bg-black/50 md:flex items-center justify-center md:p-4 md:z-50">
+      <div className="bg-white rounded-none md:rounded-3xl w-full h-full fixed inset-0 md:h-auto md:max-w-4xl overflow-hidden z-50 flex flex-col md:flex-row md:inset-auto md:relative animate-in fade-in duration-500">
+        <button
+          className="absolute right-16 md:right-4 top-4 text-white hover:text-gray-700 z-20"
+          onClick={onClose}
+        >
           <svg
             className="w-6 h-6"
             fill="none"
@@ -20,11 +23,11 @@ const NewsLetterSuccess: React.FC<Props> = () => {
               d="M6 18L18 6M6 6l12 12"
             />
           </svg>
-          <button className="sr-only">Close</button>
         </button>
+        <button className="sr-only">Close</button>
 
         {/* Left side with geometric pattern */}
-        <div className="w-full h-[250px] md:h-auto md:w-[45%] relative overflow-hidden">
+        <div className="w-full h-[350px] md:h-auto md:w-[45%] relative overflow-hidden">
           <svg
             className="absolute inset-0 w-full h-full"
             viewBox="0 0 400 400"
@@ -71,29 +74,72 @@ const NewsLetterSuccess: React.FC<Props> = () => {
         </div>
 
         {/* Right side with content */}
-        <div className="w-full md:w-[55%] p-6 md:p-12 flex flex-col justify-center bg-white">
-          <div className="space-y-6">
-            <h2 className="text-3xl font-bold text-gray-900">
+        <div className="w-[90%] md:w-[55%] p-6 md:p-12 flex flex-col justify-start md:justify-center bg-white">
+          <div className="md:space-y-6 space-y-2 max-w-sm md:max-w-md mx-auto flex flex-col justify-start gap-5 md:block">
+            <h2
+              className="
+              text-3xl 
+              md:text-4xl 
+              font-extrabold 
+              text-gray-900 
+              tracking-tight 
+              md:text-left 
+              bg-gradient-to-r 
+              from-blue-600 
+              to-purple-600 
+              bg-clip-text 
+              text-transparent 
+              pb-1
+            "
+            >
               Successfully Subscribed!
             </h2>
-            <p className="text-lg text-gray-600">
+
+            <p className="block text-gray-600 text-lg">
+              We're excited to keep you informed about
+              <span className="font-bold text-black"> new features</span>,
+              <span className="font-bold text-black"> innovative tools</span>,
+              and
+              <span className="font-bold text-black"> exclusive insights </span>
+              as they become available.
+            </p>
+
+            <span className="block text-lg text-gray-700 mb-2">
+              Stay ahead of the curve with our latest updates.
+            </span>
+
+            <p
+              className="
+              text-sm 
+              text-gray-500 
+              md:text-left 
+              italic 
+              opacity-80
+            "
+            >
+              You can always unsubscribe using the link in our emails.
+            </p>
+            {/* <h2
+              className="  text-2xl 
+              md:text-3xl  font-bold text-gray-900"
+            >
+              Successfully Subscribed!
+            </h2>
+            <p
+              className=" text-base 
+              md:text-lg  text-gray-600"
+            >
               Thank you for subscribing to our newsletter. You'll receive our
               next update on Monday.
             </p>
             <p className="text-sm text-gray-500">
               You can always unsubscribe using the link in our emails.
-            </p>
-            <div className="pt-4">
-              <a
-                href="#"
-                className="text-sm text-gray-500 hover:text-gray-700 underline"
-              >
-                Personal Data Charter
-              </a>
-            </div>
+            </p> */}
           </div>
         </div>
       </div>
     </div>
   );
 };
+
+export default NewsLetterSuccess;

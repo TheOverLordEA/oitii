@@ -59,7 +59,7 @@ export default function JobAnalytics() {
         <div className="lg:w-1/2">
           <div className="bg-white rounded-2xl shadow-lg border border-gray-100 h-full">
             <div className="p-6 border-b border-gray-100">
-              <span className="inline-block px-4 py-1 bg-pink-100 text-pink-600 font-semibold rounded-full text-sm">
+              <span className="inline-block px-4 py-1 bg-[#edfce7] text-[#2d9c3f] font-semibold rounded-full text-sm">
                 AFFORDABLE JOB POSTING
               </span>
               <div className="flex items-baseline gap-2 mt-4">
@@ -71,9 +71,9 @@ export default function JobAnalytics() {
             <div className="p-6 space-y-6">
               <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-xl">
                 <p className="text-lg font-semibold text-blue-700">
-                  One-time payment of just $10! No costly per-click fees or
-                  $100+ for a single post. Pay $10 for your job listing, and
-                  it's live instantly.
+                  One-time payment of just $10 <br /> No costly per-click fees
+                  or $100+ for a single post. <br />
+                  Pay $10 for your job listing, and it's live instantly.
                 </p>
               </div>
 
@@ -93,21 +93,21 @@ export default function JobAnalytics() {
                 ))}
               </div>
 
-              <div className="bg-pink-50 p-4 rounded-xl">
+              <div className="bg-[#edfce7] p-4 rounded-xl">
                 <div className="flex items-center gap-2 mb-2">
-                  <Sparkles className="h-5 w-5 text-pink-500" />
-                  <span className="font-semibold text-pink-700">
+                  <Sparkles className="h-5 w-5 text-[#33be49]" />
+                  <span className="font-semibold text-[#2d9c3f]">
                     Best Value Guarantee
                   </span>
                 </div>
-                <p className="text-pink-600 text-sm">
+                <p className="text-[#2d9c3f] text-sm">
                   Get maximum exposure for your job posting at the most
                   competitive price in the market
                 </p>
               </div>
 
               <div className="pt-4">
-                <button className="w-full bg-pink-600 hover:bg-pink-700 text-white py-4 px-6 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center group">
+                <button className="w-full bg-[#2d9c3f] hover:bg-[#38c84e] text-white py-4 px-6 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center group">
                   Post your job now
                   <ArrowRight className="ml-2 h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
                 </button>
@@ -138,7 +138,7 @@ export default function JobAnalytics() {
                 { id: "overview", label: "Overview", icon: TrendingUp },
                 { id: "jobs", label: "Jobs", icon: Briefcase },
                 { id: "team", label: "Team", icon: Users },
-                { id: "about", label: "About", icon: Info },
+                // { id: "about", label: "About", icon: Info },
               ].map((tab) => (
                 <button
                   key={tab.id}

@@ -100,7 +100,7 @@ export default function LandingPage() {
     <>
       <main className="flex flex-col min-h-screen bg-white text-black">
         <div className="flex-1">
-          <section className="w-full py-12 md:py-24 bg-white relative">
+          <section className="w-full py-4 md:py-20 bg-white relative">
             {/* <div className="absolute inset-0 rounded max-h-24 bg-gradient-to-br from-white via-orange-50/80 to-purple-200/90" /> */}
             {/* <div className="absolute inset-0 bg-gradient-to-br from-orange-50/90 via-pink-100/80 to-purple-300/70" />
             <div className="relative container mx-auto px-4 md:px-6"> */}
@@ -108,7 +108,46 @@ export default function LandingPage() {
             {/* </div> */}
             <div className="relative container mx-auto px-4 md:px-6">
               <div className="flex flex-col items-center space-y-4 text-center">
-                <div className="flex flex-col gap-8">
+                <div className="flex flex-col gap-6 md:gap-8 p-4 md:p-6 lg:p-8">
+                  <div
+                    className="uppercase text-center" // Centered text for mobile readability
+                    aria-label="Job search tagline"
+                    role="text"
+                  >
+                    <p className="text-black text-lg md:text-xl">
+                      {" "}
+                      {/* Adjusted text size for better readability */}
+                      Apply to{" "}
+                      <span
+                        className="bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent font-bold"
+                        aria-label="real jobs"
+                      >
+                        real jobs
+                      </span>{" "}
+                      not{" "}
+                      <span
+                        className="bg-gradient-to-r from-orange-500 to-rose-800 bg-clip-text text-transparent font-bold"
+                        aria-label="ghost jobs"
+                      >
+                        ghost jobs
+                      </span>
+                    </p>
+                  </div>
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-center text-black">
+                    Find and apply to real jobs <br />
+                    Authentic Careers
+                  </h1>
+                  <div>
+                    <p className="uppercase text-black text-lg md:text-xl text-center">
+                      {" "}
+                      {/* Centered text for mobile readability */}
+                      Verified opportunities. Zero time wasted. Your dream
+                      career awaits.
+                    </p>
+                  </div>
+                </div>
+
+                {/* <div className="flex flex-col gap-12 md:gap-8">
                   <div
                     className="uppercase"
                     aria-label="Job search tagline"
@@ -141,16 +180,16 @@ export default function LandingPage() {
                       career awaits.{" "}
                     </p>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </section>
 
           <section>
-            <div className="flex flex-col md:flex-row justify-between items-center bg-white p-8 md:p-16">
+            <div className="flex flex-col md:flex-row justify-between items-center bg-white p-4 md:p-16">
               {/* Left Section with Profile and Shapes */}
-              <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
-                <div className="relative">
+              <div className="hidden flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 md:flex">
+                <div className="relative ">
                   {/* Profile Image */}
                   <img
                     src="https://via.placeholder.com/150"
@@ -178,7 +217,7 @@ export default function LandingPage() {
               </div>
 
               {/* Right Section with Profile and Shapes */}
-              <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 mt-8 md:mt-0">
+              <div className="md:flex hidden flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 mt-8 md:mt-0 ">
                 <div className="relative">
                   {/* Profile Image */}
                   <img

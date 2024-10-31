@@ -1,13 +1,22 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { User, Rocket, Building2, Bell, Linkedin } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import {
+  User,
+  Rocket,
+  Building2,
+  Bell,
+  Linkedin,
+  AlertCircle,
+} from "lucide-react";
+// import {CheckCircle2} from '@/components/ui/chec'
 // import { createClient } from "@/utils/supabase/server";
 import { createClient } from "@/utils/supabase/client";
+import NewsLetterSuccess from "../emailNewsletter/NewsLetterSuccess";
+import { CardFooter } from "../ui/card";
 
 // import type { SubscriberType } from "@/types/newsletter";
 type EmailState = {
@@ -134,6 +143,20 @@ export default function ComingSoonHome() {
 
   const [isLoadingBusiness, setIsLoadingBusiness] = useState(false);
 
+  const handleClosePersonal = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      setShowSuccessfulUser(false);
+    },
+    []
+  );
+
+  const handleCloseBusiness = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      setShowSuccessfulBusiness(false);
+    },
+    []
+  );
+
   const handleInputChangePersonalEmail = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -163,13 +186,27 @@ export default function ComingSoonHome() {
         ...formData,
         personalEmail: "",
       });
+      setShowError({
+        ...showError,
+        personalError: result.success,
+        businessError: false,
+      });
+
+      setShowErrorMessage({
+        ...showErrorMessage,
+        personalError: result.message,
+        businessError: "",
+      });
+    } else {
+      setIsLoadingPersonal(false);
+      setFormData({
+        ...formData,
+        personalEmail: "",
+      });
+
+      setShowSuccessfulUser(true);
+      console.log(result);
     }
-    setIsLoadingPersonal(false);
-    setFormData({
-      ...formData,
-      personalEmail: "",
-    });
-    console.log(result);
   };
 
   const handleSubmitEmailBusiness = async (e: React.FormEvent) => {
@@ -182,14 +219,26 @@ export default function ComingSoonHome() {
         ...formData,
         businessEmail: "",
       });
-      setIsLoadingBusiness(false);
-    }
+      setShowError({
+        ...showError,
+        personalError: false,
+        businessError: result.success,
+      });
 
-    setFormData({
-      ...formData,
-      personalEmail: "",
-    });
-    setIsLoadingBusiness(false);
+      setShowErrorMessage({
+        ...showErrorMessage,
+        personalError: "",
+        businessError: result.message,
+      });
+      setIsLoadingBusiness(false);
+    } else {
+      setIsLoadingBusiness(false);
+      setFormData({
+        ...formData,
+        personalEmail: "",
+      });
+      setShowSuccessfulBusiness(true);
+    }
   };
 
   return (
@@ -270,14 +319,14 @@ export default function ComingSoonHome() {
                       />
                       <Button
                         type="submit"
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2"
+                        className="bg-blue-600 flex hover:bg-blue-700 text-white px-6 py-2 gap-2"
                       >
                         {isLoadingPersonal ? (
                           <>
                             {" "}
                             <svg
                               aria-hidden="true"
-                              className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                              className="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
                               viewBox="0 0 100 101"
                               fill="none"
                               xmlns="http://www.w3.org/2000/svg"
@@ -366,6 +415,14 @@ export default function ComingSoonHome() {
                 </div>
               </TabsContent>
             </Tabs>
+            <CardFooter>
+              {showError.personalError && (
+                <div className="flex items-center space-x-2 text-red-600">
+                  <AlertCircle size={20} />
+                  <span>{showErrorMessage.personalError}</span>
+                </div>
+              )}
+            </CardFooter>
           </div>
 
           {/* Social Media Section */}
@@ -391,6 +448,18 @@ export default function ComingSoonHome() {
           </div>
         </div>
       </div>
+
+      {showSuccessfulUser ? (
+        <NewsLetterSuccess onClose={handleClosePersonal} />
+      ) : (
+        ""
+      )}
+
+      {showSuccessfulBusiness ? (
+        <NewsLetterSuccess onClose={handleCloseBusiness} />
+      ) : (
+        ""
+      )}
     </div>
   );
 }

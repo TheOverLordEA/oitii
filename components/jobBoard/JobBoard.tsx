@@ -22,7 +22,8 @@ export default function JobBoard() {
             </li>
             <li>
               <strong>Realistic Job Requirements:</strong> We require employers
-              to have realistic job requirements.
+              to have realistic job requirements. <strong>Entry level</strong>{" "}
+              means no experience.
             </li>
             <li>
               <strong>Salary Transparency:</strong> Employers must provide clear

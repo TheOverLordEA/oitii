@@ -4,16 +4,19 @@ import { Button } from "../ui/button";
 import { Josefin_Sans } from "next/font/google";
 import { Lato } from "next/font/google";
 import AvatarHeader from "../avatar/AvatarHeader";
+import BurgerMenu from "../burgerMenu/BurgerMenu";
 
 const BUTTON = {
   signIn: "Sign In",
   signUp: "Sign Up",
 };
 
+const LAUNCHLINK = "/coming-soon";
+
 const navItems = [
-  { name: "Jobs", href: "/jobs" },
-  { name: "For employers", href: "/recruit/overview" },
-  { name: "Post a Job", href: "/post/new" },
+  { name: "Jobs", href: LAUNCHLINK || "/jobs" },
+  { name: "For employers", href: LAUNCHLINK || "/recruit/overview" },
+  { name: "Post a Job", href: LAUNCHLINK || "/post/new" },
   // { name: "About", href: "/about" },
 ];
 
@@ -40,19 +43,19 @@ const HomePageHeader = async () => {
 
   return (
     <header className="px-4 lg:px-6 py-12 h-16 flex items-center justify-evenly bg-white sticky top-0 z-50 border-b border-gray-200">
-      <div className="flex justify-around items-center gap-5 w-4/5 ">
-        <div className="flex items-center justify-center flex-1">
+      <div className="flex md:justify-around justify-between items-center gap-5 w-4/5 ">
+        <div className="flex items-center justify-start md:justify-center flex-1">
           <Link className="sr-only" href="/">
             Oitii
           </Link>
           <Link
-            className={`ml-2 tracking-wider text-2xl md:text-4xl font-bold text-black ${josefin_sans.className} `}
+            className={`ml-2 tracking-wider text-5xl font-bold text-black ${josefin_sans.className} `}
             href="/"
           >
             Oitii
           </Link>
         </div>
-        <nav className="flex flex-1 justify-center">
+        <nav className=" hidden md:flex flex-1 justify-center">
           <ul className="flex gap-1">
             {navItems.map((item, index) => (
               <li key={index} className="relative">
@@ -67,24 +70,28 @@ const HomePageHeader = async () => {
             ))}
           </ul>
         </nav>
-        <div className="flex gap-5 flex-1 justify-center">
+        <div className="md:flex gap-5 flex-1 justify-center hidden ">
           {data.user ? (
             // <Link href="/login"> {data.user.email} </Link>
             <AvatarHeader email={data.user.email} />
           ) : (
             <>
               {" "}
-              <Link href="/login">
+              <Link href={LAUNCHLINK || `/login`}>
                 <Button className="bg-white text-black transition-all ease-in-out hover:border hover:border-gray-500 hover:bg-white max-w-[75px]">
                   {BUTTON.signIn}
                 </Button>
               </Link>
-              <Link href="/signup">
+              <Link href={LAUNCHLINK || `/signup`}>
                 <Button className="max-w-[75px]">{BUTTON.signUp}</Button>
               </Link>
             </>
           )}
         </div>
+        {/* <div className="block md:hidden"> */}
+
+        <BurgerMenu />
+        {/* </div> */}
       </div>
     </header>
   );
