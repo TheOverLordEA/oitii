@@ -15,9 +15,9 @@ interface Props {
 const LAUNCHLINK = "/coming-soon";
 
 const menuItems = [
-  { href: LAUNCHLINK || "#discover", label: "Discover" },
-  { href: LAUNCHLINK || "#job-seekers", label: "For job seekers" },
-  { href: LAUNCHLINK || "#companies", label: "For companies" },
+  { href: LAUNCHLINK || "#discover", label: "Jobs" },
+  { href: LAUNCHLINK || "#job-seekers", label: "For employers" },
+  { href: LAUNCHLINK || "#companies", label: "Post job" },
 ];
 
 const josefin_sans = Josefin_Sans({
@@ -44,7 +44,7 @@ const BurgerMenuPanel: React.FC<Props> = ({ isOpen, onClose }) => {
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="absolute flex h-full w-[85%] flex-col">
+        <div className="absolute flex h-full w-[90%] flex-col">
           {/* Header */}
           <div className="p-6 border-b border-gray-100 flex items-center justify-between">
             <Link
@@ -65,7 +65,7 @@ const BurgerMenuPanel: React.FC<Props> = ({ isOpen, onClose }) => {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="flex items-center justify-between group"
+                  className="flex items-center justify-between group text-black"
                   //   onClick={onClose}
                 >
                   <span className="text-xl font-medium group-hover:text-primary transition-colors">

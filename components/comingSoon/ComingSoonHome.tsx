@@ -83,12 +83,13 @@ async function subscribeEmailBusiness(email: string) {
   try {
     // First, check if email already exists
     const { data: existingEmail, error: searchError } = await supabase
-      .from("business_subscribers")
+      .from("business_subscribers") // Make sure this matches your table name exactly
       .select("email")
       .eq("email", email)
       .single();
 
     if (searchError && searchError.code !== "PGRST116") {
+      console.error("Search error:", searchError); // Add logging for debugging
       throw new Error("Error checking email existence");
     }
 
@@ -102,9 +103,16 @@ async function subscribeEmailBusiness(email: string) {
     // If email doesn't exist, insert it
     const { data, error: insertError } = await supabase
       .from("business_subscribers")
-      .insert([{ email }]);
+      .insert([
+        {
+          email,
+          created_at: new Date().toISOString(),
+          subscribed_at: new Date().toISOString(),
+        },
+      ]);
 
     if (insertError) {
+      console.error("Insert error:", insertError); // Add logging for debugging
       throw new Error("Error subscribing email");
     }
 
@@ -113,12 +121,57 @@ async function subscribeEmailBusiness(email: string) {
       message: "Successfully subscribed to newsletter",
     };
   } catch (error) {
+    console.error("Subscription error:", error); // Add logging for debugging
     return {
       success: false,
-      message: (error as Error)?.message,
+      message:
+        (error as Error)?.message || "An error occurred during subscription",
     };
   }
 }
+
+// async function subscribeEmailBusiness(email: string) {
+//   const supabase = await createClient();
+
+//   try {
+//     // First, check if email already exists
+//     const { data: existingEmail, error: searchError } = await supabase
+//       .from("business_subscribers")
+//       .select("email")
+//       .eq("email", email)
+//       .single();
+
+//     if (searchError && searchError.code !== "PGRST116") {
+//       throw new Error("Error checking email existence");
+//     }
+
+//     if (existingEmail) {
+//       return {
+//         success: false,
+//         message: "This email is already subscribed",
+//       };
+//     }
+
+//     // If email doesn't exist, insert it
+//     const { data, error: insertError } = await supabase
+//       .from("business_subscribers")
+//       .insert([{ email }]);
+
+//     if (insertError) {
+//       throw new Error("Error subscribing email");
+//     }
+
+//     return {
+//       success: true,
+//       message: "Successfully subscribed to newsletter",
+//     };
+//   } catch (error) {
+//     return {
+//       success: false,
+//       message: (error as Error)?.message,
+//     };
+//   }
+// }
 
 export default function ComingSoonHome() {
   const [formData, setFormData] = useState<EmailState>({
@@ -144,14 +197,14 @@ export default function ComingSoonHome() {
   const [isLoadingBusiness, setIsLoadingBusiness] = useState(false);
 
   const handleClosePersonal = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
+    (event: React.MouseEvent<HTMLElement>) => {
       setShowSuccessfulUser(false);
     },
     []
   );
 
   const handleCloseBusiness = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
+    (event: React.MouseEvent<HTMLElement>) => {
       setShowSuccessfulBusiness(false);
     },
     []
@@ -182,13 +235,14 @@ export default function ComingSoonHome() {
 
     if (!result.success) {
       setIsLoadingPersonal(false);
+
       setFormData({
         ...formData,
         personalEmail: "",
       });
       setShowError({
         ...showError,
-        personalError: result.success,
+        personalError: true,
         businessError: false,
       });
 
@@ -197,6 +251,13 @@ export default function ComingSoonHome() {
         personalError: result.message,
         businessError: "",
       });
+
+      setTimeout(() => {
+        setShowError({
+          ...showError,
+          personalError: false,
+        });
+      }, 5000);
     } else {
       setIsLoadingPersonal(false);
       setFormData({
@@ -205,7 +266,7 @@ export default function ComingSoonHome() {
       });
 
       setShowSuccessfulUser(true);
-      console.log(result);
+      // console.log(result);
     }
   };
 
@@ -222,7 +283,7 @@ export default function ComingSoonHome() {
       setShowError({
         ...showError,
         personalError: false,
-        businessError: result.success,
+        businessError: true,
       });
 
       setShowErrorMessage({
@@ -230,12 +291,21 @@ export default function ComingSoonHome() {
         personalError: "",
         businessError: result.message,
       });
+
       setIsLoadingBusiness(false);
+
+      setTimeout(() => {
+        setShowError({
+          ...showError,
+          personalError: false,
+        });
+      }, 5000);
     } else {
       setIsLoadingBusiness(false);
       setFormData({
         ...formData,
         personalEmail: "",
+        businessEmail: "",
       });
       setShowSuccessfulBusiness(true);
     }
@@ -383,13 +453,13 @@ export default function ComingSoonHome() {
                       <Button
                         type="submit"
                         // disabled={status === "loading"}
-                        className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 transition-colors duration-200"
+                        className="w-full flex gap-2 md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 transition-colors duration-200"
                       >
                         {isLoadingBusiness ? (
                           <>
                             <svg
                               aria-hidden="true"
-                              className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                              className="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
                               viewBox="0 0 100 101"
                               fill="none"
                               xmlns="http://www.w3.org/2000/svg"
@@ -415,18 +485,35 @@ export default function ComingSoonHome() {
                 </div>
               </TabsContent>
             </Tabs>
-            <CardFooter>
-              {showError.personalError && (
-                <div className="flex items-center space-x-2 text-red-600">
-                  <AlertCircle size={20} />
-                  <span>{showErrorMessage.personalError}</span>
-                </div>
-              )}
-            </CardFooter>
+            {showError.personalError ? (
+              <CardFooter className="justify-center pt-6">
+                {showError.personalError && (
+                  <div className="flex items-center space-x-2 text-red-600">
+                    <AlertCircle size={20} />
+                    <span>{showErrorMessage.personalError}</span>
+                  </div>
+                )}
+              </CardFooter>
+            ) : (
+              ""
+            )}
+
+            {showError.businessError ? (
+              <CardFooter className="justify-center pt-6">
+                {showError.businessError && (
+                  <div className="flex items-center space-x-2 text-red-600">
+                    <AlertCircle size={20} />
+                    <span>{showErrorMessage.businessError}</span>
+                  </div>
+                )}
+              </CardFooter>
+            ) : (
+              ""
+            )}
           </div>
 
           {/* Social Media Section */}
-          <div className="mt-12 space-y-6">
+          {/* <div className="mt-12 space-y-6">
             <div className="flex flex-col items-center space-y-3">
               <p className="text-slate-600">
                 Stay updated with our latest announcements
@@ -445,7 +532,7 @@ export default function ComingSoonHome() {
                 <span>Follow us on LinkedIn</span>
               </Button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 

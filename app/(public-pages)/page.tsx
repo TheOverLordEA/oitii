@@ -15,7 +15,8 @@ const josefin_sans = Josefin_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Oitii | Real Jobs, Real Opportunities",
-  description: "...",
+  description:
+    "Oitii – Discover real, verified job listings with no ghost jobs. Save time and find genuine opportunities tailored to you. Start your career search confidently with Oitii.",
 };
 
 interface Job {

@@ -162,7 +162,7 @@ export default function JobAnalytics() {
                 </h3>
                 <div className="bg-gray-50 p-6 rounded-xl">
                   <ResponsiveContainer width="100%" height={400}>
-                    <BarChart data={analyticsData}>
+                    <BarChart data={analyticsData} className="">
                       <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                       <XAxis dataKey="name" stroke="#6b7280" />
                       <YAxis
@@ -180,6 +180,13 @@ export default function JobAnalytics() {
                           backgroundColor: "#fff",
                           border: "1px solid #e5e7eb",
                           borderRadius: "6px",
+                          color: "#333",
+                        }}
+                        itemStyle={{
+                          color: "#24E", // Set the color for the text of each item in the tooltip
+                        }}
+                        labelStyle={{
+                          color: "#062", // Set the color for the label text
                         }}
                       />
                       <Bar

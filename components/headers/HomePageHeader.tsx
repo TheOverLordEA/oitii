@@ -16,7 +16,7 @@ const LAUNCHLINK = "/coming-soon";
 const navItems = [
   { name: "Jobs", href: LAUNCHLINK || "/jobs" },
   { name: "For employers", href: LAUNCHLINK || "/recruit/overview" },
-  { name: "Post a Job", href: LAUNCHLINK || "/post/new" },
+  { name: "Post Job", href: LAUNCHLINK || "/post/new" },
   // { name: "About", href: "/about" },
 ];
 
@@ -49,7 +49,7 @@ const HomePageHeader = async () => {
             Oitii
           </Link>
           <Link
-            className={`ml-2 tracking-wider text-5xl font-bold text-black ${josefin_sans.className} `}
+            className={`ml-2 tracking-wider text-4xl font-bold text-black ${josefin_sans.className} `}
             href="/"
           >
             Oitii

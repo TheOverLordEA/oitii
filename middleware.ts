@@ -10,7 +10,8 @@ export async function middleware(request: NextRequest) {
   // List of allowed paths that should load normally
   const allowedPaths = [
     "/", // Home page
-    "/coming-soon", // Coming soon page
+    "/coming-soon",
+    "/privacy-policy", // Coming soon page
     "/api", // Optional: Allow API routes
   ];
 

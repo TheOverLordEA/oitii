@@ -1,17 +1,27 @@
 interface Props {
-  onClose: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClose: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 const NewsLetterSuccess: React.FC<Props> = ({ onClose }) => {
+  const handleModalClose = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+  };
+
   return (
-    <div className="md:fixed md:inset-0 bg-black/50 md:flex items-center justify-center md:p-4 md:z-50">
-      <div className="bg-white rounded-none md:rounded-3xl w-full h-full fixed inset-0 md:h-auto md:max-w-4xl overflow-hidden z-50 flex flex-col md:flex-row md:inset-auto md:relative animate-in fade-in duration-500">
+    <div
+      className="md:fixed md:inset-0 bg-black/50 md:flex items-center justify-center md:p-4 md:z-50"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-none md:rounded-3xl w-full h-full fixed inset-0 md:h-auto md:max-w-4xl overflow-hidden z-50 flex flex-col md:flex-row md:inset-auto md:relative animate-in fade-in duration-500"
+        onClick={handleModalClose}
+      >
         <button
-          className="absolute right-16 md:right-4 top-4 text-white hover:text-gray-700 z-20"
+          className="absolute right-10 md:right-4 top-4 text-white md:text-gray-800 hover:text-gray-700 z-20"
           onClick={onClose}
         >
           <svg
-            className="w-6 h-6"
+            className="w-8 h-8"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -74,7 +84,7 @@ const NewsLetterSuccess: React.FC<Props> = ({ onClose }) => {
         </div>
 
         {/* Right side with content */}
-        <div className="w-[90%] md:w-[55%] p-6 md:p-12 flex flex-col justify-start md:justify-center bg-white">
+        <div className="w-[100%] md:w-[55%] p-6 md:p-12 flex flex-col justify-start md:justify-center bg-white">
           <div className="md:space-y-6 space-y-2 max-w-sm md:max-w-md mx-auto flex flex-col justify-start gap-5 md:block">
             <h2
               className="
