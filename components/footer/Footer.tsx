@@ -9,7 +9,7 @@ const josefin_sans = Josefin_Sans({
 export default function Footer() {
   return (
     <footer className="bg-white rounded-lg shadow dark:bg-gray-900">
-      <div className="w-4/5 mx-auto p-4 md:py-8">
+      <div className="w-4/5 mx-auto px-2 py-4 md:py-8">
         <div className="flex justify-between items-center">
           <Link
             className={` pl-2 md:pl-36 tracking-wider text-4xl font-bold text-black ${josefin_sans.className} `}
