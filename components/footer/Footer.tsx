@@ -19,12 +19,12 @@ export default function Footer() {
           </Link>
           <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
             <li>
-              <Link
-                href="/https://www.linkedin.com/company/oitii"
+              <a
+                href="https://www.linkedin.com/company/oitii"
                 className="hover:underline me-4 md:me-6"
               >
                 LinkedIn
-              </Link>
+              </a>
             </li>
             <li>
               <Link
