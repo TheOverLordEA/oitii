@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 interface Props {
   isOpen: boolean;
-  onClose: (e?: React.MouseEvent<HTMLButtonElement>) => void;
+  onClose: (e?: React.MouseEvent<HTMLElement>) => void;
 }
 
 const LAUNCHLINK = "/coming-soon";
@@ -50,6 +50,7 @@ const BurgerMenuPanel: React.FC<Props> = ({ isOpen, onClose }) => {
             <Link
               href="/"
               className={`text-4xl font-bold text-black ${josefin_sans.className}`}
+              onClick={onClose}
             >
               Oitii
             </Link>
