@@ -49,7 +49,7 @@ const BurgerMenuPanel: React.FC<Props> = ({ isOpen, onClose }) => {
           <div className="p-6 border-b border-gray-100 flex items-center justify-between">
             <Link
               href="/"
-              className={`text-4xl font-bold text-black ${josefin_sans.className}`}
+              className={`tracking-wider text-4xl font-bold text-black ${josefin_sans.className} `}
             >
               Oitii
             </Link>
