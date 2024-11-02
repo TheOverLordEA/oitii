@@ -77,17 +77,6 @@ const BurgerMenuPanel: React.FC<Props> = ({ isOpen, onClose }) => {
               ))}
             </div>
           </nav>
-
-          {/* Footer */}
-          <div className="p-6 border-t border-gray-100">
-            <Button
-              className="w-full rounded-full text-lg font-semibold"
-              variant="outline"
-              size="lg"
-            >
-              Log In
-            </Button>
-          </div>
         </div>
       </div>
     </div>
