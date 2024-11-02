@@ -6,16 +6,6 @@ export default function HowItWorks() {
     <div className="bg-white text-gray-900 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="lg:grid lg:grid-cols-2 lg:gap-8 items-center">
-          {/* <div className="mb-10 lg:mb-0">
-            <img
-              src="/placeholder.svg?height=400&width=600"
-              alt="Product interface"
-              className="rounded-lg shadow-lg"
-              width={600}
-              height={400}
-            />
-          </div> */}
-
           <LoopingJobApplication />
           <div>
             <h2 className="text-3xl font-extrabold mb-8">How it works</h2>

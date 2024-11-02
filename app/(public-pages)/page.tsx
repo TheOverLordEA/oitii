@@ -94,8 +94,6 @@ const jobs: Job[] = [
 //   financeJobs: "Finance Jobs",
 // };
 
-const earlyBuild = false;
-
 export default function LandingPage() {
   return (
     <>
@@ -115,7 +113,7 @@ export default function LandingPage() {
                     aria-label="Job search tagline"
                     role="text"
                   >
-                    <p className="text-black text-lg md:text-xl">
+                    <p className="text-black text-base md:text-xl">
                       {" "}
                       {/* Adjusted text size for better readability */}
                       Apply to{" "}
@@ -134,12 +132,13 @@ export default function LandingPage() {
                       </span>
                     </p>
                   </div>
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-center text-black">
-                    Find and apply to real jobs <br />
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter leading-[3rem] md:leading-9 text-center text-black">
+                    Find and apply to <br className="block md:hidden" />
+                    Real jobs <br />
                     Authentic Careers
                   </h1>
                   <div>
-                    <p className="uppercase text-black text-lg md:text-xl text-center">
+                    <p className="uppercase text-black text-base md:text-xl leading-9 md:leading-5 text-center">
                       {" "}
                       {/* Centered text for mobile readability */}
                       Verified opportunities. Zero time wasted. Your dream
@@ -147,41 +146,6 @@ export default function LandingPage() {
                     </p>
                   </div>
                 </div>
-
-                {/* <div className="flex flex-col gap-12 md:gap-8">
-                  <div
-                    className="uppercase"
-                    aria-label="Job search tagline"
-                    role="text"
-                  >
-                    <p className="text-black text-xl">
-                      Apply to{" "}
-                      <span
-                        className="bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent font-bold"
-                        aria-label="real jobs"
-                      >
-                        real jobs
-                      </span>{" "}
-                      not{" "}
-                      <span
-                        className="bg-gradient-to-r from-orange-500 to-rose-800 bg-clip-text text-transparent font-bold"
-                        aria-label="ghost jobs"
-                      >
-                        ghost jobs
-                      </span>
-                    </p>
-                  </div>
-                  <h1 className="text-3xl font-bold tracking-tighter pt-0 md:text-5xl lg:text-6xl/none text-black">
-                    Find and apply to real jobs <br />
-                    Authentic Careers
-                  </h1>
-                  <div>
-                    <p className="uppercase text-black text-xl">
-                      Verified opportunities. Zero time wasted. Your dream
-                      career awaits.{" "}
-                    </p>
-                  </div>
-                </div> */}
               </div>
             </div>
           </section>
@@ -209,7 +173,8 @@ export default function LandingPage() {
               <div className="text-center mt-8 md:mt-0">
                 <h2 className="text-2xl font-bold text-black">
                   {/* Find what's next<span className="text-red-500">:</span> */}
-                  Don't Waste Your Time on Fake Listings
+                  Don't Waste Your Time on <br className="block md:hidden" />
+                  Fake Listings
                   <span className="text-green-500">:</span>
                 </h2>
                 <p className="text-gray-600 mt-2 uppercase">

@@ -52,19 +52,22 @@ export default function LoopingJobApplication() {
               transition={{ duration: 0.5 }}
             >
               <h2 className="text-2xl font-bold mb-4">Job Application</h2>
-              <form className="space-y-4">
+              <div className="space-y-4">
                 <div>
                   <Label htmlFor="name">Name</Label>
-                  <Input id="name" placeholder="Your name" />
+                  <Input id="name" placeholder="Your name" readOnly />
                 </div>
                 <div>
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="Your email" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Your email"
+                    readOnly
+                  />
                 </div>
-                <Button type="submit" className="w-full">
-                  Submit Application
-                </Button>
-              </form>
+                <Button className="w-full">Submit Application</Button>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

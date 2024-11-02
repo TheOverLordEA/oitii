@@ -22,6 +22,8 @@ export default function Footer() {
               <a
                 href="https://www.linkedin.com/company/oitii"
                 className="hover:underline me-4 md:me-6"
+                target="_blank"
+                rel="noopener"
               >
                 LinkedIn
               </a>
