@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     siteName: "Oitii",
     images: [
       {
-        url: "/assets/Oi-logo-linkedin.png",
+        url: "/assets/oi-logo.png",
         width: 1200,
         height: 630,
       },
@@ -53,7 +53,7 @@ export default function RootLayout({
       >
         {children}
         <Analytics />
-        {/* {process.env.NODE_ENV === "development" && <MetaDebugger />} */}
+        {process.env.NODE_ENV === "development" && <MetaDebugger />}
       </body>
     </html>
   );
