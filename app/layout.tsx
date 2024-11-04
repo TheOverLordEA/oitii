@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 import { Analytics } from "@vercel/analytics/react";
-import MetaDebugger from "@/components/metadataDebugger/MetaDataDebugger";
+// import MetaDebugger from "@/components/metadataDebugger/MetaDataDebugger";
 import type { Metadata } from "next";
 
 // import Footer from "@/components/footer/Footer";
@@ -53,7 +53,7 @@ export default function RootLayout({
       >
         {children}
         <Analytics />
-        {process.env.NODE_ENV === "development" && <MetaDebugger />}
+        {/* {process.env.NODE_ENV === "development" && <MetaDebugger />} */}
       </body>
     </html>
   );
