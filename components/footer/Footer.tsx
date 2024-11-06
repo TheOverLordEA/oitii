@@ -29,6 +29,16 @@ export default function Footer() {
               </a>
             </li>
             <li>
+              <a
+                href="https://x.com/OitiiJobs"
+                className="hover:underline me-4 md:me-6"
+                target="_blank"
+                rel="noopener"
+              >
+                Twitter
+              </a>
+            </li>
+            <li>
               <Link
                 href="/privacy-policy"
                 className="hover:underline me-4 md:me-6"

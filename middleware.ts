@@ -11,7 +11,8 @@ export async function middleware(request: NextRequest) {
   const allowedPaths = [
     "/", // Home page
     "/coming-soon",
-    "/privacy-policy", // Coming soon page
+    "/privacy-policy",
+    // "/about", // Coming soon page
     "/api", // Optional: Allow API routes
   ];
 
