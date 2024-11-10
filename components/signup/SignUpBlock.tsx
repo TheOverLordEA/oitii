@@ -6,6 +6,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
+import { useRouter } from "next/navigation";
+import { createClient } from "@/utils/supabase/client";
 // import { Icons } from "@/components/ui/icons"
 
 export const description =
@@ -13,6 +16,51 @@ export const description =
 
 export function SignUpBlock() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const router = useRouter();
+
+  const handleGoogleSignUp = async () => {
+    const supabase = await createClient();
+
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo:
+            // process.env.NEXT_PUBLIC_SITE_URL + "/auth/callback"
+            process.env.NEXT_DEV_SITE_URL + "/auth/callback",
+          // Use environment variable for flexibility between local and production
+        },
+      });
+
+      if (error) throw error;
+
+      // Don't manually push to homepage - let the OAuth flow complete
+      if (data.url) {
+        // Redirect to the auth URL provided by Supabase
+        window.location.href = data.url;
+      }
+    } catch (error) {
+      console.error("Auth error:", error);
+    }
+  };
+
+  // const handleGoogleSignUp = async () => {
+  //   const supabase = await createClient();
+
+  //   const { data, error } = await supabase.auth.signInWithOAuth({
+  //     provider: "google",
+  //     options: {
+  //       redirectTo: "http://localhost:3000/auth/callback",
+
+  //       // redirectTo: "http://oitii.com/auth/callback",
+  //     },
+  //   });
+
+  //   if (data.url) {
+  //     router.push("/");
+  //   }
+  // };
 
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
@@ -25,7 +73,7 @@ export function SignUpBlock() {
 
   return (
     <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
-      <div className="relative h-full w-full overflow-hidden">
+      <div className="relative h-full w-full overflow-hidden hidden md:block">
         {/* Contrasting background */}
         <div className="absolute inset-0 bg-gradient-to-b from-indigo-600 via-indigo-500 to-white" />
 
@@ -88,87 +136,128 @@ export function SignUpBlock() {
         /> */}
       {/* </div> */}
 
-      <div className="mx-auto max-w-sm space-y-6">
-        <div className="space-y-2 text-center">
-          <h1 className="text-3xl font-bold">Create Account</h1>
-          <p className="text-gray-500 dark:text-gray-400">
-            Find your next opportunity!
-          </p>
-        </div>
-        <div className="space-y-4">
-          <Button variant="outline" className="w-full" disabled={isLoading}>
-            {/* <Icons.google className="mr-2 h-4 w-4" /> */}
-            Sign up with Google
-          </Button>
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
-                or Sign up with Email
-              </span>
-            </div>
+      {/* A a updated code */}
+      <div className="w-full mt-20 md:mt-0 lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px] flex items-center justify-center">
+        <div className="mx-auto max-w-sm space-y-6">
+          <div className="space-y-2 text-center">
+            <h1 className="text-3xl font-bold text-black">Create Account</h1>
+            <p className="text-gray-500 dark:text-gray-400">
+              Find your next opportunity!
+            </p>
           </div>
-          <form onSubmit={onSubmit}>
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="full-name">Full Name</Label>
-                <Input id="full-name" placeholder="Enter text" required />
+          <div className="space-y-4">
+            <Button
+              variant="outline"
+              className="w-full text-black"
+              disabled={isLoading}
+              onClick={handleGoogleSignUp}
+            >
+              {/* <Icons.google className="mr-2 h-4 w-4" /> */}
+              Sign up with Google
+            </Button>
+            <div className="relative py-4">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300" />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  placeholder="mail@website.com"
-                  required
-                  type="email"
-                />
+              <div className="relative flex justify-center">
+                <span className="bg-white px-4 text-sm text-gray-500">
+                  Or sign up using your email address
+                </span>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  required
-                  type="password"
-                  placeholder="min 8 characters"
-                />
-              </div>
-              <Button className="w-full" type="submit" disabled={isLoading}>
-                {isLoading &&
-                  //   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                  "loading"}
-                Sign Up
-              </Button>
             </div>
-          </form>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
-            By continuing you accept our{" "}
-            <a
-              href="#"
-              className="underline underline-offset-2 hover:text-primary"
-            >
-              terms and conditions
-            </a>{" "}
-            and our{" "}
-            <a
-              href="#"
-              className="underline underline-offset-2 hover:text-primary"
-            >
-              privacy policy
-            </a>
-            .
-          </p>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Already have an account?{" "}
-            <Link
-              href="/"
-              className="text-primary underline underline-offset-4 hover:text-primary"
-            >
-              Log in
-            </Link>
-          </p>
+            {/* <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                  or Sign up with Email
+                </span>
+              </div>
+            </div> */}
+            <form onSubmit={onSubmit}>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="full-name">Full Name</Label>
+                  <Input id="full-name" placeholder="Enter text" required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    placeholder="mail@website.com"
+                    required
+                    type="email"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="password">Password</Label>
+                  <Input
+                    id="password"
+                    required
+                    type="password"
+                    placeholder="min 8 characters"
+                  />
+                </div>
+                <Button className="w-full" type="submit" disabled={isLoading}>
+                  {isLoading &&
+                    //   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                    "loading"}
+                  Sign Up
+                </Button>
+              </div>
+            </form>
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              By continuing you accept our{" "}
+              <a
+                href="#"
+                className="underline underline-offset-2 hover:text-primary"
+              >
+                terms and conditions
+              </a>{" "}
+              and our{" "}
+              <a
+                href="#"
+                className="underline underline-offset-2 hover:text-primary"
+              >
+                privacy policy
+              </a>
+              .
+            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Already have an account?{" "}
+              <Link
+                href="/"
+                className="text-primary underline underline-offset-4 hover:text-primary"
+              >
+                Log in
+              </Link>
+            </p>
+          </div>
         </div>
+
+        {/* <script src="https://accounts.google.com/gsi/client" async></script>
+        <div
+          id="g_id_onload"
+          data-client_id="<client ID>"
+          data-context="signin"
+          data-ux_mode="popup"
+          data-callback="handleSignInWithGoogle"
+          data-nonce=""
+          data-auto_select="true"
+          data-itp_support="true"
+          data-use_fedcm_for_prompt="true"
+        ></div>
+
+        <div
+          className="g_id_signin"
+          data-type="standard"
+          data-shape="pill"
+          data-theme="outline"
+          data-text="signin_with"
+          data-size="large"
+          data-logo_alignment="left"
+        ></div> */}
       </div>
     </div>
   );

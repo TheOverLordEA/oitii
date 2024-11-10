@@ -36,9 +36,9 @@ const HomePageHeader = async () => {
 
   const { data, error } = await supabase.auth.getUser();
   if (error || !data?.user) {
-    console.log("user not logged in");
+    // console.log("user not logged in");
   } else {
-    console.log(data.user);
+    // console.log(data.user);
   }
 
   return (
@@ -82,7 +82,7 @@ const HomePageHeader = async () => {
                   {BUTTON.signIn}
                 </Button>
               </Link>
-              <Link href={LAUNCHLINK || `/signup`}>
+              <Link href={`/signup`}>
                 <Button className="max-w-[75px]">{BUTTON.signUp}</Button>
               </Link>
             </>

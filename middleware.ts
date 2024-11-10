@@ -7,11 +7,18 @@ import { createClient } from "@/utils/supabase/server";
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  if (pathname === "/signup") {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = "/signup/job-seeker";
+    return NextResponse.redirect(redirectUrl);
+  }
+
   // List of allowed paths that should load normally
   const allowedPaths = [
     "/", // Home page
     "/coming-soon",
     "/privacy-policy",
+    "/signup",
     "/about", // Coming soon page
     "/api", // Optional: Allow API routes
   ];
