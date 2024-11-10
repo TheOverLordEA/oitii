@@ -18,7 +18,8 @@ export async function middleware(request: NextRequest) {
     "/", // Home page
     "/coming-soon",
     "/privacy-policy",
-    "/signup",
+    "terms-of-service",
+    // "/signup",
     "/about", // Coming soon page
     "/api", // Optional: Allow API routes
   ];
