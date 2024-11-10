@@ -12,7 +12,7 @@ export async function middleware(request: NextRequest) {
     "/", // Home page
     "/coming-soon",
     "/privacy-policy",
-    // "/about", // Coming soon page
+    "/about", // Coming soon page
     "/api", // Optional: Allow API routes
   ];
 

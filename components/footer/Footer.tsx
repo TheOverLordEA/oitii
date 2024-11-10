@@ -39,6 +39,11 @@ export default function Footer() {
               </a>
             </li>
             <li>
+              <Link href="/about" className="hover:underline me-4 md:me-6">
+                About
+              </Link>
+            </li>
+            <li>
               <Link
                 href="/privacy-policy"
                 className="hover:underline me-4 md:me-6"
