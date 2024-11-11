@@ -5,16 +5,75 @@ import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useSignupStore } from "@/components/store/useSignUpStoreEmail"; // import the store
 import { Label } from "@/components/ui/label";
+import { Josefin_Sans } from "next/font/google";
+
+import { useRouter } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/client";
+// import { s } from "framer-motion/client";
 // import { Icons } from "@/components/ui/icons"
 
-export const description =
-  "A sign up form with first name, last name, email and password inside a card. There's an option to sign up with GitHub and a link to login if you already have an account";
+// export const description =
+// "A sign up form with first name, last name, email and password inside a card. There's an option to sign up with GitHub and a link to login if you already have an account";
+
+const josefin_sans = Josefin_Sans({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export function SignUpBlock() {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const setSignupEmail = useSignupStore((state) => state.setEmail); // get the setEmail function from the store
+
+  const [formData, setFormData] = useState<{
+    name: string;
+    email: string;
+    password: string;
+  }>({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const router = useRouter();
+
+  const handleSignUpEmail = async () => {
+    const supabase = await createClient();
+
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (error) {
+        console.error("Sign-up error:", error.message); // Log the error message
+        return false; // Return false if there's an error
+      } else {
+        console.log("Verify email");
+        setSignupEmail(formData.email);
+        return true;
+      }
+
+      // // If no error, sign-up was successful
+      // console.log("Sign-up successful:", data.user?.email_confirmed_at);
+
+      // if (!data.user?.email_confirmed_at) {
+      //   console.log("verify email");
+      //   // await supabase.auth.signOut();
+
+      //   console.log("Redirect user to verify email page");
+      //   // return true;
+      // } else {
+      //   return true;
+      // }
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  };
 
   const handleGoogleSignUp = async () => {
     const supabase = await createClient();
@@ -74,14 +133,43 @@ export function SignUpBlock() {
     }
   };
 
-  async function onSubmit(event: React.SyntheticEvent) {
+  // async function onSubmit(event: React.SyntheticEvent) {
+  //   event.preventDefault();
+  //   setIsLoading(true);
+
+  //   setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 3000);
+  // }
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target; // Destructure name and value from the event target
+    console.log(name, value);
+
+    setFormData((prevState) => ({
+      ...prevState, // Keep previous state
+      [name]: value, // Update the field based on the name attribute
+    }));
+  };
+
+  const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    // console.log("Email:", formData.email);
+    // console.log("Password:", formData.password);
+
     setIsLoading(true);
 
-    setTimeout(() => {
+    const successfulSignUp = await handleSignUpEmail(); // Handle your sign-up logic here (e.g., call to API)
+
+    if (!successfulSignUp) {
       setIsLoading(false);
-    }, 3000);
-  }
+      console.log("Unsuccessful signUp");
+    } else {
+      setIsLoading(false);
+      router.push("/check-email");
+    }
+  };
 
   return (
     <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
@@ -127,13 +215,12 @@ export function SignUpBlock() {
 
         {/* Content */}
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 text-white">
-            Find the job
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+            Say Goodbye to
+            <br className="my-5" />
+            Fake Listings Forever!
           </h1>
-          <h1 className="text-4xl md:text-6xl font-bold mb-8 text-white">
-            made for you.
-          </h1>
-          <p className="text-xl md:text-2xl max-w-2xl text-indigo-100">
+          <p className="text-xl md:text-2xl max-w-2xl text-indigo-100 mt-5">
             Explore real job opportunities no ghost jobs, no wasting time on
             fake listings. Only genuine openings with Oitii!{" "}
           </p>
@@ -150,8 +237,16 @@ export function SignUpBlock() {
       {/* </div> */}
 
       {/* A a updated code */}
-      <div className="w-full mt-20 md:mt-0 lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px] flex items-center justify-center">
-        <div className="mx-auto max-w-sm space-y-6">
+      <div className="w-full lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px] flex items-center justify-center relative">
+        <div className="absolute top-5 left-5 md:top-5 md:left-10">
+          <Link
+            href="/"
+            className={`tracking-wider text-4xl font-bold text-black ${josefin_sans.className}`}
+          >
+            Oitii
+          </Link>
+        </div>
+        <div className="mx-auto mt-28 md:mt-0 max-w-sm space-y-6">
           <div className="space-y-2 text-center">
             <h1 className="text-3xl font-bold text-black">Create Account</h1>
             <p className="text-gray-500 dark:text-gray-400">
@@ -182,39 +277,59 @@ export function SignUpBlock() {
             <form onSubmit={onSubmit}>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="full-name">Full Name</Label>
+                  <Label htmlFor="full-name" className="text-gray-800">
+                    Full Name
+                  </Label>
                   <Input
                     id="full-name"
+                    name="name"
                     placeholder="Enter text"
                     required
                     className="text-black"
+                    value={formData.name}
+                    onChange={handleInputChange}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email" className="text-gray-800">
+                    Email
+                  </Label>
                   <Input
                     id="email"
+                    name="email"
                     placeholder="mail@website.com"
                     required
                     className="text-black"
                     type="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password" className="text-gray-800">
+                    Password
+                  </Label>
                   <Input
                     id="password"
+                    name="password"
+                    value={formData.password}
                     required
                     className="text-black"
                     type="password"
-                    placeholder="min 8 characters"
+                    onChange={handleInputChange}
+                    placeholder="Min 6 chars (letters & symbols)"
                   />
                 </div>
-                <Button className="w-full" type="submit" disabled={isLoading}>
-                  {isLoading &&
-                    //   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                    "loading"}
-                  Sign Up
+                <Button
+                  className="w-full bg-black"
+                  type="submit"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <span className="loading loading-dots loading-md"></span>
+                  ) : (
+                    "Sign Up"
+                  )}
                 </Button>
               </div>
             </form>
