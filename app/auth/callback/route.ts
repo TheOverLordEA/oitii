@@ -1,20 +1,30 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
+
+// Mark the route as dynamic
+export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
   try {
-    const { searchParams, origin } = new URL(request.url);
+    const { searchParams } = new URL(request.url);
     const code = searchParams.get("code");
     const next = searchParams.get("next") ?? "/";
 
+    // Get the request headers early
+    const forwardedHost = request.headers.get("x-forwarded-host");
+    const origin = request.headers.get("origin") || "";
+
     // Determine environment and set appropriate origin
     const isLocalEnv = process.env.NODE_ENV === "development";
-    const finalOrigin = isLocalEnv ? "http://localhost:3000" : origin;
+    const baseUrl = isLocalEnv
+      ? "http://localhost:3000"
+      : forwardedHost
+      ? `https://${forwardedHost}`
+      : origin;
 
     if (!code) {
       console.error("No code provided in callback");
-      return NextResponse.redirect(`${finalOrigin}/auth/auth-code-error`);
+      return NextResponse.redirect(`${baseUrl}/auth/auth-code-error`);
     }
 
     const supabase = await createClient();
@@ -27,12 +37,12 @@ export async function GET(request: Request) {
 
     if (sessionError) {
       console.error("Session exchange error:", sessionError);
-      return NextResponse.redirect(`${finalOrigin}/auth/auth-code-error`);
+      return NextResponse.redirect(`${baseUrl}/auth/auth-code-error`);
     }
 
     if (!session?.user) {
       console.error("No user in session");
-      return NextResponse.redirect(`${finalOrigin}/auth/auth-code-error`);
+      return NextResponse.redirect(`${baseUrl}/auth/auth-code-error`);
     }
 
     // Check if user exists in users_job_seekers
@@ -44,7 +54,7 @@ export async function GET(request: Request) {
 
     if (userCheckError && userCheckError.code !== "PGRST116") {
       console.error("Error checking user:", userCheckError);
-      return NextResponse.redirect(`${finalOrigin}/auth/auth-code-error`);
+      return NextResponse.redirect(`${baseUrl}/auth/auth-code-error`);
     }
 
     if (!existingUser) {
@@ -65,7 +75,7 @@ export async function GET(request: Request) {
 
       if (insertError) {
         console.error("Error inserting user:", insertError);
-        return NextResponse.redirect(`${finalOrigin}/auth/database-error`);
+        return NextResponse.redirect(`${baseUrl}/auth/database-error`);
       }
     } else {
       // Update existing user's last sign in
@@ -85,59 +95,15 @@ export async function GET(request: Request) {
       }
     }
 
-    // Handle redirect based on environment
-    const forwardedHost = request.headers.get("x-forwarded-host");
-
-    const response = new NextResponse(null, {
-      status: 302,
-      headers: {
-        Location: isLocalEnv
-          ? `${finalOrigin}${next}`
-          : forwardedHost
-          ? `https://${forwardedHost}${next}`
-          : `${origin}${next}`,
-      },
-    });
-
-    // Set any additional cookies if needed
-    // const cookieStore = cookies();
-    // response.cookies.set('last_sign_in', new Date().toISOString(), {
-    //   path: '/',
-    //   secure: !isLocalEnv,
-    //   sameSite: 'lax',
-    //   maxAge: 60 * 60 * 24 * 30, // 30 days
-    // });
-
-    return response;
+    return NextResponse.redirect(`${baseUrl}${next}`);
   } catch (error) {
     console.error("Unexpected error in auth callback:", error);
-    return NextResponse.redirect(
-      `${
-        process.env.NODE_ENV === "development"
-          ? "http://localhost:3000"
-          : origin
-      }/auth/auth-code-error`
-    );
+    const errorBaseUrl =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : request.headers.get("origin") || "";
+    return NextResponse.redirect(`${errorBaseUrl}/auth/auth-code-error`);
   }
-}
-
-// Optional: Add error handlers for specific paths
-export async function generateErrorResponse(errorType: string, origin: string) {
-  const errorMessages = {
-    "auth-code-error":
-      "Authentication code error. Please try signing in again.",
-    "database-error": "Error saving user data. Please contact support.",
-    "session-error": "Error creating session. Please try again.",
-  };
-
-  return NextResponse.json(
-    {
-      error:
-        errorMessages[errorType as keyof typeof errorMessages] ||
-        "Unknown error occurred",
-    },
-    { status: 400 }
-  );
 }
 
 // import { NextResponse } from "next/server";
