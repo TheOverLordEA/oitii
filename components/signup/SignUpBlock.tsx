@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 // import { Icons } from "@/components/ui/icons"
 
@@ -16,8 +15,6 @@ export const description =
 
 export function SignUpBlock() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const router = useRouter();
 
   const handleGoogleSignUp = async () => {
     const supabase = await createClient();
@@ -35,6 +32,38 @@ export function SignUpBlock() {
 
       if (error) throw error;
 
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (userError) throw userError;
+
+      const userEmail = user?.email;
+
+      const { data: existingUser, error: checkError } = await supabase
+        .from("users_job_seekers")
+        .select("email")
+        .eq("email", userEmail)
+        .single();
+
+      if (checkError) throw checkError;
+
+      if (!existingUser) {
+        const { error: insertError } = await supabase
+          .from("users_job_seekers")
+          .insert([{ email: userEmail }]); // Insert email if not already in the table
+
+        if (insertError) throw insertError;
+
+        console.log("User email added to users_job_seekers:", userEmail);
+      } else {
+        console.log(
+          "User email already exists in users_job_seekers:",
+          userEmail
+        );
+      }
+
       // Don't manually push to homepage - let the OAuth flow complete
       if (data.url) {
         // Redirect to the auth URL provided by Supabase
@@ -44,23 +73,6 @@ export function SignUpBlock() {
       console.error("Auth error:", error);
     }
   };
-
-  // const handleGoogleSignUp = async () => {
-  //   const supabase = await createClient();
-
-  //   const { data, error } = await supabase.auth.signInWithOAuth({
-  //     provider: "google",
-  //     options: {
-  //       redirectTo: "http://localhost:3000/auth/callback",
-
-  //       // redirectTo: "http://oitii.com/auth/callback",
-  //     },
-  //   });
-
-  //   if (data.url) {
-  //     router.push("/");
-  //   }
-  // };
 
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
@@ -122,7 +134,8 @@ export function SignUpBlock() {
             made for you.
           </h1>
           <p className="text-xl md:text-2xl max-w-2xl text-indigo-100">
-            Browse over 130K jobs at top companies and fast-growing startups.
+            Explore real job opportunities no ghost jobs, no wasting time on
+            fake listings. Only genuine openings with Oitii!{" "}
           </p>
         </div>
       </div>
@@ -165,21 +178,17 @@ export function SignUpBlock() {
                 </span>
               </div>
             </div>
-            {/* <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">
-                  or Sign up with Email
-                </span>
-              </div>
-            </div> */}
+
             <form onSubmit={onSubmit}>
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="full-name">Full Name</Label>
-                  <Input id="full-name" placeholder="Enter text" required />
+                  <Input
+                    id="full-name"
+                    placeholder="Enter text"
+                    required
+                    className="text-black"
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
@@ -187,6 +196,7 @@ export function SignUpBlock() {
                     id="email"
                     placeholder="mail@website.com"
                     required
+                    className="text-black"
                     type="email"
                   />
                 </div>
@@ -195,6 +205,7 @@ export function SignUpBlock() {
                   <Input
                     id="password"
                     required
+                    className="text-black"
                     type="password"
                     placeholder="min 8 characters"
                   />
@@ -227,10 +238,19 @@ export function SignUpBlock() {
             <p className="text-sm text-gray-500 dark:text-gray-400">
               Already have an account?{" "}
               <Link
-                href="/"
+                href="/login"
                 className="text-primary underline underline-offset-4 hover:text-primary"
               >
                 Log in
+              </Link>
+            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Employer account?{" "}
+              <Link
+                href="/signup/employer"
+                className="text-primary underline underline-offset-4 hover:text-primary"
+              >
+                Employer Account
               </Link>
             </p>
           </div>
