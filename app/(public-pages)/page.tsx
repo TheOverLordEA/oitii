@@ -107,7 +107,7 @@ export default function LandingPage() {
             {/* </div> */}
             <div className="relative container mx-auto px-4 md:px-6">
               <div className="flex flex-col items-center space-y-4 text-center">
-                <div className="flex flex-col gap-6 md:gap-8 p-4 md:p-6 lg:p-8">
+                <div className="flex flex-col gap-6 md:gap-5 p-4 md:p-6 lg:p-8">
                   <div
                     className="uppercase text-center" // Centered text for mobile readability
                     aria-label="Job search tagline"
@@ -132,9 +132,9 @@ export default function LandingPage() {
                       </span>
                     </p>
                   </div>
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter leading-[3rem] md:leading-9 text-center text-black">
-                    Find and apply to <br className="block md:hidden" />
-                    Real jobs <br />
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter leading-[3rem] md:leading-9 text-center pb-2 md:pb-5 text-black">
+                    Find and Apply to <br className="block md:hidden" />
+                    Real jobs <br className="my-0 md:my-5 " />
                     Authentic Careers
                   </h1>
                   <div>

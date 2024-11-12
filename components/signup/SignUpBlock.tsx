@@ -336,17 +336,21 @@ export function SignUpBlock() {
             <p className="text-xs text-gray-500 dark:text-gray-400">
               By continuing you accept our{" "}
               <a
-                href="#"
+                href="/terms-of-service"
+                target="_blank"
+                rel="noopener"
                 className="underline underline-offset-2 hover:text-primary"
               >
-                terms and conditions
+                Terms of Service
               </a>{" "}
               and our{" "}
               <a
-                href="#"
+                href="/privacy-policy"
+                target="_blank"
+                rel="noopener"
                 className="underline underline-offset-2 hover:text-primary"
               >
-                privacy policy
+                Privacy Policy
               </a>
               .
             </p>
