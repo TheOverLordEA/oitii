@@ -83,70 +83,100 @@ export default function SignUpBlockEmployer() {
     }
   };
 
-  //   const handleEmailSignUp = async () => {
+  const handleGoogleSignUp = async () => {
+    try {
+      const supabase = await createClient();
+
+      // Determine the correct redirect URL based on environment
+      const redirectUrl =
+        process.env.NODE_ENV === "development"
+          ? `${process.env.NEXT_PUBLIC_DEV_SITE_URL}/auth/callback`
+          : `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`;
+
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: redirectUrl,
+          queryParams: {
+            access_type: "offline",
+            prompt: "consent",
+          },
+        },
+      });
+
+      if (error) throw error;
+
+      if (data.url) {
+        // Important: This should be the last thing that happens
+        window.location.href = data.url;
+        return;
+      }
+    } catch (error) {
+      console.error("Auth error:", error);
+    }
+  };
+
+  //   const handleGoogleSignUp = async () => {
   //     const supabase = await createClient();
 
   //     try {
-  //       const { data, error } = await supabase.auth.signUp({
-  //         email: formData.email,
-  //         password: formData.password,
+  //       const { data, error } = await supabase.auth.signInWithOAuth({
+  //         provider: "google",
+  //         options: {
+  //           redirectTo:
+  //             // process.env.NEXT_PUBLIC_SITE_URL + "/auth/callback"
+  //             process.env.NEXT_DEV_SITE_URL + "/auth/callback",
+  //           // Use environment variable for flexibility between local and production
+  //         },
   //       });
 
-  //       if (error) {
-  //         console.error("Sign-up error:", error.message); // Log the error message
-  //         return false; // Return false if there's an error
+  //       if (error) throw error;
+
+  //       //   console.log(data);
+
+  //       const {
+  //         data: { user },
+  //         error: userError,
+  //       } = await supabase.auth.getUser();
+
+  //       console.log(user);
+
+  //       if (userError) throw userError;
+
+  //       const userEmail = user?.email;
+
+  //       const { data: existingUser, error: checkError } = await supabase
+  //         .from("users_job_seekers")
+  //         .select("email")
+  //         .eq("email", userEmail)
+  //         .single();
+
+  //       if (checkError) throw checkError;
+
+  //       if (!existingUser) {
+  //         const { error: insertError } = await supabase
+  //           .from("users_job_seekers")
+  //           .insert([{ email: userEmail }]); // Insert email if not already in the table
+
+  //         if (insertError) throw insertError;
+
+  //         console.log("User email added to users_job_seekers:", userEmail);
   //       } else {
-  //         console.log("Verify email");
-  //         console.log(data);
-  //         const { data: existingUser, error: checkError } = await supabase
-  //           .from("users_employers")
-  //           .select("*")
-  //           .eq("email", formData.email)
-  //           .single();
-
-  //         console.log("user added");
-
-  //         if (checkError) {
-  //           throw new Error(checkError.message);
-  //         }
-
-  //         if (existingUser) {
-  //           const { error } = await supabase.auth.signOut();
-  //           if (error) {
-  //             console.log("a sign out error");
-  //           } else {
-  //             throw new Error("User already exists");
-  //           }
-  //         } else {
-  //           console.log("Succesful adding user to database");
-
-  //           const { error: dbError } = await supabase
-  //             .from("users_employers")
-  //             .insert({
-  //               email: formData.email,
-  //               company_name: formData.companyName,
-  //               password_hash: formData.password,
-  //               is_active: true,
-  //             });
-  //           //   console.log("Succesful adding user to database");
-
-  //           if (dbError) {
-  //             throw new Error(dbError.message);
-  //           } else {
-  //             console.log("Added user to db");
-  //             setSignupEmail(formData.email);
-  //             return true;
-  //           }
-  //         }
+  //         console.log(
+  //           "User email already exists in users_job_seekers:",
+  //           userEmail
+  //         );
   //       }
-  //     } catch (e) {
-  // console.log(e);
-  // const { error } = await supabase.auth.signOut();
-  //       return false;
+
+  //       // Don't manually push to homepage - let the OAuth flow complete
+  //       if (data.url) {
+  //         // Redirect to the auth URL provided by Supabase
+  //         window.location.href = data.url;
+  //       }
+  //     } catch (error) {
+  //       console.error("Auth error:", error);
   //     }
   //   };
-
-  const handleGoogleSignUp = async () => {};
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;

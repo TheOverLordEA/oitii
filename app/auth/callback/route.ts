@@ -52,6 +52,8 @@ export async function GET(request: Request) {
       .eq("email", session.user.email)
       .single();
 
+    console.log(existingUser);
+
     if (userCheckError && userCheckError.code !== "PGRST116") {
       console.error("Error checking user:", userCheckError);
       return NextResponse.redirect(`${baseUrl}/auth/auth-code-error`);
@@ -68,8 +70,8 @@ export async function GET(request: Request) {
             provider_id: session.user.id,
             full_name: session.user.user_metadata?.full_name,
             avatar_url: session.user.user_metadata?.avatar_url,
-            last_sign_in: new Date().toISOString(),
-            created_at: new Date().toISOString(),
+            // last_sign_in: new Date().toISOString(),
+            // created_at: new Date().toISOString(),
           },
         ]);
 

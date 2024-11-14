@@ -76,62 +76,95 @@ export function SignUpBlock() {
   };
 
   const handleGoogleSignUp = async () => {
-    const supabase = await createClient();
-
     try {
+      const supabase = await createClient();
+
+      // Determine the correct redirect URL based on environment
+      const redirectUrl =
+        process.env.NODE_ENV === "development"
+          ? `${process.env.NEXT_PUBLIC_DEV_SITE_URL}/auth/callback`
+          : `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`;
+
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo:
-            // process.env.NEXT_PUBLIC_SITE_URL + "/auth/callback"
-            process.env.NEXT_DEV_SITE_URL + "/auth/callback",
-          // Use environment variable for flexibility between local and production
+          redirectTo: redirectUrl,
+          queryParams: {
+            access_type: "offline",
+            prompt: "consent",
+          },
         },
       });
 
       if (error) throw error;
 
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
-
-      if (userError) throw userError;
-
-      const userEmail = user?.email;
-
-      const { data: existingUser, error: checkError } = await supabase
-        .from("users_job_seekers")
-        .select("email")
-        .eq("email", userEmail)
-        .single();
-
-      if (checkError) throw checkError;
-
-      if (!existingUser) {
-        const { error: insertError } = await supabase
-          .from("users_job_seekers")
-          .insert([{ email: userEmail }]); // Insert email if not already in the table
-
-        if (insertError) throw insertError;
-
-        console.log("User email added to users_job_seekers:", userEmail);
-      } else {
-        console.log(
-          "User email already exists in users_job_seekers:",
-          userEmail
-        );
-      }
-
-      // Don't manually push to homepage - let the OAuth flow complete
       if (data.url) {
-        // Redirect to the auth URL provided by Supabase
+        // Important: This should be the last thing that happens
         window.location.href = data.url;
+        return;
       }
     } catch (error) {
       console.error("Auth error:", error);
     }
   };
+
+  // const handleGoogleSignUp = async () => {
+  //   const supabase = await createClient();
+
+  //   try {
+  //     const { data, error } = await supabase.auth.signInWithOAuth({
+  //       provider: "google",
+  //       options: {
+  //         redirectTo:
+  //           // process.env.NEXT_PUBLIC_SITE_URL + "/auth/callback"
+  //           process.env.NEXT_DEV_SITE_URL + "/auth/callback",
+  //         // Use environment variable for flexibility between local and production
+  //       },
+  //     });
+
+  //     if (error) throw error;
+
+  //     const {
+  //       data: { user },
+  //       error: userError,
+  //     } = await supabase.auth.getUser();
+
+  //     if (userError) throw userError;
+
+  //     const userEmail = user?.email;
+
+  //     const { data: existingUser, error: checkError } = await supabase
+  //       .from("users_job_seekers")
+  //       .select("email")
+  //       .eq("email", userEmail)
+  //       .single();
+
+  //     if (checkError) throw checkError;
+
+  //     if (!existingUser) {
+  //       const { error: insertError } = await supabase
+  //         .from("users_job_seekers")
+  //         .insert([{ email: userEmail }]); // Insert email if not already in the table
+
+  //       if (insertError) throw insertError;
+
+  //       console.log("User email added to users_job_seekers:", userEmail);
+  //     } else {
+  //       console.log(
+  //         "User email already exists in users_job_seekers:",
+  //         userEmail
+  //       );
+  //     }
+
+  //     // Don't manually push to homepage - let the OAuth flow complete
+  //     if (data.url) {
+  //       // Redirect to the auth URL provided by Supabase
+  //       window.location.href = data.url;
+  //     }
+  //   } catch (error) {
+  //     console.error("Auth error:", error);
+  //   }
+  // };
 
   // async function onSubmit(event: React.SyntheticEvent) {
   //   event.preventDefault();
