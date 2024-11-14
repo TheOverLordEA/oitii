@@ -1,10 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { Github } from "lucide-react";
+import { Github, Router } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useSignupStore } from "@/components/store/useSignUpStoreEmail"; // import the store
+
+import { useRouter } from "next/navigation";
+import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
 
 import { Josefin_Sans } from "next/font/google";
@@ -27,7 +31,120 @@ export default function SignUpBlockEmployer() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleEmailSignUo = async () => {};
+  const setSignupEmail = useSignupStore((state) => state.setEmail); // get the setEmail function from the store
+
+  const router = useRouter();
+
+  const handleEmailSignUp = async () => {
+    // Make sure createClient is properly initialized with headers
+    const supabase = await createClient();
+    try {
+      // First check if user already exists in users_employers
+      const { data: existingUser, error: checkError } = await supabase
+        .from("users_employers")
+        .select("*")
+        .eq("email", formData.email);
+
+      // Check if any users were found (without using .single())
+      if (existingUser && existingUser.length > 0) {
+        throw new Error("User already exists");
+      }
+
+      // If no existing user, proceed with signup
+      const { data, error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (error) {
+        console.error("Sign-up error:", error.message);
+        return false;
+      }
+
+      // Add user to users_employers table
+      const { error: dbError } = await supabase.from("users_employers").insert({
+        email: formData.email,
+        company_name: formData.companyName,
+        password_hash: formData.password,
+        is_active: true,
+      });
+
+      if (dbError) {
+        throw new Error(dbError.message);
+      }
+
+      console.log("Added user to db");
+      setSignupEmail(formData.email);
+      return true;
+    } catch (e) {
+      console.log(e);
+      await supabase.auth.signOut();
+      return false;
+    }
+  };
+
+  //   const handleEmailSignUp = async () => {
+  //     const supabase = await createClient();
+
+  //     try {
+  //       const { data, error } = await supabase.auth.signUp({
+  //         email: formData.email,
+  //         password: formData.password,
+  //       });
+
+  //       if (error) {
+  //         console.error("Sign-up error:", error.message); // Log the error message
+  //         return false; // Return false if there's an error
+  //       } else {
+  //         console.log("Verify email");
+  //         console.log(data);
+  //         const { data: existingUser, error: checkError } = await supabase
+  //           .from("users_employers")
+  //           .select("*")
+  //           .eq("email", formData.email)
+  //           .single();
+
+  //         console.log("user added");
+
+  //         if (checkError) {
+  //           throw new Error(checkError.message);
+  //         }
+
+  //         if (existingUser) {
+  //           const { error } = await supabase.auth.signOut();
+  //           if (error) {
+  //             console.log("a sign out error");
+  //           } else {
+  //             throw new Error("User already exists");
+  //           }
+  //         } else {
+  //           console.log("Succesful adding user to database");
+
+  //           const { error: dbError } = await supabase
+  //             .from("users_employers")
+  //             .insert({
+  //               email: formData.email,
+  //               company_name: formData.companyName,
+  //               password_hash: formData.password,
+  //               is_active: true,
+  //             });
+  //           //   console.log("Succesful adding user to database");
+
+  //           if (dbError) {
+  //             throw new Error(dbError.message);
+  //           } else {
+  //             console.log("Added user to db");
+  //             setSignupEmail(formData.email);
+  //             return true;
+  //           }
+  //         }
+  //       }
+  //     } catch (e) {
+  // console.log(e);
+  // const { error } = await supabase.auth.signOut();
+  //       return false;
+  //     }
+  //   };
 
   const handleGoogleSignUp = async () => {};
 
@@ -39,6 +156,20 @@ export default function SignUpBlockEmployer() {
       ...prevState,
       [name]: value,
     }));
+  };
+
+  const onSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setIsLoading(true);
+
+    const successfulSignUp = await handleEmailSignUp();
+
+    if (!successfulSignUp) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
+      router.push("/check-email");
+    }
   };
 
   return (
@@ -60,7 +191,7 @@ export default function SignUpBlockEmployer() {
             </p>
           </div>
           <div className="space-y-4">
-            <form className="flex flex-col gap-5">
+            <form className="flex flex-col gap-5" onSubmit={onSubmit}>
               <div className="space-y-2">
                 <Label className="text-gray-800">Company Name</Label>
                 <Input
@@ -143,26 +274,46 @@ export default function SignUpBlockEmployer() {
               Sign up with Google
             </Button>
           </div>
-          <div className="text-center text-sm text-gray-500">
-            By clicking continue, you agree to our{" "}
-            <Link
-              className="underline underline-offset-4 hover:text-white"
-              target="_blank"
-              rel="noopener"
-              href="/terms-of-service"
-            >
-              Terms of Service
-            </Link>{" "}
-            and{" "}
-            <Link
-              className="underline underline-offset-4 hover:text-white"
-              href="/privacy-policy"
-              target="_blank"
-              rel="noopener"
-            >
-              Privacy Policy
-            </Link>
-            .
+          <div className="text-left text-gray-500 flex flex-col gap-4">
+            <p className="text-xs">
+              By continuing you accept our{" "}
+              <Link
+                className="underline underline-offset-4 hover:text-white"
+                target="_blank"
+                rel="noopener"
+                href="/terms-of-service"
+              >
+                Terms of Service
+              </Link>{" "}
+              and our{" "}
+              <Link
+                className="underline underline-offset-4 hover:text-white"
+                href="/privacy-policy"
+                target="_blank"
+                rel="noopener"
+              >
+                Privacy Policy
+              </Link>
+              .
+            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 text-left">
+              Already have an account?{" "}
+              <Link
+                href="/login"
+                className="text-primary underline underline-offset-4 hover:text-primary"
+              >
+                Log in
+              </Link>
+            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 text-left">
+              Employer account?{" "}
+              <Link
+                href="/signup/employer"
+                className="text-primary underline underline-offset-4 hover:text-primary"
+              >
+                Employer Account
+              </Link>
+            </p>
           </div>
         </div>
       </div>

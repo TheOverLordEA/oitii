@@ -12,7 +12,7 @@ export default function Footer() {
       <div className="w-4/5 mx-auto px-2 py-4 md:py-8">
         <div className="flex justify-between items-start md:items-center gap-5 md:gap-0 flex-col md:flex-row">
           <Link
-            className={` pl-2 md:pl-36 tracking-wider text-4xl font-bold text-black ${josefin_sans.className} `}
+            className={` pl-2 md:pl-40 tracking-wider text-4xl font-bold text-black ${josefin_sans.className} `}
             href="/"
           >
             Oitii
@@ -36,6 +36,16 @@ export default function Footer() {
                 rel="noopener"
               >
                 Twitter
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://bsky.app/profile/oitii.bsky.social"
+                className="hover:underline me-4 md:me-6"
+                target="_blank"
+                rel="noopener"
+              >
+                Bluesky
               </a>
             </li>
             <li>

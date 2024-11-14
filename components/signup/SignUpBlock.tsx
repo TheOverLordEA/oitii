@@ -164,7 +164,6 @@ export function SignUpBlock() {
 
     if (!successfulSignUp) {
       setIsLoading(false);
-      console.log("Unsuccessful signUp");
     } else {
       setIsLoading(false);
       router.push("/check-email");
