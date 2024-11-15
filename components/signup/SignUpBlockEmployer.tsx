@@ -64,9 +64,9 @@ export default function SignUpBlockEmployer() {
       // Add user to users_employers table
       const { error: dbError } = await supabase.from("users_employers").insert({
         email: formData.email,
-        company_name: formData.companyName,
-        password_hash: formData.password,
+        company_name: formData.companyName.toLowerCase(),
         is_active: true,
+        role: "job_seeker",
       });
 
       if (dbError) {
@@ -115,68 +115,6 @@ export default function SignUpBlockEmployer() {
       console.error("Auth error:", error);
     }
   };
-
-  //   const handleGoogleSignUp = async () => {
-  //     const supabase = await createClient();
-
-  //     try {
-  //       const { data, error } = await supabase.auth.signInWithOAuth({
-  //         provider: "google",
-  //         options: {
-  //           redirectTo:
-  //             // process.env.NEXT_PUBLIC_SITE_URL + "/auth/callback"
-  //             process.env.NEXT_DEV_SITE_URL + "/auth/callback",
-  //           // Use environment variable for flexibility between local and production
-  //         },
-  //       });
-
-  //       if (error) throw error;
-
-  //       //   console.log(data);
-
-  //       const {
-  //         data: { user },
-  //         error: userError,
-  //       } = await supabase.auth.getUser();
-
-  //       console.log(user);
-
-  //       if (userError) throw userError;
-
-  //       const userEmail = user?.email;
-
-  //       const { data: existingUser, error: checkError } = await supabase
-  //         .from("users_job_seekers")
-  //         .select("email")
-  //         .eq("email", userEmail)
-  //         .single();
-
-  //       if (checkError) throw checkError;
-
-  //       if (!existingUser) {
-  //         const { error: insertError } = await supabase
-  //           .from("users_job_seekers")
-  //           .insert([{ email: userEmail }]); // Insert email if not already in the table
-
-  //         if (insertError) throw insertError;
-
-  //         console.log("User email added to users_job_seekers:", userEmail);
-  //       } else {
-  //         console.log(
-  //           "User email already exists in users_job_seekers:",
-  //           userEmail
-  //         );
-  //       }
-
-  //       // Don't manually push to homepage - let the OAuth flow complete
-  //       if (data.url) {
-  //         // Redirect to the auth URL provided by Supabase
-  //         window.location.href = data.url;
-  //       }
-  //     } catch (error) {
-  //       console.error("Auth error:", error);
-  //     }
-  //   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;

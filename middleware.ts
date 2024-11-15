@@ -13,6 +13,12 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
+  if (pathname === "/login") {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = "/login/job-seeker";
+    return NextResponse.redirect(redirectUrl);
+  }
+
   // List of allowed paths that should load normally
   const allowedPaths = [
     "/", // Home page
@@ -20,8 +26,10 @@ export async function middleware(request: NextRequest) {
     "/privacy-policy",
     "/terms-of-service",
     "/signup",
+    "/login",
     "/check-email",
-    "/about", //
+    "/about",
+    "/dashboard",
     "/api", // Optional: Allow API routes
   ];
 

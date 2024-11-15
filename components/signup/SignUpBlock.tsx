@@ -8,10 +8,20 @@ import { Input } from "@/components/ui/input";
 import { useSignupStore } from "@/components/store/useSignUpStoreEmail"; // import the store
 import { Label } from "@/components/ui/label";
 import { Josefin_Sans } from "next/font/google";
+import { AlertCircle } from "lucide-react";
+
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 import { useRouter } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/client";
+
+const userRole = "job_seeker";
+
+const signUpErrors = {
+  passwordError:
+    "Password must be at least 6 characters, with one uppercase letter, one digit, and one special character.",
+};
 // import { s } from "framer-motion/client";
 // import { Icons } from "@/components/ui/icons"
 
@@ -25,7 +35,8 @@ const josefin_sans = Josefin_Sans({
 
 export function SignUpBlock() {
   const [isLoading, setIsLoading] = useState(false);
-  const setSignupEmail = useSignupStore((state) => state.setEmail); // get the setEmail function from the store
+  const [showSignUpError, setShowSignUpError] = useState(false);
+  const [signUpErrorMsg, setSignUpErrorMsg] = useState("");
 
   const [formData, setFormData] = useState<{
     name: string;
@@ -37,40 +48,60 @@ export function SignUpBlock() {
     password: "",
   });
 
+  const setSignupEmail = useSignupStore((state) => state.setEmail); // get the setEmail function from the store
+
   const router = useRouter();
 
   const handleSignUpEmail = async () => {
     const supabase = await createClient();
 
     try {
-      const { data, error } = await supabase.auth.signUp({
-        email: formData.email,
-        password: formData.password,
-      });
+      const { data: existingUser, error: checkError } = await supabase
+        .from("users_job_seekers")
+        .select("*")
+        .eq("email", formData.email);
 
-      if (error) {
-        console.error("Sign-up error:", error.message); // Log the error message
-        return false; // Return false if there's an error
+      if (existingUser && existingUser.length > 0) {
+        throw new Error("User already exists");
       } else {
-        console.log("Verify email");
-        setSignupEmail(formData.email);
-        return true;
+        const { data, error } = await supabase.auth.signUp({
+          email: formData.email,
+          password: formData.password,
+        });
+
+        if (error) {
+          console.error("Sign-up error:", error.message);
+          setShowSignUpError(true);
+
+          // console.log(error.name);
+
+          if (error.name === "AuthWeakPasswordError") {
+            setSignUpErrorMsg(signUpErrors.passwordError);
+          }
+
+          return false;
+        } else {
+          console.log(data);
+          const { error: dbError } = await supabase
+            .from("users_job_seekers")
+            .insert({
+              email: formData.email,
+              full_name: formData.name.toLowerCase(),
+              is_active: true,
+              role: userRole,
+            });
+          if (dbError) {
+            throw new Error(dbError.message);
+          } else {
+            console.log("Added user to db");
+            setSignupEmail(formData.email);
+            return true;
+          }
+        }
       }
-
-      // // If no error, sign-up was successful
-      // console.log("Sign-up successful:", data.user?.email_confirmed_at);
-
-      // if (!data.user?.email_confirmed_at) {
-      //   console.log("verify email");
-      //   // await supabase.auth.signOut();
-
-      //   console.log("Redirect user to verify email page");
-      //   // return true;
-      // } else {
-      //   return true;
-      // }
     } catch (e) {
       console.log(e);
+      await supabase.auth.signOut();
       return false;
     }
   };
@@ -98,6 +129,35 @@ export function SignUpBlock() {
 
       if (error) throw error;
 
+      // const {
+      //   data: { user },
+      // } = await supabase.auth.getUser();
+
+      // if (!user) {
+      //   console.log(
+      //     "No user data available yet - this is normal on the initial redirect"
+      //   );
+      //   return { data, error: null };
+      // }
+
+      // const { error: dbError } = await supabase
+      //   .from("users_job_seekers")
+      //   .insert({
+      //     email: user.email,
+      //     full_name: user.user_metadata?.full_name?.toLowerCase() || "",
+      //     is_active: true,
+      //     role: "job-seeker",
+      //     provider_id: user.id,
+      //     auth_provider: "google",
+      //     created_at: new Date().toISOString(),
+      //     last_sign_in: new Date().toISOString(),
+      //     avatar_url: user.user_metadata?.avatar_url,
+      //   });
+
+      // if (dbError) throw dbError;
+
+      console.log(data);
+
       if (data.url) {
         // Important: This should be the last thing that happens
         window.location.href = data.url;
@@ -107,73 +167,6 @@ export function SignUpBlock() {
       console.error("Auth error:", error);
     }
   };
-
-  // const handleGoogleSignUp = async () => {
-  //   const supabase = await createClient();
-
-  //   try {
-  //     const { data, error } = await supabase.auth.signInWithOAuth({
-  //       provider: "google",
-  //       options: {
-  //         redirectTo:
-  //           // process.env.NEXT_PUBLIC_SITE_URL + "/auth/callback"
-  //           process.env.NEXT_DEV_SITE_URL + "/auth/callback",
-  //         // Use environment variable for flexibility between local and production
-  //       },
-  //     });
-
-  //     if (error) throw error;
-
-  //     const {
-  //       data: { user },
-  //       error: userError,
-  //     } = await supabase.auth.getUser();
-
-  //     if (userError) throw userError;
-
-  //     const userEmail = user?.email;
-
-  //     const { data: existingUser, error: checkError } = await supabase
-  //       .from("users_job_seekers")
-  //       .select("email")
-  //       .eq("email", userEmail)
-  //       .single();
-
-  //     if (checkError) throw checkError;
-
-  //     if (!existingUser) {
-  //       const { error: insertError } = await supabase
-  //         .from("users_job_seekers")
-  //         .insert([{ email: userEmail }]); // Insert email if not already in the table
-
-  //       if (insertError) throw insertError;
-
-  //       console.log("User email added to users_job_seekers:", userEmail);
-  //     } else {
-  //       console.log(
-  //         "User email already exists in users_job_seekers:",
-  //         userEmail
-  //       );
-  //     }
-
-  //     // Don't manually push to homepage - let the OAuth flow complete
-  //     if (data.url) {
-  //       // Redirect to the auth URL provided by Supabase
-  //       window.location.href = data.url;
-  //     }
-  //   } catch (error) {
-  //     console.error("Auth error:", error);
-  //   }
-  // };
-
-  // async function onSubmit(event: React.SyntheticEvent) {
-  //   event.preventDefault();
-  //   setIsLoading(true);
-
-  //   setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 3000);
-  // }
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target; // Destructure name and value from the event target
@@ -188,16 +181,15 @@ export function SignUpBlock() {
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    // console.log("Email:", formData.email);
-    // console.log("Password:", formData.password);
-
     setIsLoading(true);
 
     const successfulSignUp = await handleSignUpEmail(); // Handle your sign-up logic here (e.g., call to API)
 
     if (!successfulSignUp) {
+      // setShowSignUpError(false);
       setIsLoading(false);
     } else {
+      setShowSignUpError(false);
       setIsLoading(false);
       router.push("/check-email");
     }
@@ -363,6 +355,16 @@ export function SignUpBlock() {
                     "Sign Up"
                   )}
                 </Button>
+
+                {showSignUpError ? (
+                  <Alert variant="destructive">
+                    <AlertCircle className="h-4 w-4" />
+                    {/* <AlertTitle>Error</AlertTitle> */}
+                    <AlertDescription>{signUpErrorMsg}</AlertDescription>
+                  </Alert>
+                ) : (
+                  ""
+                )}
               </div>
             </form>
             <p className="text-xs text-gray-500 dark:text-gray-400">
