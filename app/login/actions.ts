@@ -12,13 +12,27 @@ export async function login(formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
+  // console.log(email, password);
+
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
+  // console.log(data);
+
   if (error) {
-    return { error: error.message };
+    if (error.message.includes("Invalid login credentials")) {
+      return { success: false, message: "Invalid email or password" };
+    } else {
+      return { success: false, message: error.message };
+    }
+  }
+
+  if (!data.user) {
+    return { success: false, user: null };
+  } else if (!data.session) {
+    return { success: false, user: null };
   }
 
   // Check if the user exists in the users table

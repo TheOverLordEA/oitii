@@ -280,11 +280,16 @@ export function SignUpBlock() {
           <div className="space-y-4">
             <Button
               variant="outline"
-              className="w-full text-black"
+              className="w-full text-black flex justify-center gap-5"
               disabled={isLoading}
               onClick={handleGoogleSignUp}
             >
-              {/* <Icons.google className="mr-2 h-4 w-4" /> */}
+              <img
+                width="25"
+                height="25"
+                src="https://img.icons8.com/color/48/google-logo.png"
+                alt="google-logo"
+              />
               Sign up with Google
             </Button>
             <div className="relative py-4">
@@ -359,7 +364,7 @@ export function SignUpBlock() {
                 {showSignUpError ? (
                   <Alert variant="destructive">
                     <AlertCircle className="h-4 w-4" />
-                    {/* <AlertTitle>Error</AlertTitle> */}
+                    <AlertTitle className="mt-1">Error</AlertTitle>
                     <AlertDescription>{signUpErrorMsg}</AlertDescription>
                   </Alert>
                 ) : (

@@ -61,13 +61,13 @@ export default function LoginBlock() {
               Oitii
             </Link>
             <Link
-              className={`tracking-wider text-2xl md:text-4xl font-bold text-black ${josefin_sans.className} `}
+              className={`tracking-wider text-4xl font-bold text-black ${josefin_sans.className} `}
               href="/"
             >
               Oitii
             </Link>
           </div>
-          <div className="flex flex-col gap-5 pt-20">
+          <div className="flex flex-col gap-5 pt-10 md:pt-20">
             <div className="grid gap-2">
               <h1 className="text-4xl font-bold text-left">Login</h1>
               <p
@@ -115,13 +115,17 @@ export default function LoginBlock() {
                 className="w-full bg-black text-white py-2 rounded-md hover:bg-blue-700 transition duration-300"
                 disabled={isLoading}
               >
-                {isLoading ? "Logging in..." : "Login"}
+                {isLoading ? (
+                  <span className="loading loading-dots loading-md"></span>
+                ) : (
+                  "Login"
+                )}
               </button>
 
               <div className="flex items-center py-5">
                 <div className="border flex-1 h-[1px] bg-gray-950"></div>
-                <span className="px-10 text-xs text-gray-500 ">
-                  or Login with Google
+                <span className="px-10 text-sm text-gray-500 uppercase ">
+                  continue with google
                 </span>
                 <div className="border flex-1 h-[1px] bg-gray-950"></div>
               </div>
@@ -144,27 +148,31 @@ export default function LoginBlock() {
               </p>
             )} */}
             </form>
-            <div className="mt-4 text-center text-sm">
-              <span>Don't have an account? </span>
-              <Link href="/signup" className="underline">
-                Sign up
-              </Link>
+            <div className="mt-4 flex flex-col gap-5 text-gray-600">
+              <div className="text-center text-sm">
+                <span>Log in to your Business Account? </span>
+                <Link
+                  href="/login/employer"
+                  className="text-primary underline underline-offset-4 hover:text-primary "
+                >
+                  Login
+                </Link>
+              </div>
+              <div className=" text-center text-sm">
+                <span>Don't have an account? </span>
+                <Link
+                  href="/signup/job-seeker"
+                  className="text-primary underline-offset-4 hover:text-primary underline"
+                >
+                  Sign up
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* <div className="hidden bg-muted lg:block">
-        <Image
-          src="/placeholder.svg"
-          alt="Image"
-          width="1920"
-          height="1080"
-          className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-        />
-      </div> */}
-
-      <div className="relative h-full w-full overflow-hidden bg-gradient-to-br from-pink-100 to-blue-100 p-8">
+      <div className="hidden md:block relative h-full w-full overflow-hidden bg-gradient-to-br from-pink-100 to-blue-100 p-8">
         <div className="absolute -left-4 -top-4 h-32 w-32 rounded-full bg-yellow-300 opacity-50" />
         <div className="absolute -bottom-4 -right-4 h-40 w-40 rounded-full bg-blue-300 opacity-50" />
         <div className="absolute left-1/4 top-1/4 h-24 w-24 rounded-lg bg-green-300 opacity-50 rotate-12" />
@@ -235,7 +243,31 @@ export default function LoginBlock() {
           </div>
         </div>
 
-        <div className="mt-12 text-center">
+        <div className="mt-12 text-center max-w-3xl mx-auto">
+          <h1 className="text-5xl font-bold text-gray-950 mb-2">
+            Say Goodbye to
+          </h1>
+          <h2 className="text-5xl font-bold text-gray-950 mb-4">
+            Fake Listings!
+          </h2>
+          {/* <p className="mt-6 text-xl text-gray-950 leading-relaxed">
+            We vet every listing to ensure you only see real, verified
+            opportunities.
+            <br /> */}
+          <span className="font-semibold text-[#6559EF] text-lg">
+            Only verified opportunities are available to you — every time!
+          </span>
+          {/* </p> */}
+          <div className="mt-8 flex justify-center space-x-4">
+            <span className="px-4 py-2 bg-green-100 text-green-800 rounded-full">
+              ✓ Authentic Employers
+            </span>
+            <span className="px-4 py-2 bg-green-100 text-green-800 rounded-full">
+              ✓ Real Job Opportunities
+            </span>
+          </div>
+        </div>
+        {/* <div className="mt-12 text-center">
           <h2 className="text-5xl font-bold text-gray-950 mb-2">
             Find the opportunity
           </h2>
@@ -248,7 +280,7 @@ export default function LoginBlock() {
             <br />
             Value your time and apply to roles that matter.
           </p>
-        </div>
+        </div> */}
 
         <div className="absolute bottom-4 left-4 right-4 flex justify-between">
           <div className="h-8 w-8 rounded-full bg-orange-400" />
