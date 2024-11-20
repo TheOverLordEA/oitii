@@ -11,7 +11,7 @@ import {
   Building2,
   Users,
   Briefcase,
-  Info,
+  CreditCard,
   TrendingUp,
 } from "lucide-react";
 import {
@@ -62,19 +62,34 @@ export default function JobAnalytics() {
               <span className="inline-block px-4 py-1 bg-[#edfce7] text-[#2d9c3f] font-semibold rounded-full text-sm">
                 AFFORDABLE JOB POSTING
               </span>
-              <div className="flex items-baseline gap-2 mt-4">
-                <h1 className="text-4xl font-bold text-gray-900">$10</h1>
-                <span className="text-gray-600">per post</span>
+              <div className="flex items-center space-x-3 bg-gray-50 p-4 rounded-lg shadow-sm">
+                <div className="flex items-baseline gap-2">
+                  <h1 className="text-5xl font-extrabold text-gray-900">$10</h1>
+                  <span className="text-gray-500 text-lg font-medium">
+                    per post
+                  </span>
+                </div>
               </div>
             </div>
 
             <div className="p-6 space-y-6">
-              <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-xl">
-                <p className="text-lg font-semibold text-blue-700">
-                  One-time payment of just $10 <br /> No costly per-click fees
-                  or $100+ for a single post. <br />
-                  Pay $10 for your job listing, and it's live instantly.
-                </p>
+              <div className="bg-gradient-to-r from-indigo-50 to-blue-100 p-6 rounded-2xl shadow-md border border-blue-100/50 transform transition-all hover:scale-[1.01]">
+                <div className="flex items-center space-x-4">
+                  <div className="bg-blue-500/20 p-3 rounded-full flex-shrink-0">
+                    <CreditCard className="h-6 w-6 text-blue-700" />
+                  </div>
+                  <div className="flex-grow">
+                    <h3 className="text-2xl font-bold text-blue-900 mb-2">
+                      Maximize Your Hiring Potential
+                    </h3>
+                    <p className="text-base text-blue-800 leading-relaxed">
+                      Unlimited Job Visibility for Just $10
+                      <span className="block text-sm text-blue-700 mt-1">
+                        Simple Pricing • Instant Activation • Broad Reach
+                      </span>
+                    </p>
+                  </div>
+                </div>
               </div>
 
               <div className="space-y-3">
@@ -101,13 +116,12 @@ export default function JobAnalytics() {
                   </span>
                 </div>
                 <p className="text-[#2d9c3f] text-sm">
-                  Get maximum exposure for your job posting at the most
-                  competitive price in the market
+                  Get maximum exposure for your job posting at the best price
                 </p>
               </div>
 
               <div className="pt-4">
-                <button className="w-full bg-[#2d9c3f] hover:bg-[#38c84e] text-white py-4 px-6 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center group">
+                <button className="w-full bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-700 hover:to-green-600 text-white py-4 px-6 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center group shadow-md hover:shadow-lg">
                   Post your job now
                   <ArrowRight className="ml-2 h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
                 </button>

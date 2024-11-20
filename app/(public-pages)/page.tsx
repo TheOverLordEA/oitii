@@ -99,23 +99,18 @@ export default function LandingPage() {
     <>
       <main className="flex flex-col min-h-screen bg-white text-black">
         <div className="flex-1">
-          <section className="w-full py-4 md:py-20 bg-white relative">
-            {/* <div className="absolute inset-0 rounded max-h-24 bg-gradient-to-br from-white via-orange-50/80 to-purple-200/90" /> */}
-            {/* <div className="absolute inset-0 bg-gradient-to-br from-orange-50/90 via-pink-100/80 to-purple-300/70" />
-            <div className="relative container mx-auto px-4 md:px-6"> */}
-            {/* Rest of the content */}
-            {/* </div> */}
-            <div className="relative container mx-auto px-4 md:px-6">
-              <div className="flex flex-col items-center space-y-4 text-center">
-                <div className="flex flex-col gap-6 md:gap-5 p-4 md:p-6 lg:p-8">
+          <section className="w-full py-12 md:py-20 bg-white relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-50/30 via-pink-100/20 to-purple-200/30 opacity-70" />
+
+            <div className="relative container mx-auto px-4 md:px-6 z-10">
+              <div className="flex flex-col items-center space-y-6 text-center max-w-4xl mx-auto">
+                <div className="flex flex-col gap-6 md:gap-8 p-6 lg:p-10">
                   <div
-                    className="uppercase text-center" // Centered text for mobile readability
+                    className="uppercase text-center"
                     aria-label="Job search tagline"
                     role="text"
                   >
-                    <p className="text-black text-base md:text-xl">
-                      {" "}
-                      {/* Adjusted text size for better readability */}
+                    <p className="text-gray-700 text-base md:text-xl">
                       Apply to{" "}
                       <span
                         className="bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent font-bold"
@@ -132,17 +127,22 @@ export default function LandingPage() {
                       </span>
                     </p>
                   </div>
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter leading-[3rem] md:leading-9 text-center pb-2 md:pb-5 text-black">
+
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight text-center text-gray-900">
                     Find and Apply to <br className="block md:hidden" />
-                    Real jobs <br className="my-0 md:my-5 " />
+                    <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                      Real Jobs
+                    </span>{" "}
+                    <br className="my-2 md:my-0" />
                     Authentic Careers
                   </h1>
+
                   <div>
-                    <p className="uppercase text-black text-base md:text-xl leading-9 md:leading-5 text-center">
-                      {" "}
-                      {/* Centered text for mobile readability */}
-                      Verified opportunities. Zero time wasted. Your dream
-                      career awaits.
+                    <p
+                      className="text-gray-600 text-base md:text-xl leading-relaxed text-center max-w-2xl mx-auto 
+            tracking-wide"
+                    >
+                      Verified opportunities. Zero time wasted.
                     </p>
                   </div>
                 </div>
@@ -150,53 +150,41 @@ export default function LandingPage() {
             </div>
           </section>
 
-          <section>
-            <div className="flex flex-col md:flex-row justify-between items-center bg-white p-4 md:p-16">
-              {/* Left Section with Profile and Shapes */}
-              <div className="hidden flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 md:flex">
-                <div className="relative ">
-                  {/* Profile Image */}
-                  <img
-                    src="https://via.placeholder.com/150"
-                    alt="Profile 1"
-                    className="rounded-full w-20 h-20"
-                  />
-                  {/* Geometric Shapes */}
-                  <div className="absolute -top-6 -left-6 w-20 h-20 bg-pink-400"></div>
-                  <div className="absolute -top-6 left-10 w-20 h-20 bg-green-500"></div>
-                  <div className="absolute top-6 left-6 w-10 h-10 bg-yellow-400"></div>
-                  <div className="absolute top-10 left-16 w-10 h-10 bg-blue-600"></div>
-                </div>
+          <section className="w-full bg-white py-12 md:py-16 px-4 md:px-8">
+            <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0 md:space-x-12">
+              {/* Left Profile with Geometric Shapes */}
+              <div className="hidden md:block relative w-48 h-48">
+                <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-purple-300 to-pink-300 opacity-40 rounded-full blur-xl"></div>
+                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-cyan-300 to-blue-300 opacity-40 rounded-full blur-xl"></div>
+                <div className="absolute bottom-0 left-1/2 w-16 h-16 bg-gradient-to-tr from-yellow-300 to-orange-300 opacity-40 rounded-full blur-xl transform -translate-x-1/2"></div>
+                <div className="absolute bottom-0 left-1/2 w-16 h-16 bg-gradient-to-tr from-yellow-300 to-orange-300 opacity-40 rounded-full blur-xl transform -translate-x-1/2"></div>
+
+                <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-br from-purple-300 to-pink-300 opacity-30 rounded-lg blur-lg transform rotate-45"></div>
               </div>
 
               {/* Center Text Section */}
-              <div className="text-center mt-8 md:mt-0">
-                <h2 className="text-2xl font-bold text-black">
-                  {/* Find what's next<span className="text-red-500">:</span> */}
-                  Don't Waste Your Time on <br className="block md:hidden" />
-                  Fake Listings
-                  <span className="text-green-500">:</span>
+              <div className="text-center max-w-xl">
+                <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                  Don't Waste Your Time on
+                  <br className="block md:hidden" />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                    {" "}
+                    Fake Listings
+                  </span>
                 </h2>
-                <p className="text-gray-600 mt-2 uppercase">
+                <p className="text-gray-600 text-base md:text-lg uppercase tracking-wide">
                   Discover Authentic Jobs with Accurate Descriptions
                 </p>
               </div>
 
-              {/* Right Section with Profile and Shapes */}
-              <div className="md:flex hidden flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 mt-8 md:mt-0 ">
-                <div className="relative">
-                  {/* Profile Image */}
-                  <img
-                    src="https://via.placeholder.com/150"
-                    alt="Profile 2"
-                    className="rounded-full w-20 h-20"
-                  />
-                  {/* Geometric Shapes */}
-                  <div className="absolute -top-6 -right-6 w-20 h-20 bg-yellow-500"></div>
-                  <div className="absolute -top-6 right-10 w-20 h-20 bg-green-600"></div>
-                  <div className="absolute top-6 right-6 w-10 h-10 bg-blue-600"></div>
-                  <div className="absolute top-10 right-16 w-10 h-10 bg-orange-400"></div>
-                </div>
+              {/* Right Profile with Geometric Shapes */}
+              <div className="hidden md:block relative w-48 h-48">
+                <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-purple-300 to-pink-300 opacity-40 rounded-full blur-xl"></div>
+                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-cyan-300 to-blue-300 opacity-40 rounded-full blur-xl"></div>
+                <div className="absolute bottom-0 left-1/2 w-16 h-16 bg-gradient-to-tr from-yellow-300 to-orange-300 opacity-40 rounded-full blur-xl transform -translate-x-1/2"></div>
+                <div className="absolute bottom-0 left-1/2 w-16 h-16 bg-gradient-to-tr from-yellow-300 to-orange-300 opacity-40 rounded-full blur-xl transform -translate-x-1/2"></div>
+
+                <div className="absolute -bottom-4 -right-4 w-12 h-12 bg-gradient-to-br from-purple-300 to-pink-300 opacity-30 rounded-lg blur-lg transform rotate-45"></div>
               </div>
             </div>
           </section>
