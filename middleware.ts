@@ -4,8 +4,24 @@ import { updateSession } from "@/utils/supabase/middleware";
 
 import { createClient } from "@/utils/supabase/server";
 
+export const JOB_CATEGORIES = [
+  "latest",
+  "engineering",
+  "finance",
+  "marketing",
+  "healthcare",
+  "construction",
+  "government",
+  "retail",
+  "utilities",
+];
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.auth.getUser();
 
   if (pathname === "/signup") {
     const redirectUrl = request.nextUrl.clone();
@@ -13,53 +29,104 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
+  // Redirect logic for /login to /login/job-seeker
   if (pathname === "/login") {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = "/login/job-seeker";
     return NextResponse.redirect(redirectUrl);
   }
 
-  // List of allowed paths that should load normally
-  const allowedPaths = [
-    "/", // Home page
-    "/coming-soon",
-    "/privacy-policy",
-    "/terms-of-service",
-    "/signup",
-    "/login",
-    "/check-email",
-    "/about",
-    "/dashboard",
-    "/api", // Optional: Allow API routes
-  ];
-
-  // Check if the current path starts with any allowed path
-  const isAllowedPath = allowedPaths.some(
-    (path) => pathname === path || pathname.startsWith(`${path}/`)
-  );
-
-  // Allow access to assets and public files
   if (
-    pathname.startsWith("/_next") ||
-    pathname.startsWith("/static") ||
-    pathname.includes(".")
+    request.nextUrl.pathname.startsWith("/login") &&
+    data.user
+    // (request.nextUrl.pathname.startsWith("/login") && error)
   ) {
-    return;
+    // return NextResponse.rewrite(new URL("/", request.url));
+    const response = NextResponse.redirect(new URL("/", request.url));
+    response.headers.set("x-middleware-cache", "no-cache");
+    return response;
   }
 
-  // Allow the path if it's in the allowed list
-  if (isAllowedPath) {
-    return await updateSession(request);
+  if (request.nextUrl.pathname.startsWith("/signup") && data.user) {
+    // return NextResponse.rewrite(new URL("/", request.url));
+    const response = NextResponse.redirect(new URL("/", request.url));
+    response.headers.set("x-middleware-cache", "no-cache");
+    return response;
   }
 
-  // Redirect all other paths to home page
-  const response = NextResponse.redirect(new URL("/", request.url));
+  if (pathname.startsWith("/jobs")) {
+    const categoryMatch = pathname.match(/^\/jobs\/([^/]+)$/);
 
-  // Prevent caching of redirect response
-  response.headers.set("x-middleware-cache", "no-cache");
+    if (categoryMatch) {
+      const category = categoryMatch[1];
 
-  return response;
+      // Check if the category is valid
+      if (!JOB_CATEGORIES.includes(category)) {
+        // Redirect to 404 page if the category is invalid
+        return NextResponse.redirect(new URL("/404", request.url));
+      }
+    }
+  }
+
+  return await updateSession(request);
 }
+
+// export async function middleware(request: NextRequest) {
+//   const { pathname } = request.nextUrl;
+
+//   if (pathname === "/signup") {
+//     const redirectUrl = request.nextUrl.clone();
+//     redirectUrl.pathname = "/signup/job-seeker";
+//     return NextResponse.redirect(redirectUrl);
+//   }
+
+//   if (pathname === "/login") {
+//     const redirectUrl = request.nextUrl.clone();
+//     redirectUrl.pathname = "/login/job-seeker";
+//     return NextResponse.redirect(redirectUrl);
+//   }
+
+//   // List of allowed paths that should load normally
+//   const allowedPaths = [
+//     "/", // Home page
+//     "/coming-soon",
+//     "/privacy-policy",
+//     "/terms-of-service",
+//     "/signup",
+//     "/login",
+//     "/check-email",
+//     "/about",
+//     "/dashboard",
+//     "/api", // Optional: Allow API routes
+//   ];
+
+//   // Check if the current path starts with any allowed path
+//   const isAllowedPath = allowedPaths.some(
+//     (path) => pathname === path || pathname.startsWith(`${path}/`)
+//   );
+
+//   // Allow access to assets and public files
+//   if (
+//     pathname.startsWith("/_next") ||
+//     pathname.startsWith("/static") ||
+//     pathname.includes(".")
+//   ) {
+//     return;
+//   }
+
+//   // Allow the path if it's in the allowed list
+//   if (isAllowedPath) {
+//     return await updateSession(request);
+//   }
+
+//   // Redirect all other paths to home page
+//   const response = NextResponse.redirect(new URL("/", request.url));
+
+//   // Prevent caching of redirect response
+//   response.headers.set("x-middleware-cache", "no-cache");
+
+//   return response;
+// }
 
 // export async function middleware(request: NextRequest) {
 //   const { pathname } = request.nextUrl;
@@ -73,60 +140,6 @@ export async function middleware(request: NextRequest) {
 //   const response = NextResponse.redirect(new URL("/", request.url));
 //   response.headers.set("x-middleware-cache", "no-cache");
 //   return response;
-// }
-
-// export const JOB_CATEGORIES = [
-//   "latest",
-//   "engineering",
-//   "finance",
-//   "marketing",
-//   "healthcare",
-//   "construction",
-//   "government",
-//   "retail",
-//   "utilities",
-// ];
-
-// export async function middleware(request: NextRequest) {
-//   const { pathname } = request.nextUrl;
-
-//   const supabase = createClient();
-
-//   const { data, error } = await supabase.auth.getUser();
-
-//   if (
-//     request.nextUrl.pathname.startsWith("/login") &&
-//     data.user
-//     // (request.nextUrl.pathname.startsWith("/login") && error)
-//   ) {
-//     // return NextResponse.rewrite(new URL("/", request.url));
-//     const response = NextResponse.redirect(new URL("/", request.url));
-//     response.headers.set("x-middleware-cache", "no-cache");
-//     return response;
-//   }
-
-//   if (request.nextUrl.pathname.startsWith("/signup") && data.user) {
-//     // return NextResponse.rewrite(new URL("/", request.url));
-//     const response = NextResponse.redirect(new URL("/", request.url));
-//     response.headers.set("x-middleware-cache", "no-cache");
-//     return response;
-//   }
-
-//   if (pathname.startsWith("/jobs")) {
-//     const categoryMatch = pathname.match(/^\/jobs\/([^/]+)$/);
-
-//     if (categoryMatch) {
-//       const category = categoryMatch[1];
-
-//       // Check if the category is valid
-//       if (!JOB_CATEGORIES.includes(category)) {
-//         // Redirect to 404 page if the category is invalid
-//         return NextResponse.redirect(new URL("/404", request.url));
-//       }
-//     }
-//   }
-
-//   return await updateSession(request);
 // }
 
 export const config = {

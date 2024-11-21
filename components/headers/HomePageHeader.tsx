@@ -33,12 +33,13 @@ const josefin_sans = Josefin_Sans({
 
 const HomePageHeader = async () => {
   const supabase = await createClient();
-
+  // console.log("code working");
   const { data, error } = await supabase.auth.getUser();
+  console.log(data);
   if (error || !data?.user) {
-    // console.log("user not logged in");
+    console.log("user not logged in");
   } else {
-    // console.log(data.user);
+    console.log(data.user);
   }
 
   return (

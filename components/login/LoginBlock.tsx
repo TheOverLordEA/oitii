@@ -3,12 +3,12 @@
 // import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-// import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
-// import { Label } from "@/components/ui/label";
-
+import { AlertCircle } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Circle, Square, Triangle } from "lucide-react";
 import { Josefin_Sans } from "next/font/google";
+import { createClient } from "@/utils/supabase/client";
+import OneTapComponent from "@/components/google/SignInGoogle";
 import { Montserrat } from "next/font/google";
 
 import { useState } from "react";
@@ -28,7 +28,8 @@ const montserrat = Montserrat({
 });
 
 export default function LoginBlock() {
-  const [error, setError] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [showError, setShowError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -37,18 +38,93 @@ export default function LoginBlock() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
-    setError(null);
 
     const result = await login(new FormData(event.currentTarget));
 
-    if (result.error) {
-      setError(result.error);
+    if (!result.success) {
+      // setError(result.message);
+      console.log(result.message);
+      setShowError(true);
+      if (result.message === "Invalid login credentials") {
+        setErrorMessage(result.message);
+      } else {
+        setErrorMessage(result.message ?? "An unknown error occurred");
+      }
       setIsLoading(false);
     } else {
       // Show success message briefly before redirecting
       setTimeout(() => {
         router.push(redirectTo);
       }, 1000);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    const supabase = await createClient();
+    try {
+      const redirectUrl =
+        process.env.NODE_ENV === "development"
+          ? `http://localhost:3000/auth/callback`
+          : `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`;
+
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+
+        options: {
+          redirectTo: redirectUrl,
+          queryParams: {
+            access_type: "offline",
+            prompt: "consent",
+          },
+        },
+        // options: {
+        //   redirectTo: `http://localhost:3000`,
+        // },
+      });
+      console.log(data);
+
+      if (error) throw error;
+
+      if (data.url) {
+        window.location.href = data.url;
+      }
+      // setUser(data.user)
+    } catch (error) {
+      console.error("Error signing in with Google:", error);
+    }
+  };
+
+  const handleGoogleSignUp = async () => {
+    try {
+      const supabase = await createClient();
+
+      // Determine the correct redirect URL based on environment
+      const redirectUrl =
+        process.env.NODE_ENV === "development"
+          ? `${process.env.NEXT_PUBLIC_DEV_SITE_URL}/auth/callback`
+          : `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`;
+
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: redirectUrl,
+          queryParams: {
+            access_type: "offline",
+            prompt: "consent",
+          },
+        },
+      });
+
+      if (error) throw error;
+
+      if (data.url) {
+        // Important: This should be the last thing that happens
+        console.log(data.url);
+        window.location.href = data.url;
+        return;
+      }
+    } catch (error) {
+      console.error("Auth error:", error);
     }
   };
 
@@ -110,6 +186,15 @@ export default function LoginBlock() {
                   className="w-full px-3 py-2 border rounded-md bg-white"
                 />
               </div>
+              {showError ? (
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle className="mt-1">Error</AlertTitle>
+                  <AlertDescription>{errorMessage}</AlertDescription>
+                </Alert>
+              ) : (
+                ""
+              )}
               <button
                 type="submit"
                 className="w-full bg-black text-white py-2 rounded-md hover:bg-blue-700 transition duration-300"
@@ -130,6 +215,7 @@ export default function LoginBlock() {
                 <div className="border flex-1 h-[1px] bg-gray-950"></div>
               </div>
               <button
+                onClick={handleGoogleSignIn}
                 type="button"
                 className="w-full border flex justify-center gap-5 border-gray-300 py-2 rounded-md hover:bg-gray-100 transition duration-300"
               >
@@ -141,13 +227,10 @@ export default function LoginBlock() {
                 />
                 <span>Login with Google</span>
               </button>
-              {error && <p className="text-red-500 text-sm">{error}</p>}
-              {/* {!isLoading && !error && (
-              <p className="text-green-500 text-sm">
-                Login successful! Redirecting...
-              </p>
-            )} */}
             </form>
+
+            {/* <OneTapComponent /> */}
+
             <div className="mt-4 flex flex-col gap-5 text-gray-600">
               <div className="text-center text-sm">
                 <span>Log in to your Business Account? </span>

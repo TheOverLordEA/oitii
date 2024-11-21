@@ -4,7 +4,8 @@ import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Oitii | Employer Login ",
-  description: "...",
+  description:
+    "Access your Oitii employer dashboard to manage job listings, review applications, and connect with top talent. Login to start hiring the best candidates today",
 };
 
 const Page = () => {

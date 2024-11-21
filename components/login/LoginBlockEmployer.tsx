@@ -99,58 +99,9 @@ export default function LoginBlockEmployer() {
     }
   };
 
-  //   const handleEmailSignUp = async () => {
-  //     // Make sure createClient is properly initialized with headers
-  //     const supabase = await createClient();
-  //     try {
-  //       // First check if user already exists in users_employers
-  //       const { data: existingUser, error: checkError } = await supabase
-  //         .from("users_employers")
-  //         .select("*")
-  //         .eq("email", formData.email);
-
-  //       // Check if any users were found (without using .single())
-  //       if (existingUser && existingUser.length > 0) {
-  //         throw new Error("User already exists");
-  //       }
-
-  //       // If no existing user, proceed with signup
-  //       const { data, error } = await supabase.auth.signUp({
-  //         email: formData.email,
-  //         password: formData.password,
-  //       });
-
-  //       if (error) {
-  //         console.error("Sign-up error:", error.message);
-  //         return false;
-  //       }
-
-  //       // Add user to users_employers table
-  //       const { error: dbError } = await supabase.from("users_employers").insert({
-  //         email: formData.email,
-  //         company_name: formData.companyName.toLowerCase(),
-  //         is_active: true,
-  //         role: "job_seeker",
-  //       });
-
-  //       if (dbError) {
-  //         throw new Error(dbError.message);
-  //       }
-
-  //       console.log("Added user to db");
-  //       setSignupEmail(formData.email);
-  //       return true;
-  //     } catch (e) {
-  //       console.log(e);
-  //       await supabase.auth.signOut();
-  //       return false;
-  //     }
-  //   };
-
   const handleGoogleSignUp = async () => {
+    const supabase = await createClient();
     try {
-      const supabase = await createClient();
-
       // Determine the correct redirect URL based on environment
       const redirectUrl =
         process.env.NODE_ENV === "development"
@@ -189,20 +140,6 @@ export default function LoginBlockEmployer() {
       [name]: value,
     }));
   };
-
-  //   const onSubmit = async (event: React.FormEvent) => {
-  //     event.preventDefault();
-  //     setIsLoading(true);
-
-  //     const successfulSignUp = await handleEmailSignUp();
-
-  //     if (!successfulSignUp) {
-  //       setIsLoading(false);
-  //     } else {
-  //       setIsLoading(false);
-  //       router.push("/check-email");
-  //     }
-  //   };
 
   return (
     <div className="grid min-h-screen grid-cols-1 md:grid-cols-2">
@@ -292,13 +229,6 @@ export default function LoginBlockEmployer() {
                   <AlertDescription>{errorMessage}</AlertDescription>
                 </Alert>
               ) : (
-                // <Alert variant="destructive">
-                //   <AlertCircle className="h-4 w-4" />
-                //   {/* <AlertTitle>Error</AlertTitle> */}
-                //   <AlertDescription>
-                //     {LOGIN_ERRORS.INVALID_ACCOUNT_ERROR}
-                //   </AlertDescription>
-                // </Alert>
                 ""
               )}
 

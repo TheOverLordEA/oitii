@@ -6,6 +6,7 @@
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
+    "target": "es2015", // or higher like "es2020"
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
