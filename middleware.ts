@@ -36,6 +36,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
+  // if()
+
   if (
     request.nextUrl.pathname.startsWith("/login") &&
     data.user

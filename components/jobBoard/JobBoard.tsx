@@ -9,29 +9,33 @@ export default function JobBoard() {
           <h2 className="text-[#FF6347] font-semibold mb-4 uppercase">
             Real Jobs, Verified Listings — No Ghost Jobs Here!
           </h2>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            {/* High exposure, great connection */}
-            Real opportunities, <br />
-            avoid ghost jobs!
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 relative">
+            <span className="block text-gray-900 leading-tight">
+              Real jobs,
+            </span>
+            <span className="block text-[#FF6347] leading-tight">
+              No Ghost jobs!
+            </span>
           </h1>
+
           <ul className="list-disc mb-8 max-w-3xl pl-5 text-gray-900 space-y-2">
             <li>
-              <strong>Transparency in Hiring:</strong> Employers must be
-              transparent about their hiring processes, including the use of
-              third-party companies and Applicant Tracking Systems (ATS).
+              <strong>Real Jobs Only:</strong> All job listings on Oitii are
+              verified to ensure they are genuine opportunities, not fake or
+              ghost jobs.
             </li>
             <li>
-              <strong>Realistic Job Requirements:</strong> We require employers
-              to have realistic job requirements. <strong>Entry level</strong>{" "}
-              means no experience.
+              <strong>No Ghost Jobs:</strong>
+              We eliminate fake or outdated job postings.
             </li>
             <li>
-              <strong>Salary Transparency:</strong> Employers must provide clear
-              salary ranges.
+              <strong>Verified Companies:</strong> Every job on Oitii comes from
+              verified employers, ensuring all companies are vetted and
+              authentic.
             </li>
             <li>
-              <strong>Applicant Communication:</strong> All applicants receive
-              responses, ensuring no one is left in the dark.
+              <strong>Trusted Listings:</strong> Every job is reviewed to ensure
+              legitimacy.
             </li>
           </ul>
           {/* <p className="text-gray-600 mb-8 max-w-3xl mx-auto">

@@ -27,6 +27,8 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
+const USER_TYPE = "job_seeker";
+
 export default function LoginBlock() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showError, setShowError] = useState(false);
@@ -64,8 +66,8 @@ export default function LoginBlock() {
     try {
       const redirectUrl =
         process.env.NODE_ENV === "development"
-          ? `http://localhost:3000/auth/callback`
-          : `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`;
+          ? `http://localhost:3000/auth/callback?user_type=${USER_TYPE}`
+          : `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?user_type=${USER_TYPE}`;
 
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "google",
@@ -91,40 +93,6 @@ export default function LoginBlock() {
       // setUser(data.user)
     } catch (error) {
       console.error("Error signing in with Google:", error);
-    }
-  };
-
-  const handleGoogleSignUp = async () => {
-    try {
-      const supabase = await createClient();
-
-      // Determine the correct redirect URL based on environment
-      const redirectUrl =
-        process.env.NODE_ENV === "development"
-          ? `${process.env.NEXT_PUBLIC_DEV_SITE_URL}/auth/callback`
-          : `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`;
-
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: redirectUrl,
-          queryParams: {
-            access_type: "offline",
-            prompt: "consent",
-          },
-        },
-      });
-
-      if (error) throw error;
-
-      if (data.url) {
-        // Important: This should be the last thing that happens
-        console.log(data.url);
-        window.location.href = data.url;
-        return;
-      }
-    } catch (error) {
-      console.error("Auth error:", error);
     }
   };
 

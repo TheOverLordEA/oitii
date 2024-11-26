@@ -23,6 +23,8 @@ const josefin_sans = Josefin_Sans({
   display: "swap",
 });
 
+const USER_TYPE = "employer";
+
 // const LOGIN_ERRORS = {
 //   INVALID_ACCOUNT_ERROR: "No account found with this email address.",
 //   EMAIL_PASSWORD_ERROR: "Email or Password is incorrect",
@@ -49,7 +51,7 @@ export default function LoginBlockEmployer() {
 
   const searchParams = useSearchParams();
 
-  const redirectTo = searchParams.get("redirect") || "/dashboard";
+  const redirectTo = searchParams.get("redirect") || "/dashboard/employer";
 
   //   const setSignupEmail = useSignupStore((state) => state.setEmail); // get the setEmail function from the store
 
@@ -105,8 +107,8 @@ export default function LoginBlockEmployer() {
       // Determine the correct redirect URL based on environment
       const redirectUrl =
         process.env.NODE_ENV === "development"
-          ? `${process.env.NEXT_PUBLIC_DEV_SITE_URL}/auth/callback`
-          : `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`;
+          ? `http://localhost:3000/auth/callback?user_type=${USER_TYPE}`
+          : `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?user_type=${USER_TYPE}`;
 
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "google",

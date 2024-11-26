@@ -2,14 +2,31 @@ import { NextResponse } from "next/server";
 // The client you created from the Server-Side Auth instructions
 import { createClient } from "@/utils/supabase/server";
 
+enum UserType {
+  JOB_SEEKER = "job_seeker",
+  EMPLOYER = "employer",
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
+  const userType = searchParams.get("user_type");
+
   const code = searchParams.get("code");
-  const next = "/about";
+  // const next = "/dashboard" || "/";
+
+  const next =
+    userType === UserType.JOB_SEEKER
+      ? "/dashboard/job_seeker"
+      : userType === UserType.EMPLOYER
+      ? "/dashboard/employer"
+      : "/";
 
   if (code) {
     const supabase = await createClient();
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    const {
+      // data: { user },
+      error,
+    } = await supabase.auth.exchangeCodeForSession(code);
 
     if (!error) {
       const isLocalEnv = process.env.NODE_ENV === "development";
