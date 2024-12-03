@@ -11,6 +11,10 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const userType = searchParams.get("user_type");
 
+  // const supabaseApp = await createClient();
+
+  // console.log("User input", supabaseApp.auth.getUser());
+
   const code = searchParams.get("code");
   // const next = "/dashboard" || "/";
 
@@ -24,12 +28,72 @@ export async function GET(request: Request) {
   if (code) {
     const supabase = await createClient();
     const {
-      // data: { user },
+      data: { user },
       error,
     } = await supabase.auth.exchangeCodeForSession(code);
 
+    console.log(user);
+
     if (!error) {
       const isLocalEnv = process.env.NODE_ENV === "development";
+
+      const dbUserType =
+        userType === UserType.JOB_SEEKER
+          ? "users_job_seekers"
+          : "users_employers";
+
+      const { data: userEmployer, error: fetchError } = await supabase
+        .from("users_employers")
+        .select("*")
+        .eq("id", user?.id)
+        .single(); // Assuming user_id is unique
+
+      if (fetchError && fetchError.code !== "PGRST116") {
+        // Ignore "row not found" errors
+        throw fetchError;
+      }
+
+      if (userEmployer) {
+        // If the user exists, update their is_active status
+        const { error: updateError } = await supabase
+          .from(dbUserType)
+          .update({ is_active: true })
+          .eq("id", user?.id);
+
+        if (updateError) throw updateError;
+
+        console.log("User updated successfully");
+      } else {
+        // If the user does not exist, insert a new row
+        const { error: insertError } = await supabase.from(dbUserType).insert({
+          user_id: user?.id,
+          email: user?.email,
+          full_name: user?.user_metadata.full_name,
+          // company_name: formData.companyName.toLowerCase(),
+          is_active: true,
+          role: userType,
+        });
+
+        if (insertError) {
+          // await supabase.auth.signOut();
+          // document.cookie.split(";").forEach((c) => {
+          //   if (c.includes("sb-") || c.includes("supabase-auth")) {
+          //     document.cookie = c
+          //       .replace(/^ +/, "")
+          //       .replace(
+          //         /=.*/,
+          //         "=;expires=" + new Date().toUTCString() + ";path=/"
+          //       );
+          //   }
+          // });
+
+          console.log("User signed out and cookies cleared");
+          console.log("User signed out");
+          throw insertError;
+        }
+
+        console.log("User added successfully");
+      }
 
       if (isLocalEnv) {
         // Use the full local URL
@@ -41,6 +105,7 @@ export async function GET(request: Request) {
         if (forwardedHost) {
           return NextResponse.redirect(`https://${forwardedHost}${next}`);
         } else {
+          // console.log("error")
           return NextResponse.redirect(`${origin}${next}`);
         }
       }
@@ -48,6 +113,7 @@ export async function GET(request: Request) {
   }
 
   // Error case
+
   return NextResponse.redirect(`${origin}/auth/auth-code-error`);
 }
 // import { NextResponse } from "next/server";

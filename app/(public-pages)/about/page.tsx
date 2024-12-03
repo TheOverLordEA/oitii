@@ -1,8 +1,15 @@
 import Image from "next/image";
+import type { Metadata } from "next";
+
 import Link from "next/link";
 import { Target, Shield, CreditCard, Users } from "lucide-react";
 
-// TODO: Change href of Link vision to job post
+export const metadata: Metadata = {
+  title: "Oitii | About",
+  description:
+    "Discover Oitii, the platform that verifies job postings, ensuring genuine opportunities for employers and candidates alike. Affordable solutions for hiring.",
+};
+// TODO: Change href of Link Discover Oitii, the platform that verifies job postings, ensuring genuine opportunities for employers and candidates alike. Affordable solutions for hiring.vision to job post
 
 export default function Page() {
   return (

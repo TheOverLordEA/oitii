@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useSignupStore } from "@/components/store/useSignUpStoreEmail"; // import the store
 
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
+
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
@@ -20,6 +23,11 @@ const josefin_sans = Josefin_Sans({
 
 const USER_TYPE = "employer";
 
+const signUpErrors = {
+  passwordError:
+    "Password must be at least 6 characters, with one uppercase letter, one digit, and one special character.",
+};
+
 export default function SignUpBlockEmployer() {
   const [formData, setFormData] = useState<{
     companyName: string;
@@ -31,6 +39,8 @@ export default function SignUpBlockEmployer() {
     password: "",
   });
 
+  const [showSignUpError, setShowSignUpError] = useState(false);
+  const [signUpErrorMsg, setSignUpErrorMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const setSignupEmail = useSignupStore((state) => state.setEmail); // get the setEmail function from the store
@@ -60,6 +70,13 @@ export default function SignUpBlockEmployer() {
 
       if (error) {
         console.error("Sign-up error:", error.message);
+        setShowSignUpError(true);
+
+        // console.log(error.name);
+
+        if (error.name === "AuthWeakPasswordError") {
+          setSignUpErrorMsg(signUpErrors.passwordError);
+        }
         return false;
       }
 
@@ -68,7 +85,7 @@ export default function SignUpBlockEmployer() {
         email: formData.email,
         company_name: formData.companyName.toLowerCase(),
         is_active: true,
-        role: "job_seeker",
+        role: "employer",
       });
 
       if (dbError) {
@@ -138,6 +155,8 @@ export default function SignUpBlockEmployer() {
       setIsLoading(false);
     } else {
       setIsLoading(false);
+      setShowSignUpError(false);
+
       router.push("/check-email");
     }
   };
@@ -212,6 +231,16 @@ export default function SignUpBlockEmployer() {
                   "Sign Up"
                 )}
               </Button>
+
+              {showSignUpError ? (
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle className="mt-1">Error</AlertTitle>
+                  <AlertDescription>{signUpErrorMsg}</AlertDescription>
+                </Alert>
+              ) : (
+                ""
+              )}
             </form>
             <div className="relative">
               <div className="absolute inset-0 flex items-center">

@@ -64,7 +64,7 @@ export default function JobAnalytics() {
               </span>
               <div className="flex items-center space-x-3 bg-gray-50 p-4 rounded-lg shadow-sm">
                 <div className="flex items-baseline gap-2">
-                  <h1 className="text-5xl font-extrabold text-gray-900">$10</h1>
+                  <h2 className="text-5xl font-extrabold text-gray-900">$10</h2>
                   <span className="text-gray-500 text-lg font-medium">
                     per post
                   </span>

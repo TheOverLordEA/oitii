@@ -131,34 +131,7 @@ export function SignUpBlock() {
 
       if (error) throw error;
 
-      // const {
-      //   data: { user },
-      // } = await supabase.auth.getUser();
-
-      // if (!user) {
-      //   console.log(
-      //     "No user data available yet - this is normal on the initial redirect"
-      //   );
-      //   return { data, error: null };
-      // }
-
-      // const { error: dbError } = await supabase
-      //   .from("users_job_seekers")
-      //   .insert({
-      //     email: user.email,
-      //     full_name: user.user_metadata?.full_name?.toLowerCase() || "",
-      //     is_active: true,
-      //     role: "job-seeker",
-      //     provider_id: user.id,
-      //     auth_provider: "google",
-      //     created_at: new Date().toISOString(),
-      //     last_sign_in: new Date().toISOString(),
-      //     avatar_url: user.user_metadata?.avatar_url,
-      //   });
-
-      // if (dbError) throw dbError;
-
-      console.log(data);
+      console.log("Google auth");
 
       if (data.url) {
         // Important: This should be the last thing that happens

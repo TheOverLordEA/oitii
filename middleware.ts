@@ -16,12 +16,20 @@ export const JOB_CATEGORIES = [
   "utilities",
 ];
 
+const USER_ROLES = {
+  employer: "employer",
+  job_seeker: "job_seeker",
+};
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const supabase = await createClient();
 
-  const { data, error } = await supabase.auth.getUser();
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
 
   if (pathname === "/signup") {
     const redirectUrl = request.nextUrl.clone();
@@ -38,9 +46,63 @@ export async function middleware(request: NextRequest) {
 
   // if()
 
+  if (request.nextUrl.pathname.startsWith("/dashboard/employer") && user) {
+    const { data, error } = await supabase
+      .from("users_employers")
+      .select("*")
+      .eq("user_id", user.id);
+
+    if (error) {
+      console.error("Error fetching data:", error);
+      const response = NextResponse.redirect(
+        new URL("/dashboard/error", request.url)
+      );
+      response.headers.set("x-middleware-cache", "no-cache");
+      return response; // Optional error page
+    }
+
+    const isEmployer = data?.[0]?.role === USER_ROLES.employer;
+    // const isEmployer =
+    // data && data.length > 0 ? data[0].role === USER_ROLES.employer : false;
+
+    if (!isEmployer) {
+      //Add a unotherized page
+      const response = NextResponse.redirect(new URL("/", request.url));
+      response.headers.set("x-middleware-cache", "no-cache");
+      return response;
+    }
+  }
+
+  if (request.nextUrl.pathname.startsWith("/dashboard/job_seeker") && user) {
+    const { data, error } = await supabase
+      .from("users_job_seekers")
+      .select("*")
+      .eq("user_id", user.id);
+
+    if (error) {
+      console.error("Error fetching data:", error);
+      const response = NextResponse.redirect(
+        new URL("/dashboard/error", request.url)
+      );
+      response.headers.set("x-middleware-cache", "no-cache");
+      return response; // Optional error page
+    }
+
+    const isEmployer = data?.[0]?.role === USER_ROLES.job_seeker;
+    // const isEmployer =
+    // data && data.length > 0 ? data[0].role === USER_ROLES.employer : false;
+
+    if (!isEmployer) {
+      //Add a unotherized page
+      const response = NextResponse.redirect(new URL("/", request.url));
+      response.headers.set("x-middleware-cache", "no-cache");
+      return response;
+    }
+  }
+
   if (
     request.nextUrl.pathname.startsWith("/login") &&
-    data.user
+    user
     // (request.nextUrl.pathname.startsWith("/login") && error)
   ) {
     // return NextResponse.rewrite(new URL("/", request.url));
@@ -49,7 +111,7 @@ export async function middleware(request: NextRequest) {
     return response;
   }
 
-  if (request.nextUrl.pathname.startsWith("/signup") && data.user) {
+  if (request.nextUrl.pathname.startsWith("/signup") && user) {
     // return NextResponse.rewrite(new URL("/", request.url));
     const response = NextResponse.redirect(new URL("/", request.url));
     response.headers.set("x-middleware-cache", "no-cache");

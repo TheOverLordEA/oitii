@@ -9,14 +9,14 @@ export default function JobBoard() {
           <h2 className="text-[#FF6347] font-semibold mb-4 uppercase">
             Real Jobs, Verified Listings — No Ghost Jobs Here!
           </h2>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 relative">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 relative">
             <span className="block text-gray-900 leading-tight">
               Real jobs,
             </span>
             <span className="block text-[#FF6347] leading-tight">
               No Ghost jobs!
             </span>
-          </h1>
+          </h2>
 
           <ul className="list-disc mb-8 max-w-3xl pl-5 text-gray-900 space-y-2">
             <li>

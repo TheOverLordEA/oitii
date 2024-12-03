@@ -30,7 +30,8 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="https://x.com/OitiiJobs"
+                href="https://x.com/oitiiJobs"
+                title="twitter"
                 className="hover:underline me-4 md:me-6"
                 target="_blank"
                 rel="noopener"
@@ -42,6 +43,7 @@ export default function Footer() {
               <a
                 href="https://bsky.app/profile/oitii.bsky.social"
                 className="hover:underline me-4 md:me-6"
+                title="Bluesky"
                 target="_blank"
                 rel="noopener"
               >
@@ -49,13 +51,18 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <Link href="/about" className="hover:underline me-4 md:me-6">
+              <Link
+                href="/about"
+                title="About"
+                className="hover:underline me-4 md:me-6"
+              >
                 About
               </Link>
             </li>
             <li>
               <Link
                 href="/privacy-policy"
+                title="Privacy Policy"
                 className="hover:underline me-4 md:me-6"
               >
                 Privacy Policy
