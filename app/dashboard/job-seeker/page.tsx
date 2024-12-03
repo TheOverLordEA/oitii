@@ -4,10 +4,9 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Briefcase, Building2, MapPin } from "lucide-react";
 
-export default function DashboardEmployerLayout({
-  children, // will be a page or nested layout
-}: {
-  children: React.ReactNode;
+export default function DashboardEmployerLayout({}: // children, // will be a page or nested layout
+{
+  // children: React.ReactNode;
 }) {
   return (
     <section>
@@ -141,7 +140,7 @@ export default function DashboardEmployerLayout({
         </div>
       </div>
 
-      {children}
+      {/* {children} */}
     </section>
   );
 }
