@@ -43,9 +43,9 @@ export async function GET(request: Request) {
           : "users_employers";
 
       const { data: userEmployer, error: fetchError } = await supabase
-        .from("users_employers")
+        .from(dbUserType)
         .select("*")
-        .eq("id", user?.id)
+        .eq("user_id", user?.id)
         .single(); // Assuming user_id is unique
 
       if (fetchError && fetchError.code !== "PGRST116") {
@@ -68,10 +68,14 @@ export async function GET(request: Request) {
         const { error: insertError } = await supabase.from(dbUserType).insert({
           user_id: user?.id,
           email: user?.email,
-          full_name: user?.user_metadata.full_name,
+          ...(userType === "job_seeker"
+            ? { full_name: user?.user_metadata.full_name }
+            : {}),
+          // full_name: user?.user_metadata.full_name,
           // company_name: formData.companyName.toLowerCase(),
           is_active: true,
           role: userType,
+          auth_provider: user?.identities?.[0]?.provider,
         });
 
         if (insertError) {
