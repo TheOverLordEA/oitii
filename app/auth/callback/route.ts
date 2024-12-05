@@ -44,7 +44,7 @@ export async function GET(request: Request) {
           ? "users_job_seekers"
           : "users_employers";
 
-      console.log(userType, dbUserType);
+      // console.log(userType, dbUserType);
 
       const { data: userData, error: fetchError } = await supabase
         .from(dbUserType)
@@ -52,7 +52,7 @@ export async function GET(request: Request) {
         .eq("user_id", user?.id)
         .single(); // Assuming user_id is unique
 
-      console.log(userData);
+      // console.log(userData);
 
       if (fetchError && fetchError.code !== "PGRST116") {
         // Ignore "row not found" errors

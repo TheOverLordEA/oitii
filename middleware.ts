@@ -102,6 +102,36 @@ async function checkUserStatusEmployer() {
     return NextResponse.redirect(redirectUrl);
   }
 
+  if(request.nextUrl.pathname === '/dashboard' && user) {
+    const jobSeeker = await checkUserStatusJobSeeker()
+
+    const employer = await checkUserStatusEmployer()
+
+    if(jobSeeker) {
+      const res = NextResponse.redirect(
+        new URL('/dashboard/job-seeker', request.url)
+      )
+
+      res.headers.set("x-middleware-cache", "no-cache")
+      return res
+    }
+
+    if(employer) {
+      const res = NextResponse.redirect(
+        new URL('/dashboard/employer', request.url)
+      )
+
+      res.headers.set("x-middleware-cache", "no-cache")
+      return res
+    } else {
+      const response = NextResponse.redirect(
+        new URL("/dashboard/error", request.url)
+      );
+      response.headers.set("x-middleware-cache", "no-cache");
+      return response;
+    }
+  }
+
 
   if (request.nextUrl.pathname.startsWith("/dashboard/employer") && user) {
     const { data, error } = await supabase
