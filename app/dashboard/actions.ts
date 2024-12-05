@@ -5,7 +5,10 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function logout() {
+  // const formData = await req.formData
   const supabase = await createClient();
+
+  // const {data, error} = await supabase.from()
 
   const { error } = await supabase.auth.signOut();
 

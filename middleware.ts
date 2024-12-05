@@ -31,6 +31,64 @@ export async function middleware(request: NextRequest) {
     error,
   } = await supabase.auth.getUser();
 
+
+  // async function checkUserStatus() {
+  //   // First check employers table
+  //   const { data: employerData, error: employerError } = await supabase
+  //     .from('users_employers')
+  //     .select('role, is_active')
+  //     .eq('user_id', user?.id)
+  //     .single()
+
+  //   if (!employerError && employerData) {
+  //     return employerData
+  //   }
+
+
+  //     // If not found in employers, check job seekers table
+  //     const { data: jobSeekerData, error: jobSeekerError } = await supabase
+  //     .from('users_job_seekers')
+  //     .select('role, is_active')
+  //     .eq('user_id', user?.id)
+  //     .single()
+
+  //   if (!jobSeekerError && jobSeekerData) {
+  //     return jobSeekerData
+  //   }
+
+  //   // If no user data found in either table
+  //   return null
+  // }
+
+
+
+  // const userData = await checkUserStatus()
+
+
+async function checkUserStatusJobSeeker() {
+  const {data: jobSeekerData, error: jobSeekerError} = await supabase.from('users_job_seekers').select('role, is_active').single()
+
+  if(!jobSeekerError && jobSeekerData) {
+    if(jobSeekerData.role === 'job_seeker' && jobSeekerData.is_active === true) {
+      return true
+    }
+    
+  }  return false
+}
+
+
+async function checkUserStatusEmployer() {
+  const {data: employerData, error: employerError} = await supabase.from('users_employers').select('role, is_active').single()
+
+  if(!employerError && employerData) {
+    if(employerData.role === 'employer' && employerData.is_active === true) {
+      return true
+    }
+    
+  }  return false
+}
+
+
   if (pathname === "/signup") {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = "/signup/job-seeker";
@@ -44,7 +102,6 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
-  // if()
 
   if (request.nextUrl.pathname.startsWith("/dashboard/employer") && user) {
     const { data, error } = await supabase
@@ -60,25 +117,37 @@ export async function middleware(request: NextRequest) {
       response.headers.set("x-middleware-cache", "no-cache");
       return response; // Optional error page
     }
+    console.log('code running')
 
-    const isEmployer = data?.[0]?.role === USER_ROLES.employer;
+
+    const isEmployer = data?.[0]?.role === USER_ROLES.employer && data?.[0]?.is_active;
     // const isEmployer =
     // data && data.length > 0 ? data[0].role === USER_ROLES.employer : false;
 
+
+
+
     if (!isEmployer) {
       //Add a unotherized page
+      const checkIfJobSeeker = await checkUserStatusJobSeeker()
+      if(checkIfJobSeeker) {
+        const response = NextResponse.redirect(new URL("/unauthorized", request.url));
+        response.headers.set("x-middleware-cache", "no-cache");
+        return response;
+      }
       const response = NextResponse.redirect(new URL("/", request.url));
       response.headers.set("x-middleware-cache", "no-cache");
       return response;
     }
   }
 
-  if (request.nextUrl.pathname.startsWith("/dashboard/job_seeker") && user) {
+  if (request.nextUrl.pathname.startsWith("/dashboard/job-seeker") && user) {
     const { data, error } = await supabase
       .from("users_job_seekers")
       .select("*")
       .eq("user_id", user.id);
 
+      console.log('code running')
     if (error) {
       console.error("Error fetching data:", error);
       const response = NextResponse.redirect(
@@ -88,12 +157,17 @@ export async function middleware(request: NextRequest) {
       return response; // Optional error page
     }
 
-    const isEmployer = data?.[0]?.role === USER_ROLES.job_seeker;
-    // const isEmployer =
-    // data && data.length > 0 ? data[0].role === USER_ROLES.employer : false;
-
-    if (!isEmployer) {
+    const isJobSeek = data?.[0]?.role === USER_ROLES.job_seeker && data?.[0]?.is_active;
+    // const isEmployer = data[0].role === USER_ROLES.employer && data?.[0]?.is_active
+console.log(isJobSeek)
+    if (!isJobSeek) {
       //Add a unotherized page
+      const checkIfEmployer = await checkUserStatusEmployer()
+      if(checkIfEmployer) {
+        const response = NextResponse.redirect(new URL ('/unauthorized', request.url))
+        response.headers.set('x-middleware-cache', 'no-cache')
+        return response
+      }
       const response = NextResponse.redirect(new URL("/", request.url));
       response.headers.set("x-middleware-cache", "no-cache");
       return response;

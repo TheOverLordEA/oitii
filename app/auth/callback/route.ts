@@ -11,6 +11,8 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const userType = searchParams.get("user_type");
 
+  console.log(userType);
+
   // const supabaseApp = await createClient();
 
   // console.log("User input", supabaseApp.auth.getUser());
@@ -20,7 +22,7 @@ export async function GET(request: Request) {
 
   const next =
     userType === UserType.JOB_SEEKER
-      ? "/dashboard/job_seeker"
+      ? "/dashboard/job-seeker"
       : userType === UserType.EMPLOYER
       ? "/dashboard/employer"
       : "/";
@@ -32,7 +34,7 @@ export async function GET(request: Request) {
       error,
     } = await supabase.auth.exchangeCodeForSession(code);
 
-    console.log(user);
+    // console.log(userType);
 
     if (!error) {
       const isLocalEnv = process.env.NODE_ENV === "development";
@@ -42,23 +44,28 @@ export async function GET(request: Request) {
           ? "users_job_seekers"
           : "users_employers";
 
-      const { data: userEmployer, error: fetchError } = await supabase
+      console.log(userType, dbUserType);
+
+      const { data: userData, error: fetchError } = await supabase
         .from(dbUserType)
         .select("*")
         .eq("user_id", user?.id)
         .single(); // Assuming user_id is unique
+
+      console.log(userData);
 
       if (fetchError && fetchError.code !== "PGRST116") {
         // Ignore "row not found" errors
         throw fetchError;
       }
 
-      if (userEmployer) {
+      if (userData) {
         // If the user exists, update their is_active status
         const { error: updateError } = await supabase
           .from(dbUserType)
           .update({ is_active: true })
-          .eq("id", user?.id);
+          .eq("user_id", user?.id);
+        console.log(user?.id);
 
         if (updateError) throw updateError;
 
