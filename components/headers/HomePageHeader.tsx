@@ -46,12 +46,13 @@ const HomePageHeader = async () => {
     <header className="px-4 lg:px-6 py-12 h-16 flex items-center justify-evenly bg-white sticky top-0 z-50 border-b border-gray-200">
       <div className="flex md:justify-around justify-between items-center gap-5 w-4/5 ">
         <div className="flex items-center justify-start md:justify-center flex-1">
-          <Link className="sr-only" href="/">
+          <Link className="sr-only" href="/" title="Oitii">
             Oitii
           </Link>
           <Link
             className={`ml-2 tracking-wider text-4xl font-bold text-black ${josefin_sans.className} `}
             href="/"
+            title="Oitii"
           >
             Oitii
           </Link>
@@ -78,12 +79,12 @@ const HomePageHeader = async () => {
           ) : (
             <>
               {" "}
-              <Link href={`/login`}>
+              <Link href={`/login`} title="Sign In">
                 <Button className="bg-white text-black transition-all ease-in-out hover:border hover:border-gray-500 hover:bg-white max-w-[75px]">
                   {BUTTON.signIn}
                 </Button>
               </Link>
-              <Link href={`/signup`}>
+              <Link href={`/signup`} title="Sign Up">
                 <Button className="max-w-[75px]">{BUTTON.signUp}</Button>
               </Link>
             </>

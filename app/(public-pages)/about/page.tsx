@@ -215,6 +215,7 @@ export default function Page() {
                 </p>
                 <Link
                   href="/"
+                  title="Get Started"
                   className="px-6 py-3 bg-yellow-700 text-white rounded-xl hover:bg-yellow-800 transition-colors"
                 >
                   Get Started

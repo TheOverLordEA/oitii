@@ -50,6 +50,9 @@ export const metadata: Metadata = {
   verification: {
     google: "n8h4bzVX8TcdwhATBUFw6AingingSz-t3nMziiDELfzaUE",
   },
+  other: {
+    "rankai-script": "https://rankai.ai/apply.js",
+  },
 };
 
 export default function RootLayout({
