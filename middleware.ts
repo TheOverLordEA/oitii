@@ -109,7 +109,7 @@ async function checkUserStatusEmployer() {
 
     if(jobSeeker) {
       const res = NextResponse.redirect(
-        new URL('/dashboard/job-seeker', request.url)
+        new URL(`/dashboard/job-seeker/${user?.id}`, request.url)
       )
 
       res.headers.set("x-middleware-cache", "no-cache")
@@ -118,7 +118,7 @@ async function checkUserStatusEmployer() {
 
     if(employer) {
       const res = NextResponse.redirect(
-        new URL('/dashboard/employer', request.url)
+        new URL(`/dashboard/employer/${user?.id}`, request.url)
       )
 
       res.headers.set("x-middleware-cache", "no-cache")
