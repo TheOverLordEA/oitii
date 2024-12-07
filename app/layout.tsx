@@ -47,11 +47,9 @@ export const metadata: Metadata = {
     ],
     apple: [{ url: "/apple-touch-icon.png" }],
   },
+  metadataBase: new URL("https://oitii.com"),
   verification: {
     google: "n8h4bzVX8TcdwhATBUFw6AingingSz-t3nMziiDELfzaUE",
-  },
-  other: {
-    "rankai-script": "https://rankai.ai/apply.js",
   },
 };
 
@@ -62,6 +60,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-white">
+      <head>
+        <script
+          src="https://rankai.ai/apply.js"
+          data-rankai-id="cm3ylfhso00018ca0efhor268"
+          crossOrigin="anonymous"
+          defer
+        ></script>
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
       >
