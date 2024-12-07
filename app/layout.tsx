@@ -61,6 +61,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-white">
       <head>
+        <meta
+          name="google-site-verification"
+          content="n8h4bzVX8TcdwhATBUFw6AingSz-t3nMziiDELfzaUE"
+        />
         <script
           src="https://rankai.ai/apply.js"
           data-rankai-id="cm3ylfhso00018ca0efhor268"
