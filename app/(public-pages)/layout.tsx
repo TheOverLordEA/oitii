@@ -1,3 +1,5 @@
+// "use client";
+
 import HomePageHeader from "@/components/headers/HomePageHeader";
 import Footer from "@/components/footer/Footer";
 

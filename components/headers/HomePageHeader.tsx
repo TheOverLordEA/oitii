@@ -32,7 +32,9 @@ const josefin_sans = Josefin_Sans({
 });
 
 const HomePageHeader = async () => {
+  // const router = useRouter();
   const supabase = await createClient();
+
   // console.log("code working");
   const { data, error } = await supabase.auth.getUser();
   console.log(data);
@@ -43,7 +45,9 @@ const HomePageHeader = async () => {
   }
 
   return (
-    <header className="px-4 lg:px-6 py-12 h-16 flex items-center justify-evenly bg-white sticky top-0 z-50 border-b border-gray-200">
+    <header
+      className={`px-4 lg:px-6 py-12 h-16 flex items-center justify-evenly bg-white sticky top-0 z-50 border-b border-gray-200`}
+    >
       <div className="flex md:justify-around justify-between items-center gap-5 w-4/5 ">
         <div className="flex items-center justify-start md:justify-center flex-1">
           <Link className="sr-only" href="/" title="Oitii">
@@ -98,5 +102,22 @@ const HomePageHeader = async () => {
     </header>
   );
 };
+
+// HomePageHeader.getInitialProps = async () => {
+//   const router = { pathname: "/post-a-job" };
+
+//   console.log(router);
+
+//   const backgroundColorClasses = {
+//     "/post-a-job": "bg-gradient-to-r from-blue-200 to-cyan-200",
+//   };
+
+//   const backgroundColor =
+//     backgroundColorClasses[
+//       router.pathname as keyof typeof backgroundColorClasses
+//     ] || "bg-white";
+
+//   return { backgroundColor };
+// };
 
 export default HomePageHeader;

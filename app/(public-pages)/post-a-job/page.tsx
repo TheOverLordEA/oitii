@@ -13,34 +13,38 @@ import { Button } from "@/components/ui/button";
 
 export default function Page() {
   return (
-    <div className="container mx-auto px-4 py-16">
-      <div className="text-center space-y-4 mb-16">
-        <h2 className="text-base font-semibold leading-7 text-center">
-          PLANS & PRICING
-        </h2>
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-          Start for free, then enjoy
-          <br />
-          your first month for $1
-        </h1>
-        <p className="text-xl text-muted-foreground">
-          Choose the best plan for your business. Change plans as you grow.
-        </p>
-        <div className="flex items-center justify-center gap-4 mt-8">
-          <div className="bg-secondary rounded-full p-1 flex">
-            <button className="px-4 py-2 rounded-full bg-background">
-              Pay monthly
-            </button>
-            <button className="px-4 py-2 rounded-full">
-              Pay yearly (save 25%)*
-            </button>
+    <>
+      <section className="bg-gradient-to-t from-cyan-100 to-slate-50">
+        <div className="text-center space-y-4 mb-16 container mx-auto px-4 py-16 text-black">
+          <h2 className="text-base font-semibold leading-7 text-center">
+            PLANS & PRICING
+          </h2>
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+            Start for free, then enjoy
+            <br />
+            your first month for $1
+          </h1>
+          <p className="text-xl text-muted-foreground">
+            Choose the best plan for your business. Change plans as you grow.
+          </p>
+          <div className="flex items-center justify-center gap-4 mt-8">
+            <div className="bg-secondary rounded-full p-1 flex">
+              <button className="px-4 py-2 rounded-full bg-background">
+                Pay monthly
+              </button>
+              <button className="px-4 py-2 rounded-full">
+                Pay yearly (save 25%)*
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <FreeJobPost />
+      <section className="container mx-auto px-4 py-16">
+        <FreeJobPost />
 
-      <JobPostsPricing />
+        <JobPostsPricing />
+      </section>
 
       {/* <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"> */}
       {/* Basic Plan */}
@@ -233,7 +237,7 @@ export default function Page() {
           </CardContent>
         </Card>
       </div> */}
-    </div>
+    </>
     // <div className="bg-white">
     //   <div className="container mx-auto px-4 py-16">
     //     <div className="text-center mb-16">
