@@ -17,7 +17,7 @@ export default function JobPostsPricing() {
         Choose a plan that fits your hiring needs. No hidden fees, no long-term
         commitments.
       </p> */}
-      <div className="grid md:grid-cols-3 gap-6 px-4 min-w-[75%]">
+      <div className="grid md:grid-cols-3 gap-6 px-4 min-w-[70%] max-w-[70%]">
         <div className="flex flex-col justify-start bg-white border border-gray-200 text-black rounded-xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-2 shadow-md ">
           <div className="mb-6 text-left">
             <h3 className=" text-2xl font-bold mb-2">Basic</h3>

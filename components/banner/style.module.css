@@ -1,0 +1,94 @@
+
+@keyframes slide {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0%);
+    }
+  }
+  
+  .logos {
+    overflow: hidden;
+    padding: 20px 0;
+    /* background: rgb(63, 53, 53);
+     */
+
+
+     /* background-image: linear-gradient(to right, #3df964, #00fb95, #00fbbc, #1cf9da, #60f6ed, #60f1f6, #67eafc, #74e4ff, #5ed9ff, #7ec7ff, #baadff, #f58bff); */
+    white-space: nowrap;
+    position: relative;
+       
+    background: hsla(175, 79%, 63%, 1); /* Fallback color for browsers that do not support gradients */
+
+    background: linear-gradient(180deg, hsla(175, 79%, 63%, 1) 0%, hsla(82, 96%, 57%, 1) 100%); /* Right to left gradient */
+    
+    background: -moz-linear-gradient(180deg, hsla(175, 79%, 63%, 1) 0%, hsla(82, 96%, 57%, 1) 100%); /* Firefox */
+    
+    background: -webkit-linear-gradient(180deg, hsla(175, 79%, 63%, 1) 0%, hsla(82, 96%, 57%, 1) 100%); /* Safari and older versions of Chrome */
+    
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#57EBDE", endColorstr="#AEFB2A", GradientType=1); /* For older IE versions */
+    
+       
+}
+  
+  .logos:before,
+  .logos:after {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    content: "";
+    z-index: 2;
+  }
+  
+  .logos:before {
+    left: 0;
+    /* background: linear-gradient(to left, rgba(255, 255, 255, 0), white); */
+  }
+  
+  .logos:after {
+    right: 0;
+    /* background: linear-gradient(to right, rgba(255, 255, 255, 0), white); */
+  }
+  
+  /* .logos:hover .logos-slide {
+    animation-play-state: paused;
+  }
+   */
+  .logosSlide {
+    /* display: inline-block;
+     */
+     display: flex;
+    animation: 50s slide infinite linear;
+    color: black;
+    gap: 1.8rem;
+  }
+
+
+  .logosSlide > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.8rem;
+  }
+
+  .logosSlide span {
+    margin-right: 8px;
+    font-weight: 600;
+    font-size: 2rem; /* Add space between the job post text and the arrow */
+  }
+
+  .logosSlide > div > span + span {
+    font-size: 3rem;
+    transform: scale(1.5);
+  }
+
+  
+
+
+/*   
+  .logos-slide img {
+    height: 50px;
+    margin: 0 40px;
+  } */

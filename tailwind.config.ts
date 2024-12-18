@@ -19,14 +19,31 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        // marquee: {
+        //   "0%": { transform: "translateX(-100%)" },
+        //   "100%": { transform: "translateX(0%)" },
+        // },
         marquee: {
-          "0%": { transform: "translateX(-100%)" },
-          "100%": { transform: "translateX(0%)" },
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(-100%)" },
         },
+
+        // "scroll-continuous": {
+        //   "0%": { transform: "translateX(0%)" },
+        //   "100%": { transform: "translateX(0%)" },
+        // },
+        // "scroll-right": {
+        //   "0%": { transform: "translateX(-100%)" },
+        //   "100%": { transform: "translateX(0%)" },
+        // },
       },
       animation: {
-        marquee: "marquee 28s linear infinite",
+        marquee: "marquee 15s linear infinite",
       },
+      // animation: {
+      //   marquee: "marquee 28s linear infinite",
+      //   "scroll-right": "scroll-right 1s linear",
+      // },
     },
   },
   plugins: [require("daisyui"), require("tailwindcss-animate")],
