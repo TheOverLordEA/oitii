@@ -5,13 +5,43 @@ import FeaturedJobs from "@/components/trendingJobs/TrendingJobs";
 // import { span } from "framer-motion/client";
 import { Suspense } from "react";
 import JobSectionHome from "@/components/job-sections/JobSectionBlock";
-import Link from "next/link";
+// import Link from "next/link";
 
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Oitii | Find real jobs",
-  description: "...",
+  title: "Find Tech Jobs & Career Opportunities | Job Board | Oitii",
+  description:
+    "Browse verified tech jobs with real salaries and benefits. No ghost jobs. Apply to engineering, design, product, and other tech roles at top companies.",
+  keywords: [
+    "tech jobs",
+    "software engineering jobs",
+    "design jobs",
+    "product jobs",
+    "remote jobs",
+    "verified jobs",
+    "real jobs",
+    "job board",
+    "finance jobs",
+    "healthcare jobs",
+    "public service jobs",
+    "finance jobs",
+    "retail",
+    "career opportunities",
+    "tech careers",
+  ],
+
+  alternates: {
+    canonical: "https://www.oitii.com/jobs",
+  },
+  openGraph: {
+    title: "Find Tech Jobs & Career Opportunities | Oitii",
+    description:
+      "Browse verified tech jobs, No ghost jobs or fake jobs. No ghost jobs. Apply to engineering, design, product roles at top companies.",
+    type: "website",
+    url: "https://www.oitii.com/jobs",
+  },
+  robots: "index, follow",
 };
 
 interface Job {

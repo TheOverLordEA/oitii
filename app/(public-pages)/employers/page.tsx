@@ -1,11 +1,40 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronRight, Stars } from "lucide-react";
+import Link from "next/link"; // Add Link import
+import { Metadata } from "next";
 
 const comingSoon = true;
 
+export const metadata: Metadata = {
+  title: "Post Jobs & Hire Talent | Employer Solutions | Oitii",
+  description:
+    "Post jobs and hire top talent efficiently. Simple job posting, AI-powered candidate matching, and premium recruiting tools. Start hiring with Oitii's trusted recruiting platform.",
+  keywords: [
+    "post jobs",
+    "hire talent",
+    "job posting",
+    "recruiting platform",
+    "talent acquisition",
+    "employer solutions",
+    "hiring platform",
+    "recruitment tools",
+    "candidate matching",
+    "tech recruiting",
+  ],
+  openGraph: {
+    title: "Post Jobs & Hire Talent | Employer Solutions | Oitii",
+    description:
+      "Post jobs and hire top talent efficiently. Simple job posting, AI-powered candidate matching, and premium recruiting tools.",
+    type: "website",
+    url: "https://www.oitii.com/employers",
+  },
+};
+
 export default function Page() {
   return (
-    <>
+    <div key="employer-page">
+      {" "}
+      {/* Add unique key */}
       {comingSoon ? (
         <div className="min-h-screen w-full flex items-start md:items-center justify-center p-8">
           <div className="max-w-4xl w-full mx-auto grid md:grid-cols-2 gap-8 md:gap-12 items-center">
@@ -42,16 +71,21 @@ export default function Page() {
               platform matches your perfect candidates in minutes.
             </p>
             <div className="flex justify-center space-x-4">
-              <Button size="lg" className="shadow-md">
-                Start Posting <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-              <Button variant="outline" size="lg" className="shadow-sm">
-                Learn More <ChevronRight className="ml-2 h-4 w-4" />
-              </Button>
+              {/* Use Link for client-side navigation */}
+              <Link href="/post-a-job">
+                <Button size="lg" className="shadow-md">
+                  Start Posting <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+              <Link href="/about">
+                <Button variant="outline" size="lg" className="shadow-sm">
+                  Learn More <ChevronRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }

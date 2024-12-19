@@ -5,7 +5,7 @@ import React, { Suspense } from "react";
 import type { Metadata } from "next";
 // import TrendingJobs from "@/components/trendingJobs/TrendingJobs";
 // import JobSectionHome from "@/components/job-sections/JobSectionBlock";
-import { Josefin_Sans } from "next/font/google";
+// import { Josefin_Sans } from "next/font/google";
 import JobBoard from "@/components/jobBoard/JobBoard";
 import CompingSoonHome from "@/components/comingSoon/ComingSoonHome";
 import HowItWorks from "@/components/howItWorks/HowItWorks";

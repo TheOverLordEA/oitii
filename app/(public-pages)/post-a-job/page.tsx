@@ -31,10 +31,7 @@ const jsonLd: WithContext<WebPage> = {
     description: "Leading job board for tech professionals",
     url: "https://www.oitii.com",
     logo: "https://www.oitii.com/assets/logo.png",
-    sameAs: [
-      "https://twitter.com/oitii",
-      "https://www.linkedin.com/company/oitii",
-    ],
+    sameAs: ["https://x.com/oitii", "https://www.linkedin.com/company/oitii"],
   },
 };
 
