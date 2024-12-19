@@ -71,17 +71,25 @@
     justify-content: center;
     align-items: center;
     gap: 1.8rem;
+    text-transform: uppercase;
   }
 
   .logosSlide span {
     margin-right: 8px;
     font-weight: 600;
-    font-size: 2rem; /* Add space between the job post text and the arrow */
+    font-size: 1.5rem; /* Add space between the job post text and the arrow */
   }
 
   .logosSlide > div > span + span {
     font-size: 3rem;
     transform: scale(1.5);
+  }
+
+
+  @media (max-width: 768px) {
+    .logosSlide {
+      animation: 10s slide infinite linear; /* Increase speed (reduce duration) for mobile */
+    }
   }
 
   

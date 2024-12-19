@@ -20,30 +20,35 @@ const config: Config = {
       },
       keyframes: {
         // marquee: {
-        //   "0%": { transform: "translateX(-100%)" },
-        //   "100%": { transform: "translateX(0%)" },
+        // 	'0%': {
+        // 		transform: 'translateX(100%)'
+        // 	},
+        // 	'100%': {
+        // 		transform: 'translateX(-100%)'
+        // 	}
         // },
-        marquee: {
-          "0%": { transform: "translateX(100%)" },
-          "100%": { transform: "translateX(-100%)" },
-        },
-
-        // "scroll-continuous": {
-        //   "0%": { transform: "translateX(0%)" },
-        //   "100%": { transform: "translateX(0%)" },
+        // 'accordion-down': {
+        // 	from: {
+        // 		height: '0'
+        // 	},
+        // 	to: {
+        // 		height: 'var(--radix-accordion-content-height)'
+        // 	}
         // },
-        // "scroll-right": {
-        //   "0%": { transform: "translateX(-100%)" },
-        //   "100%": { transform: "translateX(0%)" },
-        // },
-      },
-      animation: {
-        marquee: "marquee 15s linear infinite",
+        // 'accordion-up': {
+        // 	from: {
+        // 		height: 'var(--radix-accordion-content-height)'
+        // 	},
+        // 	to: {
+        // 		height: '0'
+        // 	}
+        // }
       },
       // animation: {
-      //   marquee: "marquee 28s linear infinite",
-      //   "scroll-right": "scroll-right 1s linear",
-      // },
+      // 	marquee: 'marquee 15s linear infinite',
+      // 	'accordion-down': 'accordion-down 0.2s ease-out',
+      // 	'accordion-up': 'accordion-up 0.2s ease-out'
+      // }
     },
   },
   plugins: [require("daisyui"), require("tailwindcss-animate")],
