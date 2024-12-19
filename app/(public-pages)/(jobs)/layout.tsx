@@ -1,5 +1,5 @@
-import HomePageHeader from "@/components/headers/HomePageHeader";
-import Footer from "@/components/footer/Footer";
+// import HomePageHeader from "@/components/headers/HomePageHeader";
+// import Footer from "@/components/footer/Footer";
 
 export default function JobsLayout({
   children, // will be a page or nested layout
@@ -8,11 +8,11 @@ export default function JobsLayout({
 }) {
   return (
     <>
-      <HomePageHeader />
+      {/* <HomePageHeader /> */}
       <>
         <main className="bg-white">{children}</main>
       </>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

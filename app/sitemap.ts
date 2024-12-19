@@ -11,6 +11,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1, // Home page has the highest priority
     },
     // About Page
+
+    {
+      url: "https://oitii.com/jobs",
+      lastModified: new Date(),
+      changeFrequency: "daily", // Jobs page changes frequently
+      priority: 0.9, // Highest priority as main jobs listing page
+    },
+    {
+      url: "https://oitii.com/post-a-job",
+      lastModified: new Date(),
+      changeFrequency: "monthly", // Changes less frequently
+      priority: 0.9, // High priority for employer conversion
+    },
     {
       url: "https://oitii.com/about",
       lastModified: new Date(),

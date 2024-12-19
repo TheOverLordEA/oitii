@@ -14,7 +14,7 @@ const BUTTON = {
 const LAUNCHLINK = "/coming-soon";
 
 const navItems = [
-  { name: "Jobs", href: LAUNCHLINK || "/jobs" },
+  { name: "Jobs", href: "/jobs" },
   { name: "For employers", href: LAUNCHLINK || "/recruit/overview" },
   { name: "Post a Job", href: "/post-a-job" },
   // { name: "About", href: "/about" },

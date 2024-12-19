@@ -15,7 +15,7 @@ interface Props {
 const LAUNCHLINK = "/coming-soon";
 
 const menuItems = [
-  { href: LAUNCHLINK || "#discover", label: "Jobs" },
+  { href: "/jobs", label: "Jobs" },
   { href: LAUNCHLINK || "#job-seekers", label: "For employers" },
   { href: "/post-a-job", label: "Post job" },
 ];

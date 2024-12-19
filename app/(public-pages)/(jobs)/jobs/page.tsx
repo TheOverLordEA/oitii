@@ -5,6 +5,7 @@ import FeaturedJobs from "@/components/trendingJobs/TrendingJobs";
 // import { span } from "framer-motion/client";
 import { Suspense } from "react";
 import JobSectionHome from "@/components/job-sections/JobSectionBlock";
+import Link from "next/link";
 
 import { Metadata } from "next";
 
@@ -88,39 +89,62 @@ const JOBSECTIONTITLES = {
   financeJobs: "Finance Jobs",
 };
 
+const comingSoon = true;
+
 const Page = () => {
   return (
-    <div>
-      <HeroJobs />
-      <section className="text-black mx-auto my-0 max-w-[80%] flex flex-col gap-5">
-        <Suspense fallback={<span>Loading ...</span>}>
-          <FeaturedJobs />
-          <EmailNewsLetterSignUp />
-          <div>
-            {/* Latest Jobs */}
-            <Suspense fallback={<span>Loading.....</span>}>
-              <JobSectionHome
-                jobTitle={JOBSECTIONTITLES.latestJobs}
-                jobs={jobs}
-              />
-            </Suspense>
-            {/* Tech Jobs */}
-            <Suspense fallback={<span>Loading.....</span>}>
-              <JobSectionHome
-                jobTitle={JOBSECTIONTITLES.engineeringJobs}
-                jobs={jobs}
-              />
-            </Suspense>
-            <Suspense fallback={<span>Loading.....</span>}>
-              <JobSectionHome
-                jobTitle={JOBSECTIONTITLES.marketingJobs}
-                jobs={jobs}
-              />
-            </Suspense>
+    <>
+      {comingSoon ? (
+        <main className="min-h-screen w-full flex items-start md:items-center justify-center p-8">
+          <div className="max-w-4xl w-full mx-auto grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="flex flex-col gap-2 pt-0 md:pt-0">
+              <div className="flex flex-col">
+                <h2 className="text-2xl md:text-xl text-muted-foreground uppercase tracking-wide text-gray-800">
+                  all features are
+                </h2>
+                <h1 className="text-8xl md:text-6xl font-bold py-2 bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+                  Coming Soon
+                </h1>
+              </div>
+              <p className="text-2xl md:text-xl text-muted-foreground text-gray-800">
+                Available next week.
+              </p>
+            </div>
           </div>
-        </Suspense>
-      </section>
-    </div>
+        </main>
+      ) : (
+        <>
+          <HeroJobs />
+
+          <section className="text-black mx-auto my-0 max-w-[80%] flex flex-col gap-5">
+            <Suspense fallback={<span>Loading ...</span>}>
+              <FeaturedJobs />
+              <EmailNewsLetterSignUp />
+              <div>
+                <Suspense fallback={<span>Loading.....</span>}>
+                  <JobSectionHome
+                    jobTitle={JOBSECTIONTITLES.latestJobs}
+                    jobs={jobs}
+                  />
+                </Suspense>
+                <Suspense fallback={<span>Loading.....</span>}>
+                  <JobSectionHome
+                    jobTitle={JOBSECTIONTITLES.engineeringJobs}
+                    jobs={jobs}
+                  />
+                </Suspense>
+                <Suspense fallback={<span>Loading.....</span>}>
+                  <JobSectionHome
+                    jobTitle={JOBSECTIONTITLES.marketingJobs}
+                    jobs={jobs}
+                  />
+                </Suspense>
+              </div>
+            </Suspense>
+          </section>
+        </>
+      )}
+    </>
   );
 };
 
