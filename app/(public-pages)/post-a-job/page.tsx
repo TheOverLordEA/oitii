@@ -25,7 +25,7 @@ export default function Page() {
 
         <FreeJobPost />
       </section>
-      <section className="flex flex-col py-16">
+      <section className="flex flex-col py-16 gap-8 md:gap-5">
         <FeaturedJobPosts />
         <PostAJobFAQ />
       </section>

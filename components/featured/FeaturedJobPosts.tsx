@@ -18,13 +18,14 @@ const features = [
   {
     icon: Users, // or a similar candidate icon
     title: "Quality Candidate Pool",
-    description: "Access the best, highest-quality candidates.",
+    description:
+      "Access a pool of top-tier candidates, carefully vetted for skills, experience, and fit.",
   },
   {
     icon: Target, // or a similar targeting icon
     title: "Easy job management.",
     description:
-      "Our intelligent system matches your job posts with the most qualified candidates, saving time and resources in recruitment.",
+      "Effortlessly manage job postings with Oitii — view applicants, edit listings, and pause posts with ease.",
   },
   {
     icon: BarChart3,
@@ -36,7 +37,7 @@ const features = [
     icon: Briefcase, // or a similar job posting icon
     title: "Enhanced Visibility",
     description:
-      "Your job posts get premium placement across our trusted network, reaching quality candidates who are actively searching.",
+      "Gain enhanced visibility with verified job posts that build trust and attract the right candidates.",
   },
 ];
 
@@ -53,7 +54,7 @@ export default function FeaturedJobPosts() {
           {features.map((feature, index) => (
             <Card
               key={index}
-              className="border border-solid border-gray-200 shadow-xl pb-2 w-[280px] md:w-full"
+              className="border border-solid border-gray-200 shadow-xl flex-shrink-0 pb-2 w-[280px] md:w-full"
             >
               <CardContent className="flex flex-col gap-5 pt-6 pb-1">
                 <div className="mb-4">
@@ -73,27 +74,5 @@ export default function FeaturedJobPosts() {
         </div>
       </div>
     </div>
-    // <div className="px-4 py-8 md:py-12 mx-auto max-w-[80%]">
-    //   <h2 className="text-3xl font-base text-black mb-8 text-left">
-    //     What each job post includes
-    //   </h2>
-    //   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-    //     {features.map((feature, index) => (
-    //       <Card key={index} className="border-0 shadow-sm">
-    //         <CardContent className="pt-6">
-    //           <div className="mb-4">
-    //             <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-blue-50">
-    //               <feature.icon className="w-5 h-5 text-blue-500" />
-    //             </div>
-    //           </div>
-    //           <h3 className="font-medium mb-2">{feature.title}</h3>
-    //           <p className="text-sm text-muted-foreground">
-    //             {feature.description}
-    //           </p>
-    //         </CardContent>
-    //       </Card>
-    //     ))}
-    //   </div>
-    // </div>
   );
 }

@@ -42,12 +42,16 @@ export default function JobPostsPricing() {
               listing
             </li>
             <li className="flex items-center">
-              <CheckCircle2 className="mr-2 text-blue-700 h-4 w-4" /> Basic
-              candidate matching
+              <CheckCircle2 className="mr-2 text-blue-700 h-4 w-4" /> Free
+              Automatic posting to job alerts
             </li>
             <li className="flex items-center">
-              <CheckCircle2 className="mr-2 text-blue-700 h-4 w-4" /> Email
-              support
+              <CheckCircle2 className="mr-2 text-blue-700 h-4 w-4" />
+              Smart Recruitment Tools
+            </li>
+            <li className="flex items-center">
+              <CheckCircle2 className="mr-2 text-blue-700 h-4 w-4" /> Job post
+              optimization assistance
             </li>
           </ul>
         </div>
@@ -71,23 +75,23 @@ export default function JobPostsPricing() {
           >
             Post a Job
           </Button>
-          <ul className="space-y-3 text-sm text-purple-950">
+          <ul className="space-y-3 text-sm text-blue-950">
             <li className="flex items-center">
-              <CheckCircle2 className="mr-2 text-purple-700 h-4 w-4" /> 60-day
-              listing
+              <CheckCircle2 className="mr-2 text-blue-700 h-4 w-4" /> All Basic
+              plan features included
             </li>
             <li className="flex items-center">
-              <CheckCircle2 className="mr-2 text-purple-700 h-4 w-4" /> Advanced
-              candidate matching
+              <CheckCircle2 className="mr-2 text-blue-700 h-4 w-4" /> Post up to
+              10 jobs simultaneously
             </li>
             <li className="flex items-center">
-              <CheckCircle2 className="mr-2 text-purple-700 h-4 w-4" /> Priority
-              support
+              <CheckCircle2 className="mr-2 text-blue-700 h-4 w-4" /> Perfect
+              for growing teams
             </li>
-            <li className="flex items-center">
+            {/* <li className="flex items-center">
               <CheckCircle2 className="mr-2 text-purple-700 h-4 w-4" /> Featured
               listing
-            </li>
+            </li> */}
           </ul>
         </div>
 
@@ -110,23 +114,24 @@ export default function JobPostsPricing() {
           >
             Get in touch
           </Button>
-          <ul className="space-y-3 text-sm text-purple-950">
+          <ul className="space-y-3 text-sm text-blue-950">
             <li className="flex items-center">
-              <CheckCircle2 className="mr-2 text-purple-700 h-4 w-4" /> 60-day
-              listing
+              <CheckCircle2 className="mr-2 text-blue-700 h-4 w-4" /> All Basic
+              plan features included
             </li>
             <li className="flex items-center">
-              <CheckCircle2 className="mr-2 text-purple-700 h-4 w-4" /> Advanced
-              candidate matching
+              <CheckCircle2 className="mr-2 text-blue-700 h-4 w-4" />{" "}
+              Volume-based discounts
             </li>
+
             <li className="flex items-center">
-              <CheckCircle2 className="mr-2 text-purple-700 h-4 w-4" /> Priority
-              support
+              <CheckCircle2 className="mr-2 text-blue-700 h-4 w-4" /> Great for
+              high-volume hiring.
             </li>
-            <li className="flex items-center">
+            {/* <li className="flex items-center">
               <CheckCircle2 className="mr-2 text-purple-700 h-4 w-4" /> Featured
               listing
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>
