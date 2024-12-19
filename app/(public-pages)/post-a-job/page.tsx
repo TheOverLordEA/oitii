@@ -2,8 +2,40 @@ import FreeJobPost from "@/components/banner/FreeJobPost";
 import PostAJobFAQ from "@/components/faq/FeaturedJobsFAQ";
 import FeaturedJobPosts from "@/components/featured/FeaturedJobPosts";
 import JobPostsPricing from "@/components/pricing/JobPostsPricing";
+import { Metadata } from "next";
 
 import { WithContext, WebPage } from "schema-dts";
+
+const metadata: Metadata = {
+  title: "Post a Job | Free & Premium Job Listings | Oitii Jobs",
+  description:
+    "Post your job listings on Oitii Jobs. First job post free, then $10 per post. Reach qualified candidates quickly and easily with our trusted job board.",
+  keywords: [
+    "post a job",
+    "job posting",
+    "free job post",
+    "hire developers",
+    "fianance jobs",
+    "healthcare jobs",
+    "tech job board",
+    "recruitment platform",
+    "post tech jobs",
+    "hiring platform",
+    "tech recruiting",
+    "employer solutions",
+  ],
+  alternates: {
+    canonical: "https://www.oitii.com/post-a-job",
+  },
+  openGraph: {
+    title: "Post a Job | Free & Premium Job Listings | Oitii Jobs",
+    description:
+      "Post your job listings on Oitii Jobs. First job post free, then $10 per post. Reach qualified candidates quickly.",
+    type: "website",
+    url: "https://www.oitii.com/post-a-job",
+  },
+  robots: "index, follow",
+};
 
 const jsonLd: WithContext<WebPage> = {
   "@context": "https://schema.org",

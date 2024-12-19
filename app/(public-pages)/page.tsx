@@ -15,9 +15,47 @@ import { WithContext, WebPage } from "schema-dts";
 // const josefin_sans = Josefin_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Oitii | Real Jobs, Real Opportunities",
+  title: "Find Real Tech Jobs & Career Opportunities | No Ghost Jobs | Oitii",
   description:
-    "Oitii – Discover real, verified job listings with no ghost jobs. Save time and find genuine opportunities tailored to you. Start your career search confidently with Oitii.",
+    "Discover verified tech jobs with real salaries. No ghost listings, no fake opportunities. Apply to software, design, and product roles at top companies. Start your authentic career search with Oitii.",
+  keywords: [
+    "real jobs",
+    "verified jobs",
+    "tech jobs",
+    "software jobs",
+    "design jobs",
+    "product jobs",
+    "no ghost jobs",
+    "authentic jobs",
+    "career opportunities",
+    "job search",
+  ],
+  alternates: {
+    canonical: "https://www.oitii.com",
+  },
+  openGraph: {
+    title: "Find Real Tech Jobs & Career Opportunities | Oitii",
+    description:
+      "Discover verified tech jobs with real salaries. No ghost listings, no fake opportunities. Apply to authentic roles at top companies.",
+    type: "website",
+    url: "https://www.oitii.com",
+    images: [
+      {
+        url: "https://www.oitii.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Oitii - Real Jobs, Real Opportunities",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Find Real Tech Jobs & Career Opportunities | Oitii",
+    description:
+      "Discover verified tech jobs with real salaries. No ghost listings, apply to authentic roles at top companies.",
+    images: ["https://www.oitii.com/twitter-image.png"],
+  },
+  robots: "index, follow",
 };
 
 interface Job {
