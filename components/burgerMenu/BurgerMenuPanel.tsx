@@ -1,11 +1,11 @@
 "use client";
 
-import { Menu, X, ChevronRight } from "lucide-react";
+import { X, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 // import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Josefin_Sans } from "next/font/google";
-import { cn } from "@/lib/utils";
+// import { cn } from "@/lib/utils";
 
 interface Props {
   isOpen: boolean;
@@ -17,7 +17,7 @@ const LAUNCHLINK = "/coming-soon";
 const menuItems = [
   { href: LAUNCHLINK || "#discover", label: "Jobs" },
   { href: LAUNCHLINK || "#job-seekers", label: "For employers" },
-  { href: LAUNCHLINK || "#companies", label: "Post job" },
+  { href: "/post-a-job", label: "Post job" },
 ];
 
 const josefin_sans = Josefin_Sans({

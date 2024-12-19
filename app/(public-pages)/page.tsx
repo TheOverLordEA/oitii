@@ -10,8 +10,9 @@ import JobBoard from "@/components/jobBoard/JobBoard";
 import CompingSoonHome from "@/components/comingSoon/ComingSoonHome";
 import HowItWorks from "@/components/howItWorks/HowItWorks";
 import JobAnalytics from "@/components/jobBoard/JobAnalytics";
+import { WithContext, WebPage } from "schema-dts";
 
-const josefin_sans = Josefin_Sans({ subsets: ["latin"] });
+// const josefin_sans = Josefin_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Oitii | Real Jobs, Real Opportunities",
@@ -95,8 +96,39 @@ const jobs: Job[] = [
 // };
 
 export default function LandingPage() {
+  const jsonLd: WithContext<WebPage> = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Oitii",
+    url: "https://www.oitii.com",
+    description:
+      "Oitii - Your trusted partner for innovative software solutions and digital transformation",
+    datePublished: new Date("2024-01-01").toISOString(), // Adjust the date as needed
+
+    publisher: {
+      "@type": "Organization" as const,
+      name: "Oitii LLC",
+      description:
+        "A forward-thinking software development company specializing in web and mobile solutions",
+
+      url: "https://www.oitii.com",
+      logo: "https://www.oitii.com/assets/logo.png",
+      sameAs: [
+        "https://x.com/oitiiJobs",
+        "https://www.linkedin.com/company/oitii",
+        // "https://github.com/oitii",
+        // "https://facebook.com/oitii"
+      ],
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <main className="flex flex-col min-h-screen bg-white text-black">
         <div className="flex-1">
           <section className="w-full py-12 md:py-20 bg-white relative overflow-hidden">
