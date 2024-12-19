@@ -2,22 +2,18 @@
 
 import { X, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-// import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Josefin_Sans } from "next/font/google";
-// import { cn } from "@/lib/utils";
 
 interface Props {
   isOpen: boolean;
   onClose: (e?: React.MouseEvent<HTMLElement>) => void;
 }
 
-const LAUNCHLINK = "/coming-soon";
-
 const menuItems = [
   { href: "/jobs", label: "Jobs" },
-  { href: LAUNCHLINK || "#job-seekers", label: "For employers" },
-  { href: "/post-a-job", label: "Post job" },
+  { href: "/employers", label: "For employers" },
+  { href: "/post-a-job", label: "Post a job" },
 ];
 
 const josefin_sans = Josefin_Sans({

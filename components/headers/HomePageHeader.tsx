@@ -11,8 +11,6 @@ const BUTTON = {
   signUp: "Sign Up",
 };
 
-const LAUNCHLINK = "/coming-soon";
-
 const navItems = [
   { name: "Jobs", href: "/jobs" },
   { name: "For employers", href: "/employers" },
