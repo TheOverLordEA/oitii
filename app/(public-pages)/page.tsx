@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 // import { Button } from "@/components/ui/button";
 // import { Search, BarChart, Users, Briefcase } from "lucide-react";
 // import Link from "next/link";
@@ -13,8 +13,9 @@ import JobAnalytics from "@/components/jobBoard/JobAnalytics";
 import { WithContext, WebPage } from "schema-dts";
 import { Button } from "@/components/ui/button";
 import AnimatedHero from "@/components/hero/AnimatedHero";
-import GetStarted from "@/components/banner/GetStarted";
+// import GetStarted from "@/components/banner/GetStarted";
 import HomePageBanner from "@/components/banner/HomePageBanner";
+import Link from "next/link";
 
 // const josefin_sans = Josefin_Sans({ subsets: ["latin"] });
 
@@ -183,64 +184,27 @@ export default function LandingPage() {
                   No Ghost jobs. <br /> No Fake jobs. {/* </span>{" "} */}
                   {/* <br /> <span className="text-6xl">No Fake Jobs.</span> */}
                 </h1>
-                <p className="text-xl sm:text-2xl pb-4 text-muted-foreground max-w-xl">
+                <p className="text-xl sm:text-2xl pb-8 md:pb-6x text-muted-foreground max-w-xl">
                   {/* Figma helps design and development teams build great products,
                   together. */}
                   Stop wasting time on fake jobs — apply only to{" "}
                   <span className="font-bold">Real Jobs</span>, verified by
                   Oitii.
                 </p>
-                <Button
-                  size="lg"
-                  className="rounded-md text-xl md:text-2xl px-6 h-12 bg-black hover:bg-black/90"
-                >
-                  Post a job
-                </Button>
+                <Link href="/post-a-job">
+                  <Button
+                    size="lg"
+                    className="rounded-md text-xl md:text-2xl px-6 h-12 bg-black hover:bg-black/90"
+                  >
+                    Post a job
+                  </Button>
+                </Link>
               </div>
               <AnimatedHero />
             </div>
           </div>
 
           <HomePageBanner />
-
-          {/* <section className="w-full bg-white py-12 md:py-16 px-4 md:px-8"> */}
-          {/* <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0 md:space-x-12"> */}
-          {/* Left Profile with Geometric Shapes */}
-          {/* <div className="hidden md:block relative w-48 h-48">
-                <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-purple-300 to-pink-300 opacity-40 rounded-full blur-xl"></div>
-                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-cyan-300 to-blue-300 opacity-40 rounded-full blur-xl"></div>
-                <div className="absolute bottom-0 left-1/2 w-16 h-16 bg-gradient-to-tr from-yellow-300 to-orange-300 opacity-40 rounded-full blur-xl transform -translate-x-1/2"></div>
-                <div className="absolute bottom-0 left-1/2 w-16 h-16 bg-gradient-to-tr from-yellow-300 to-orange-300 opacity-40 rounded-full blur-xl transform -translate-x-1/2"></div>
-
-                <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-br from-purple-300 to-pink-300 opacity-30 rounded-lg blur-lg transform rotate-45"></div>
-              </div> */}
-
-          {/* Center Text Section */}
-          {/* <div className="text-center max-w-xl">
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                  Don't Waste Your Time on
-                  <br className="block md:hidden" />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                    {" "}
-                    Fake Listings
-                  </span>
-                </h2>
-                <p className="text-gray-600 text-base md:text-lg uppercase tracking-wide">
-                  Discover Authentic Jobs with Accurate Descriptions
-                </p>
-              </div> */}
-
-          {/* Right Profile with Geometric Shapes */}
-          {/* <div className="hidden md:block relative w-48 h-48">
-                <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-purple-300 to-pink-300 opacity-40 rounded-full blur-xl"></div>
-                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-cyan-300 to-blue-300 opacity-40 rounded-full blur-xl"></div>
-                <div className="absolute bottom-0 left-1/2 w-16 h-16 bg-gradient-to-tr from-yellow-300 to-orange-300 opacity-40 rounded-full blur-xl transform -translate-x-1/2"></div>
-                <div className="absolute bottom-0 left-1/2 w-16 h-16 bg-gradient-to-tr from-yellow-300 to-orange-300 opacity-40 rounded-full blur-xl transform -translate-x-1/2"></div>
-
-                <div className="absolute -bottom-4 -right-4 w-12 h-12 bg-gradient-to-br from-purple-300 to-pink-300 opacity-30 rounded-lg blur-lg transform rotate-45"></div>
-              </div>
-            </div>
-          </section> */}
 
           <JobBoard />
 

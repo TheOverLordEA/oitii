@@ -24,7 +24,7 @@ export default function Footer() {
             </div>
 
             {/* Right side - Links */}
-            <ul className="flex flex-wrap items-center text-sm font-medium text-gray-500 dark:text-gray-400">
+            <ul className="flex flex-wrap items-center justify-end md:justify-center text-xs md:text-sm lg:text-lg font-medium text-gray-500 dark:text-gray-400">
               <li>
                 <a
                   title="LinkedIn"

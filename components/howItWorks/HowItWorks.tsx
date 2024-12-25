@@ -17,13 +17,12 @@ export default function HowItWorks() {
                   </div>
                 </div>
                 <div className="ml-4">
-                  <h3 className="text-lg font-medium">
+                  <h3 className="md:text-xl text-2xl font-medium">
                     Job Posting & Verification
                   </h3>
-                  <p className="mt-2 text-gray-600">
-                    Our team verifies each posting by confirming the company's
-                    existence, validating the position's availability, and
-                    ensuring all details are accurate.
+                  <p className="mt-2 text-gray-600 text-lg">
+                    Every job is checked for company legitimacy, position
+                    availability, and accurate information.
                   </p>
                 </div>
               </div>
@@ -34,15 +33,15 @@ export default function HowItWorks() {
                   </div>
                 </div>
                 <div className="ml-4">
-                  <h3 className="text-lg font-medium">Find & Apply</h3>
-                  <p className="mt-2 text-gray-600">
+                  <h3 className="md:text-xl text-2xl font-medium">
+                    Find & Apply
+                  </h3>
+                  <p className="mt-2 text-gray-600 text-lg">
                     Apply using the employer's preferred method:{" "}
-                    <span className="text-black font-bold">Oitii Apply</span>,{" "}
+                    <span className="text-black font-bold">Oitii Apply</span> or{" "}
                     <span className="text-black font-bold">
-                      company website
-                    </span>
-                    , <span className="text-black font-bold">email</span>, or{" "}
-                    <span className="text-black font-bold">phone number</span>.
+                      Employer Website
+                    </span>{" "}
                     Choose the option that suits you best!
                   </p>
                 </div>
@@ -54,13 +53,11 @@ export default function HowItWorks() {
                   </div>
                 </div>
                 <div className="ml-4">
-                  <h3 className="text-lg font-medium">
+                  <h3 className="md:text-xl text-2xl font-medium">
                     Your Journey Continues — Response Ahead!
                   </h3>
-                  <p className="mt-2 text-gray-600">
-                    We guarantee a response to all applications—no ghosting
-                    allowed. This ensures accountability and gives job seekers
-                    peace of mind.
+                  <p className="mt-2 text-gray-600 text-lg">
+                    No ghosting. Guaranteed responses to all applications.
                   </p>
                 </div>
               </div>

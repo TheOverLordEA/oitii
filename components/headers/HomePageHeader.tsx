@@ -60,7 +60,7 @@ const HomePageHeader = async () => {
         </div>
 
         {/* Center - Navigation */}
-        <nav className="hidden md:flex justify-center flex-1">
+        <nav className="hidden lg:flex justify-center flex-1">
           <ul className="flex gap-1">
             {navItems.map((item, index) => (
               <li key={index} className="relative">
@@ -77,7 +77,7 @@ const HomePageHeader = async () => {
 
         {/* Right side - Auth buttons */}
         <div className="w-40 flex justify-end">
-          <div className="md:flex gap-5 justify-end hidden">
+          <div className="lg:flex gap-5 justify-end hidden">
             {data.user ? (
               <AvatarHeader email={data.user.email} />
             ) : (

@@ -73,7 +73,37 @@ export default function JobAnalytics() {
             </div>
 
             <div className="p-6 space-y-6">
-              <div className="bg-gradient-to-r from-indigo-50 to-blue-100 p-6 rounded-2xl shadow-md border border-blue-100/50 transform transition-all hover:scale-[1.01]">
+              <div className="bg-white p-8 md:p-4 rounded-2xl shadow-lg hover:shadow-xl transition-all">
+                <div className="flex flex-col md:flex-row md:items-center gap-6">
+                  <div className="w-fit bg-gray-900 p-4 rounded-2xl">
+                    <CreditCard className="h-8 w-8 text-white " />
+                  </div>
+
+                  <div className="flex-1 space-y-3 text-black">
+                    <h3 className="text-4xl md:text-2xl font-bold">
+                      Maximize Your Hiring Potential
+                    </h3>
+
+                    <div className="space-y-2 flex flex-col gap-2">
+                      <p className="text-xl font-semibold ">
+                        Unlimited Job Visibility for Just $10
+                      </p>
+                      <div className="flex flex-wrap gap-3 text-sm font-medium text-white">
+                        <span className="bg-gray-900 px-4 py-2 rounded-full">
+                          Simple Pricing
+                        </span>
+                        <span className="bg-gray-900 px-4 py-2 rounded-full">
+                          Instant Activation
+                        </span>
+                        <span className="bg-gray-900 px-4 py-2 rounded-full">
+                          Broad Reach
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* <div className="bg-gradient-to-r from-indigo-50 to-blue-100 p-6 rounded-2xl shadow-md border border-blue-100/50 transform transition-all hover:scale-[1.01]">
                 <div className="flex items-center space-x-4">
                   <div className="bg-blue-500/20 p-3 rounded-full flex-shrink-0">
                     <CreditCard className="h-6 w-6 text-blue-700" />
@@ -90,13 +120,13 @@ export default function JobAnalytics() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <div className="space-y-3">
                 {[
                   "Flat $10 fee per job posting",
                   "No hidden costs or per-click charges",
-                  "Unlimited visibility—your post stays up until filled",
+                  "Uninterrupted visibility for your job posting.",
                   "Analytics available at no extra cost!",
                 ].map((feature, index) => (
                   <div key={index} className="flex items-center gap-3">
@@ -121,7 +151,7 @@ export default function JobAnalytics() {
               </div>
 
               <div className="pt-4">
-                <button className="w-full bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-700 hover:to-green-600 text-white py-4 px-6 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center group shadow-md hover:shadow-lg">
+                <button className="w-full bg-gray-950 text-xl hover:bg-gray-900 text-white py-4 px-6 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center group shadow-md hover:shadow-lg">
                   Post your job now
                   <ArrowRight className="ml-2 h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
                 </button>

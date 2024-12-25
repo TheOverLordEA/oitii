@@ -95,12 +95,12 @@ export default function HomePageBanner() {
       </h2>
       <div className="flex flex-col gap-4 w-full max-w-lg md:flex-row md:gap-8">
         <Link href="/post-a-job" legacyBehavior>
-          <button className="inline-block px-6 py-4 bg-black text-white hover:bg-gray-800  rounded-lg no-underline font-semibold text-center transition-colors w-full box-border focus:outline-2 focus:outline-[#007bff] focus:outline-offset-2 md:w-auto md:flex-1">
+          <button className="inline-block px-6 py-4 bg-black text-white hover:bg-gray-800  rounded-lg no-underline text-lg font-semibold text-center transition-colors w-full box-border focus:outline-2 focus:outline-[#007bff] focus:outline-offset-2 md:w-auto md:flex-1">
             Find talent
           </button>
         </Link>
         <Link href="/jobs" legacyBehavior>
-          <button className="bg-white text-black border border-gray-400 hover:bg-gray-100 inline-block px-[2rem] py-[1rem] rounded-lg no-underline font-semibold text-center transition-colors w-full box-border focus:outline-2 focus:outline-[#007bff] focus:outline-offset-2 md:w-auto md:flex-1">
+          <button className="bg-white text-black border border-gray-400 hover:bg-gray-100 text-lg inline-block px-[2rem] py-[1rem] rounded-lg no-underline font-semibold text-center transition-colors w-full box-border focus:outline-2 focus:outline-[#007bff] focus:outline-offset-2 md:w-auto md:flex-1">
             Find your perfect job{" "}
           </button>
         </Link>

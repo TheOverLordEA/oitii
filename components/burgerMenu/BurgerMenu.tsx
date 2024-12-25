@@ -42,7 +42,7 @@ export default function BurgerMenu() {
 
   return (
     <>
-      <Menu className="h-8 w-8 block md:hidden" onClick={handleBurgerOpen} />
+      <Menu className="h-8 w-8 block lg:hidden" onClick={handleBurgerOpen} />
 
       {isOpen ? (
         <BurgerMenuPanel isOpen={isOpen} onClose={handleBurgerClose} />
