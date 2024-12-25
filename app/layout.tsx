@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     siteName: "Oitii",
     images: [
       {
-        url: "/assets/oi-logo.png",
+        url: "/assets/oitii-logo-opengraph.ong",
         width: 1200,
         height: 630,
       },
@@ -65,12 +65,12 @@ export default function RootLayout({
           name="google-site-verification"
           content="n8h4bzVX8TcdwhATBUFw6AingSz-t3nMziiDELfzaUE"
         />
-        <script
+        {/* <script
           src="https://rankai.ai/apply.js"
           data-rankai-id="cm3ylfhso00018ca0efhor268"
           crossOrigin="anonymous"
           defer
-        ></script>
+        ></script> */}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}

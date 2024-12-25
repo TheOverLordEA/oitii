@@ -11,6 +11,10 @@ import CompingSoonHome from "@/components/comingSoon/ComingSoonHome";
 import HowItWorks from "@/components/howItWorks/HowItWorks";
 import JobAnalytics from "@/components/jobBoard/JobAnalytics";
 import { WithContext, WebPage } from "schema-dts";
+import { Button } from "@/components/ui/button";
+import AnimatedHero from "@/components/hero/AnimatedHero";
+import GetStarted from "@/components/banner/GetStarted";
+import HomePageBanner from "@/components/banner/HomePageBanner";
 
 // const josefin_sans = Josefin_Sans({ subsets: ["latin"] });
 
@@ -34,14 +38,14 @@ export const metadata: Metadata = {
     canonical: "https://www.oitii.com",
   },
   openGraph: {
-    title: "Find Real Tech Jobs & Career Opportunities | Oitii",
+    title: "Find Real Jobs & Career Opportunities | Oitii",
     description:
-      "Discover verified tech jobs with real salaries. No ghost listings, no fake opportunities. Apply to authentic roles at top companies.",
+      "Discover verified jobs. No ghost listings, no fake opportunities. Apply to authentic roles at top companies.",
     type: "website",
     url: "https://www.oitii.com",
     images: [
       {
-        url: "https://www.oitii.com/og-image.png",
+        url: "https://www.oitii.com/assets/oitii-logo-opengraph.png",
         width: 1200,
         height: 630,
         alt: "Oitii - Real Jobs, Real Opportunities",
@@ -70,60 +74,60 @@ interface Job {
   category: string;
 }
 
-const jobs: Job[] = [
-  {
-    id: "1",
-    title: "Founding AI Engineer",
-    company: "Console",
-    logo: "/placeholder.svg?height=40&width=40",
-    location: "San Francisco",
-    salary: "$185k - $250k",
-    equity: "0.1% - 1.0%",
-    postedDate: "yesterday",
-    category: "engineering",
-  },
-  {
-    id: "2",
-    title: "Senior Compensation Business Partner",
-    company: "Relativity Space",
-    logo: "/placeholder.svg?height=40&width=40",
-    location: "Long Beach",
-    salary: "$132k - $169k",
-    postedDate: "yesterday",
-    category: "engineering",
-  },
-  {
-    id: "3",
-    title: "Sr Analyst, Marketing Analytics & Insights",
-    company: "2U",
-    logo: "/placeholder.svg?height=40&width=40",
-    location: "Arlington",
-    salary: "$80k - $89k",
-    postedDate: "1 day ago",
-    category: "finance",
-  },
-  {
-    id: "4",
-    title: "Staff Product Manager",
-    company: "Cleric",
-    logo: "/placeholder.svg?height=40&width=40",
-    location: "San Francisco",
-    salary: "$140k - $200k",
-    equity: "0.5% - 1.5%",
-    postedDate: "yesterday",
-    category: "healthcare",
-  },
-  {
-    id: "5",
-    title: "Continuity Clinician - Nurse Practioner",
-    company: "Virta Health",
-    logo: "/placeholder.svg?height=40&width=40",
-    location: "United States",
-    salary: "$104k - $120k",
-    postedDate: "yesterday",
-    category: "healthcare",
-  },
-];
+// const jobs: Job[] = [
+//   {
+//     id: "1",
+//     title: "Founding AI Engineer",
+//     company: "Console",
+//     logo: "/placeholder.svg?height=40&width=40",
+//     location: "San Francisco",
+//     salary: "$185k - $250k",
+//     equity: "0.1% - 1.0%",
+//     postedDate: "yesterday",
+//     category: "engineering",
+//   },
+//   {
+//     id: "2",
+//     title: "Senior Compensation Business Partner",
+//     company: "Relativity Space",
+//     logo: "/placeholder.svg?height=40&width=40",
+//     location: "Long Beach",
+//     salary: "$132k - $169k",
+//     postedDate: "yesterday",
+//     category: "engineering",
+//   },
+//   {
+//     id: "3",
+//     title: "Sr Analyst, Marketing Analytics & Insights",
+//     company: "2U",
+//     logo: "/placeholder.svg?height=40&width=40",
+//     location: "Arlington",
+//     salary: "$80k - $89k",
+//     postedDate: "1 day ago",
+//     category: "finance",
+//   },
+//   {
+//     id: "4",
+//     title: "Staff Product Manager",
+//     company: "Cleric",
+//     logo: "/placeholder.svg?height=40&width=40",
+//     location: "San Francisco",
+//     salary: "$140k - $200k",
+//     equity: "0.5% - 1.5%",
+//     postedDate: "yesterday",
+//     category: "healthcare",
+//   },
+//   {
+//     id: "5",
+//     title: "Continuity Clinician - Nurse Practioner",
+//     company: "Virta Health",
+//     logo: "/placeholder.svg?height=40&width=40",
+//     location: "United States",
+//     salary: "$104k - $120k",
+//     postedDate: "yesterday",
+//     category: "healthcare",
+//   },
+// ];
 
 // const JOBSECTIONTITLES = {
 //   latestJobs: "Latest Jobs",
@@ -169,71 +173,50 @@ export default function LandingPage() {
 
       <main className="flex flex-col min-h-screen bg-white text-black">
         <div className="flex-1">
-          <section className="w-full py-12 md:py-20 bg-white relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-orange-50/30 via-pink-100/20 to-purple-200/30 opacity-70" />
-
-            <div className="relative container mx-auto px-4 md:px-6 z-10">
-              <div className="flex flex-col items-center space-y-6 text-center max-w-4xl mx-auto">
-                <div className="flex flex-col gap-6 md:gap-8 p-6 lg:p-10">
-                  <div
-                    className="uppercase text-center"
-                    aria-label="Job search tagline"
-                    role="text"
-                  >
-                    <p className="text-gray-700 text-base md:text-xl">
-                      Apply to{" "}
-                      <span
-                        className="bg-gradient-to-r from-cyan-500 to-emerald-500 bg-clip-text text-transparent font-bold"
-                        aria-label="real jobs"
-                      >
-                        real jobs
-                      </span>{" "}
-                      not{" "}
-                      <span
-                        className="bg-gradient-to-r from-orange-500 to-rose-800 bg-clip-text text-transparent font-bold"
-                        aria-label="ghost jobs"
-                      >
-                        ghost jobs
-                      </span>
-                    </p>
-                  </div>
-
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight text-center text-gray-900">
-                    Find and Apply to <br className="block md:hidden" />
-                    <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                      Real Jobs
-                    </span>{" "}
-                    <br className="my-2 md:my-0" />
-                    Authentic Careers
-                  </h1>
-
-                  <div>
-                    <p
-                      className="text-gray-600 text-base md:text-xl leading-relaxed text-center max-w-2xl mx-auto 
-            tracking-wide"
-                    >
-                      Verified opportunities. Zero time wasted.
-                    </p>
-                  </div>
-                </div>
+          <div className="container mx-auto px-4 py-14">
+            <div className="grid lg:grid-cols-2 gap-5 md:gap-8 items-center ">
+              <div className="space-y-6">
+                <h1 className=" text-6xl md:text-7xl font-medium tracking-tight md:tracking-tighter md:leading-tighter leading-tight">
+                  {/* <span className="text-2xl">Real jobs.</span>.{" "} */}
+                  {/* <br className="mb-2" />{" "} */}
+                  {/* <span className=" text-5xl"> */}
+                  No Ghost jobs. <br /> No Fake jobs. {/* </span>{" "} */}
+                  {/* <br /> <span className="text-6xl">No Fake Jobs.</span> */}
+                </h1>
+                <p className="text-xl sm:text-2xl pb-4 text-muted-foreground max-w-xl">
+                  {/* Figma helps design and development teams build great products,
+                  together. */}
+                  Stop wasting time on fake jobs — apply only to{" "}
+                  <span className="font-bold">Real Jobs</span>, verified by
+                  Oitii.
+                </p>
+                <Button
+                  size="lg"
+                  className="rounded-md text-xl md:text-2xl px-6 h-12 bg-black hover:bg-black/90"
+                >
+                  Post a job
+                </Button>
               </div>
+              <AnimatedHero />
             </div>
-          </section>
+          </div>
 
-          <section className="w-full bg-white py-12 md:py-16 px-4 md:px-8">
-            <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0 md:space-x-12">
-              {/* Left Profile with Geometric Shapes */}
-              <div className="hidden md:block relative w-48 h-48">
+          <HomePageBanner />
+
+          {/* <section className="w-full bg-white py-12 md:py-16 px-4 md:px-8"> */}
+          {/* <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0 md:space-x-12"> */}
+          {/* Left Profile with Geometric Shapes */}
+          {/* <div className="hidden md:block relative w-48 h-48">
                 <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-purple-300 to-pink-300 opacity-40 rounded-full blur-xl"></div>
                 <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-cyan-300 to-blue-300 opacity-40 rounded-full blur-xl"></div>
                 <div className="absolute bottom-0 left-1/2 w-16 h-16 bg-gradient-to-tr from-yellow-300 to-orange-300 opacity-40 rounded-full blur-xl transform -translate-x-1/2"></div>
                 <div className="absolute bottom-0 left-1/2 w-16 h-16 bg-gradient-to-tr from-yellow-300 to-orange-300 opacity-40 rounded-full blur-xl transform -translate-x-1/2"></div>
 
                 <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-br from-purple-300 to-pink-300 opacity-30 rounded-lg blur-lg transform rotate-45"></div>
-              </div>
+              </div> */}
 
-              {/* Center Text Section */}
-              <div className="text-center max-w-xl">
+          {/* Center Text Section */}
+          {/* <div className="text-center max-w-xl">
                 <h2 className="text-3xl font-bold text-gray-900 mb-4">
                   Don't Waste Your Time on
                   <br className="block md:hidden" />
@@ -245,10 +228,10 @@ export default function LandingPage() {
                 <p className="text-gray-600 text-base md:text-lg uppercase tracking-wide">
                   Discover Authentic Jobs with Accurate Descriptions
                 </p>
-              </div>
+              </div> */}
 
-              {/* Right Profile with Geometric Shapes */}
-              <div className="hidden md:block relative w-48 h-48">
+          {/* Right Profile with Geometric Shapes */}
+          {/* <div className="hidden md:block relative w-48 h-48">
                 <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-purple-300 to-pink-300 opacity-40 rounded-full blur-xl"></div>
                 <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-cyan-300 to-blue-300 opacity-40 rounded-full blur-xl"></div>
                 <div className="absolute bottom-0 left-1/2 w-16 h-16 bg-gradient-to-tr from-yellow-300 to-orange-300 opacity-40 rounded-full blur-xl transform -translate-x-1/2"></div>
@@ -257,7 +240,7 @@ export default function LandingPage() {
                 <div className="absolute -bottom-4 -right-4 w-12 h-12 bg-gradient-to-br from-purple-300 to-pink-300 opacity-30 rounded-lg blur-lg transform rotate-45"></div>
               </div>
             </div>
-          </section>
+          </section> */}
 
           <JobBoard />
 

@@ -166,21 +166,4 @@ const HomePageHeader = async () => {
       </header> */
 }
 
-// HomePageHeader.getInitialProps = async () => {
-//   const router = { pathname: "/post-a-job" };
-
-//   console.log(router);
-
-//   const backgroundColorClasses = {
-//     "/post-a-job": "bg-gradient-to-r from-blue-200 to-cyan-200",
-//   };
-
-//   const backgroundColor =
-//     backgroundColorClasses[
-//       router.pathname as keyof typeof backgroundColorClasses
-//     ] || "bg-white";
-
-//   return { backgroundColor };
-// };
-
 export default HomePageHeader;
