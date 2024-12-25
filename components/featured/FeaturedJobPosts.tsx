@@ -33,12 +33,12 @@ const features = [
     description:
       "Track applications, candidate engagement, and performance with detailed reports.",
   },
-  {
-    icon: Briefcase, // or a similar job posting icon
-    title: "Enhanced Visibility",
-    description:
-      "Gain enhanced visibility with verified job posts that build trust and attract the right candidates.",
-  },
+  // {
+  //   icon: Briefcase, // or a similar job posting icon
+  //   title: "Enhanced Visibility",
+  //   description:
+  //     "Gain enhanced visibility with verified job posts that build trust and attract the right candidates.",
+  // },
 ];
 
 export default function FeaturedJobPosts() {
