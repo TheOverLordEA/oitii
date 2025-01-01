@@ -63,7 +63,7 @@ const BurgerMenuPanel: React.FC<Props> = ({ isOpen, onClose }) => {
                   key={item.href}
                   href={item.href}
                   className="flex items-center justify-between group text-black"
-                  //   onClick={onClose}
+                  onClick={onClose}
                 >
                   <span className="text-xl font-medium group-hover:text-primary transition-colors">
                     {item.label}
