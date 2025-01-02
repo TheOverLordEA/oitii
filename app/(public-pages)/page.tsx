@@ -20,7 +20,7 @@ import Link from "next/link";
 // const josefin_sans = Josefin_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Find Real Tech Jobs & Career Opportunities | No Ghost Jobs | Oitii",
+  title: "Find Real Jobs & Career Opportunities | No Ghost Jobs | Oitii",
   description:
     "Discover verified tech jobs with real salaries. No ghost listings, no fake opportunities. Apply to software, design, and product roles at top companies. Start your authentic career search with Oitii.",
   keywords: [

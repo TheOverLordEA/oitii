@@ -1,5 +1,7 @@
 import { Button } from "../ui/button";
-import { CheckCircle, CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
+
+import Link from "next/link";
 
 const JOB_POST_AMOUNT = {
   onePost: "1 Job Post",
@@ -30,12 +32,20 @@ export default function JobPostsPricing() {
               <span>/per post</span>
             </div>
           </div>
+          {/* <Link href='/'> */}
           <Button
             variant="outline"
             className="w-full text-lg py-5 mb-6 bg-black text-white border-none hover:bg-gray-700 hover:text-white rounded-full"
           >
             Post a Job
           </Button>
+          {/* </Link> */}
+          {/* <Button
+            variant="outline"
+            className="w-full text-lg py-5 mb-6 bg-black text-white border-none hover:bg-gray-700 hover:text-white rounded-full"
+          >
+            Post a Job
+          </Button> */}
           <ul className="space-y-3 text-sm text-blue-950">
             <li className="flex items-center">
               <CheckCircle2 className="mr-2 text-blue-700 h-4 w-4" /> 30-day
