@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import { updateSession } from "@/utils/supabase/middleware";
 
 import { createClient } from "@/utils/supabase/server";
+import { use } from "react";
+import path from "path";
 
 export const JOB_CATEGORIES = [
   "latest",
@@ -31,7 +33,6 @@ export async function middleware(request: NextRequest) {
     error,
   } = await supabase.auth.getUser();
 
-
   // async function checkUserStatus() {
   //   // First check employers table
   //   const { data: employerData, error: employerError } = await supabase
@@ -43,7 +44,6 @@ export async function middleware(request: NextRequest) {
   //   if (!employerError && employerData) {
   //     return employerData
   //   }
-
 
   //     // If not found in employers, check job seekers table
   //     const { data: jobSeekerData, error: jobSeekerError } = await supabase
@@ -60,34 +60,84 @@ export async function middleware(request: NextRequest) {
   //   return null
   // }
 
-
-
   // const userData = await checkUserStatus()
 
+  async function checkUserStatusJobSeeker() {
+    const { data: jobSeekerData, error: jobSeekerError } = await supabase
+      .from("users_job_seekers")
+      .select("role, is_active")
+      .single();
 
-async function checkUserStatusJobSeeker() {
-  const {data: jobSeekerData, error: jobSeekerError} = await supabase.from('users_job_seekers').select('role, is_active').single()
-
-  if(!jobSeekerError && jobSeekerData) {
-    if(jobSeekerData.role === 'job_seeker' && jobSeekerData.is_active === true) {
-      return true
+    if (!jobSeekerError && jobSeekerData) {
+      if (
+        jobSeekerData.role === "job_seeker" &&
+        jobSeekerData.is_active === true
+      ) {
+        return true;
+      }
     }
-    
-  }  return false
-}
+    return false;
+  }
 
+  async function checkUserStatusEmployer() {
+    const { data: employerData, error: employerError } = await supabase
+      .from("users_employers")
+      .select("role, is_active")
+      .single();
 
-async function checkUserStatusEmployer() {
-  const {data: employerData, error: employerError} = await supabase.from('users_employers').select('role, is_active').single()
-
-  if(!employerError && employerData) {
-    if(employerData.role === 'employer' && employerData.is_active === true) {
-      return true
+    if (!employerError && employerData) {
+      if (employerData.role === "employer" && employerData.is_active === true) {
+        return true;
+      }
     }
-    
-  }  return false
-}
+    return false;
+  }
 
+  if (pathname === "/recruit") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/recruit/1111";
+    return NextResponse.redirect(url);
+  }
+
+  // if (pathname === "/recruit") {
+  //   // No user - redirect to employer login
+  //   if (!user) {
+  //     const redirectUrl = request.nextUrl.clone();
+  //     redirectUrl.pathname = "/login/employer";
+  //     return NextResponse.redirect(redirectUrl);
+  //   }
+
+  //   // User exists - check their status
+  //   try {
+  //     const [jobSeeker, employer] = await Promise.all([
+  //       checkUserStatusJobSeeker(),
+  //       checkUserStatusEmployer(),
+  //     ]);
+
+  //     if (jobSeeker) {
+  //       const redirectUrl = request.nextUrl.clone();
+  //       redirectUrl.pathname = "/login/job-seeker";
+  //       return NextResponse.redirect(redirectUrl);
+  //     }
+
+  //     if (employer) {
+  //       const res = NextResponse.redirect(
+  //         new URL(`/recruit/${user.id}`, request.url)
+  //       );
+  //       res.headers.set("x-middleware-cache", "no-cache");
+  //       return res;
+  //     }
+
+  //     // Handle case where user is neither jobSeeker nor employer
+  //     const redirectUrl = request.nextUrl.clone();
+  //     redirectUrl.pathname = "/";
+  //     return NextResponse.redirect(redirectUrl);
+  //   } catch (error) {
+  //     console.error("Error checking user status:", error);
+  //     // Handle error case - redirect to error page or login
+  //     return NextResponse.redirect(new URL("/error", request.url));
+  //   }
+  // }
 
   if (pathname === "/signup") {
     const redirectUrl = request.nextUrl.clone();
@@ -102,27 +152,27 @@ async function checkUserStatusEmployer() {
     return NextResponse.redirect(redirectUrl);
   }
 
-  if(request.nextUrl.pathname === '/dashboard' && user) {
-    const jobSeeker = await checkUserStatusJobSeeker()
+  if (request.nextUrl.pathname === "/dashboard" && user) {
+    const jobSeeker = await checkUserStatusJobSeeker();
 
-    const employer = await checkUserStatusEmployer()
+    const employer = await checkUserStatusEmployer();
 
-    if(jobSeeker) {
+    if (jobSeeker) {
       const res = NextResponse.redirect(
         new URL(`/dashboard/job-seeker/${user?.id}`, request.url)
-      )
+      );
 
-      res.headers.set("x-middleware-cache", "no-cache")
-      return res
+      res.headers.set("x-middleware-cache", "no-cache");
+      return res;
     }
 
-    if(employer) {
+    if (employer) {
       const res = NextResponse.redirect(
         new URL(`/dashboard/employer/${user?.id}`, request.url)
-      )
+      );
 
-      res.headers.set("x-middleware-cache", "no-cache")
-      return res
+      res.headers.set("x-middleware-cache", "no-cache");
+      return res;
     } else {
       const response = NextResponse.redirect(
         new URL("/dashboard/error", request.url)
@@ -131,7 +181,6 @@ async function checkUserStatusEmployer() {
       return response;
     }
   }
-
 
   if (request.nextUrl.pathname.startsWith("/dashboard/employer") && user) {
     const { data, error } = await supabase
@@ -147,21 +196,20 @@ async function checkUserStatusEmployer() {
       response.headers.set("x-middleware-cache", "no-cache");
       return response; // Optional error page
     }
-    console.log('code running')
+    console.log("code running");
 
-
-    const isEmployer = data?.[0]?.role === USER_ROLES.employer && data?.[0]?.is_active;
+    const isEmployer =
+      data?.[0]?.role === USER_ROLES.employer && data?.[0]?.is_active;
     // const isEmployer =
     // data && data.length > 0 ? data[0].role === USER_ROLES.employer : false;
 
-
-
-
     if (!isEmployer) {
       //Add a unotherized page
-      const checkIfJobSeeker = await checkUserStatusJobSeeker()
-      if(checkIfJobSeeker) {
-        const response = NextResponse.redirect(new URL("/unauthorized", request.url));
+      const checkIfJobSeeker = await checkUserStatusJobSeeker();
+      if (checkIfJobSeeker) {
+        const response = NextResponse.redirect(
+          new URL("/unauthorized", request.url)
+        );
         response.headers.set("x-middleware-cache", "no-cache");
         return response;
       }
@@ -177,7 +225,7 @@ async function checkUserStatusEmployer() {
       .select("*")
       .eq("user_id", user.id);
 
-      console.log('code running')
+    console.log("code running");
     if (error) {
       console.error("Error fetching data:", error);
       const response = NextResponse.redirect(
@@ -187,16 +235,19 @@ async function checkUserStatusEmployer() {
       return response; // Optional error page
     }
 
-    const isJobSeek = data?.[0]?.role === USER_ROLES.job_seeker && data?.[0]?.is_active;
+    const isJobSeek =
+      data?.[0]?.role === USER_ROLES.job_seeker && data?.[0]?.is_active;
     // const isEmployer = data[0].role === USER_ROLES.employer && data?.[0]?.is_active
-console.log(isJobSeek)
+    console.log(isJobSeek);
     if (!isJobSeek) {
       //Add a unotherized page
-      const checkIfEmployer = await checkUserStatusEmployer()
-      if(checkIfEmployer) {
-        const response = NextResponse.redirect(new URL ('/unauthorized', request.url))
-        response.headers.set('x-middleware-cache', 'no-cache')
-        return response
+      const checkIfEmployer = await checkUserStatusEmployer();
+      if (checkIfEmployer) {
+        const response = NextResponse.redirect(
+          new URL("/unauthorized", request.url)
+        );
+        response.headers.set("x-middleware-cache", "no-cache");
+        return response;
       }
       const response = NextResponse.redirect(new URL("/", request.url));
       response.headers.set("x-middleware-cache", "no-cache");

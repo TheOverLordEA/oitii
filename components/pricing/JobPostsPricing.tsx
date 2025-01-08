@@ -32,14 +32,14 @@ export default function JobPostsPricing() {
               <span>/per post</span>
             </div>
           </div>
-          {/* <Link href='/'> */}
-          <Button
-            variant="outline"
-            className="w-full text-lg py-5 mb-6 bg-black text-white border-none hover:bg-gray-700 hover:text-white rounded-full"
-          >
-            Post a Job
-          </Button>
-          {/* </Link> */}
+          <Link href="/recruit/1111">
+            <Button
+              variant="outline"
+              className="w-full text-lg py-5 mb-6 bg-black text-white border-none hover:bg-gray-700 hover:text-white rounded-full"
+            >
+              Post a Job
+            </Button>
+          </Link>
           {/* <Button
             variant="outline"
             className="w-full text-lg py-5 mb-6 bg-black text-white border-none hover:bg-gray-700 hover:text-white rounded-full"
