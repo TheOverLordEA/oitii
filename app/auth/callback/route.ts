@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-// The client you created from the Server-Side Auth instructions
 import { createClient } from "@/utils/supabase/server";
 
 enum UserType {
@@ -60,7 +59,7 @@ export async function GET(request: Request) {
       }
 
       if (userData) {
-        // If the user exists, update their is_active status
+        // If the user exists, update is_active status
         const { error: updateError } = await supabase
           .from(dbUserType)
           .update({ is_active: true })
